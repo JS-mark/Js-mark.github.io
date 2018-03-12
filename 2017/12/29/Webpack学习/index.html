@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        Webpack打包工具总结 · Jack--Personal blog
+        
+    </title>
+    <link rel="icon" href= /assets/favicon.ico>
+    <!-- TODO: 在font-face加载完毕后改变字体  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+    <!-- 提前加载place holder  -->
+    <style type="text/css">
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url(/font/Oswald-Regular.ttf);
+        }
+    </style>
+    <style type="text/css">
+        .site-intro {
+            position: relative;
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+            box-shadow: -0.1rem 0 0.5rem 0 rgba(0, 0, 0, 0.8);
+        }
+        .site-intro-placeholder {
+            position: absolute;
+            z-index: -2;
+            top: 0;
+            left: 0px;
+            width: calc(100% + 300px);
+            height: 100%;
+            background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+            background-position: center center;
+            transform: translate3d(-226px, 0, 0);
+            animation: gradient-move 2.5s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+    <link rel="stylesheet" href = /css/style.css?v=20171218 />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Jack--Personal blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Webpack打包工具总结</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Jack--Personal blog.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Webpack打包工具总结
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = Webpack3.10>Webpack3.10</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = 语法>语法</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href = JS>JS</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/12/29</span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <script>
+            var browser = {
+                    versions: function () {
+                        var u = window.navigator.userAgent;
+                        return {
+                            userAgent: u,
+                            trident: u.indexOf('Trident') > -1, //IE内核
+                            presto: u.indexOf('Presto') > -1, //opera内核
+                            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+                            iPad: u.indexOf('iPad') > -1, //是否为iPad
+                            webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+                            weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+                            uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+                        };
+                    }()
+                }
+
+            function fontLoaded(){
+                console.log('font loaded');
+                if (document.getElementsByClassName('site-intro-meta')) {
+                    document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+                    document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+                    var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+                        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+                        if (postIntroTags) {
+                            postIntroTags.classList.add('post-fade-in');
+                        }
+                        if (postIntroMeat) {
+                            postIntroMeat.classList.add('post-fade-in');
+                        }
+                    }
+                }
+                
+            console.log("userAgent:" + browser.versions.userAgent);
+            // UC不支持跨域，所以直接显示
+            if (browser.versions.uc) {
+                console.log("UCBrowser");
+                fontLoaded();
+            } else {
+                WebFont.load({
+                    custom: {
+                        families: ['Oswald-Regular']
+                    },
+                    loading: function () {  //所有字体开始加载
+                        // console.log('loading');
+                    },
+                    active: function () {  //所有字体已渲染
+                        fontLoaded();
+                    },
+                    inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+                        console.log('inactive: timeout');
+                        fontLoaded();
+                    },
+                    timeout: 7000 // Set the timeout to two seconds
+                });
+            }
+        </script>
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h1><ul>
+<li>1.安装webpack</li>
+<li><p>2.配置webpack.config.js</p>
+<ul>
+<li>配置webconfig：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">官方教程：https://doc.webpack-china.org/configuration/#-</span><br><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">	entry: &apos;./foo.js&apos;,</span><br><span class="line">		output: &#123;</span><br><span class="line">		path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">		filename: &apos;foo.bundle.js&apos;</span><br><span class="line">	&#125;</span><br><span class="line">	module: </span><br><span class="line">		rules: [ </span><br><span class="line">			&#123;</span><br><span class="line">				test: /\.(js|jsx)$/,</span><br><span class="line">				use: &apos;babel-loader&apos;，</span><br><span class="line">				include: [</span><br><span class="line">          path.resolve(__dirname, &quot;app&quot;)</span><br><span class="line">        ],</span><br><span class="line">        exclude: [</span><br><span class="line">          path.resolve(__dirname, &quot;app/demo-files&quot;)</span><br><span class="line">        ],</span><br><span class="line">        // 这里是匹配条件，每个选项都接收一个正则表达式或字符串</span><br><span class="line">        // test 和 include 具有相同的作用，都是必须匹配选项</span><br><span class="line">        // exclude 是必不匹配选项（优先于 test 和 include）</span><br><span class="line">        // 最佳实践：</span><br><span class="line">        // - 只在 test 和 文件名匹配 中使用正则表达式</span><br><span class="line">        // - 在 include 和 exclude 中使用绝对路径数组</span><br><span class="line">        // - 尽量避免 exclude，更倾向于使用 include</span><br><span class="line">			&#125;</span><br><span class="line">		]</span><br><span class="line">		plugins: [</span><br><span class="line">		new (webpack.optimize.UglifyJsPlugin)</span><br><span class="line">		new HtmlWebpackPlugin(template: &apos;./src/index.html&apos;)</span><br><span class="line">	  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>3.模块打包（默认只能打包JS模块，规则CommonJS等模块规范）；让webpack支持其他文件类型打包，要选择合适的loader</p>
+<ul>
+<li>nodejs 书写模块规范 模块化规范CommonJs,AMD,ES6 modules,</li>
+</ul>
+</li>
+<li><p>Webpack （使用npm全局安装）</p>
+<ul>
+<li>build-tool 构建工具</li>
+<li>loader webpack默认只能打包JS，loader可以帮助我们打包其他的文件类型</li>
+<li>sass-loader 下载时，必须安装ruby或者python环境才能使用；</li>
+<li>安装webpack-dev-server热启动插件，必须在项目在安装webpack，要不然会报错！</li>
+<li>webpack 使用方法：<br>  在命令行 输入webpack 入口文件(app.js) 输出文件（build.js）</li>
+<li>配置webpack ； 使用webpack.config.js；让webpack支持其他文件类型打包，要选择合适的loader</li>
+<li>url-loader 和 file-loader 类似，url-loader加载不了的使用file-loader加载；</li>
+<li>HtmlWebpackPlugin 插件(自动在output目录中生成文件)以及，配置安装<ul>
+<li>npm install –save-dev html-webpack-plugin</li>
+<li>在webpack.config.js中配置：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: &apos;./src/index.js&apos;,</span><br><span class="line">    print: &apos;./src/print.js&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">   new cleanWebpackPlugin([&apos;dist&apos;]),//数组内可以放置多个要删除的目录，放置在HtmlWebpackPlugin插件前</span><br><span class="line">   new HtmlWebpackPlugin(&#123;</span><br><span class="line">      title: &apos;页面标题&apos;,  //生成页面标题</span><br><span class="line">      filename: &apos;index.html&apos;,//要生成的文件名</span><br><span class="line">      template: &apos;index.html&apos;//要生成页面的时候的模板</span><br><span class="line">   &#125;)</span><br><span class="line"> ],</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &apos;[name].bundle.js&apos;,</span><br><span class="line">    path: path.resolve(__dirname, &apos;dist&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JSon文件中不能以有注释</p>
+<ul>
+<li>使用package.json中的scripts键名是要启动的命令的简写，值是要启动的命令（这个个命令可以随意写，反正就是要在命令行中执行的命令，就可以写在这里）；</li>
+<li>例：<br>“scripts”: {<br>“dev”: “webpack-dev-server –inline –hot –open –port 3000”<br>},<br>启动命令为 npm run dev<br>例：<br>“scripts”: {<br>“start”: “webpack-dev-server –inline –hot –open –port 3000”<br>},<br>启动命令为 npm start<br>如果键名是start，可以省略写run</li>
+</ul>
+</li>
+<li><p>配置HMR 模块热替换，热替换这个插件，必须配置在项目目录，因为配置全局的话，不会有热替换的效果，浏览器不会自动刷新；插件webpack-dev-sever在package.json</p>
+</li>
+<li>“scripts”: {<br>  “start”: “webpack-dev-server –inline –hot –open –port 3000”<br>}</li>
+<li><p>配置ES6语法降级，bable-loader，以及bable-core,bable依赖的核心库，bable-preset-env语法字典库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: /\.js$/,</span><br><span class="line">  exclude: /(node_modules|bower_components)/,//忽略目录</span><br><span class="line">  use: &#123;</span><br><span class="line">    loader: &apos;babel-loader&apos;,</span><br><span class="line">    options: &#123;</span><br><span class="line">      presets: [&apos;@babel/preset-env&apos;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解析vue模板，vue-loader，这个模板安装后，可能会发生错误，就是需要在安装另外一个模块，安装上就好了！</p>
+</li>
+<li>解析文件的话，要去下载各种文件类型的loader</li>
+<li>webpack 可以打包各种模块，js就是模块或者说是包，我们可以直接使用CommenJS或者ES6等规范的语法，导入各种各样我们需要的模块，并把它并把导入的模块用对象包裹起来，我们就可以调用里边的方法了</li>
+<li>package.json 对象中最后一个参数项，不能书写逗号<h1 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h1></li>
+<li>（command-line interface，命令行界面）是指可在用户提示符下键入可执行指令的界面，它通常不支持鼠标，用户通过键盘输入指令，计算机接收到指令后，予以执行。CLI在汇编指令中也有关闭中断的意思</li>
+<li>vue-cli vue脚手架 ，是为了快速构建一个项目环境的命令行操作工具<h3 id="Vuex-状态管理模式，在多个组件里面共享数据"><a href="#Vuex-状态管理模式，在多个组件里面共享数据" class="headerlink" title="Vuex 状态管理模式，在多个组件里面共享数据"></a>Vuex 状态管理模式，在多个组件里面共享数据</h3></li>
+</ul>
+<h3 id="打包的工程目录中src源码所在文件，dist发布的目录"><a href="#打包的工程目录中src源码所在文件，dist发布的目录" class="headerlink" title="打包的工程目录中src源码所在文件，dist发布的目录"></a>打包的工程目录中src源码所在文件，dist发布的目录</h3>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="previous">
+                <a href= "/2017/12/29/JavaScript模块化语法总结/" title= JavaScript模块化语法总结 >
+                    <span>Previous Post</span>
+                    <span>JavaScript模块化语法总结</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/Jack-In" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Webpack"><span class="toc-number">1.</span> <span class="toc-text"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CLI"><span class="toc-number">2.</span> <span class="toc-text"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex-状态管理模式，在多个组件里面共享数据"><span class="toc-number">2.0.1.</span> <span class="toc-text"><a href="#Vuex-&#x72B6;&#x6001;&#x7BA1;&#x7406;&#x6A21;&#x5F0F;&#xFF0C;&#x5728;&#x591A;&#x4E2A;&#x7EC4;&#x4EF6;&#x91CC;&#x9762;&#x5171;&#x4EAB;&#x6570;&#x636E;" class="headerlink" title="Vuex &#x72B6;&#x6001;&#x7BA1;&#x7406;&#x6A21;&#x5F0F;&#xFF0C;&#x5728;&#x591A;&#x4E2A;&#x7EC4;&#x4EF6;&#x91CC;&#x9762;&#x5171;&#x4EAB;&#x6570;&#x636E;"></a>Vuex &#x72B6;&#x6001;&#x7BA1;&#x7406;&#x6A21;&#x5F0F;&#xFF0C;&#x5728;&#x591A;&#x4E2A;&#x7EC4;&#x4EF6;&#x91CC;&#x9762;&#x5171;&#x4EAB;&#x6570;&#x636E;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打包的工程目录中src源码所在文件，dist发布的目录"><span class="toc-number">2.0.2.</span> <span class="toc-text"><a href="#&#x6253;&#x5305;&#x7684;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x4E2D;src&#x6E90;&#x7801;&#x6240;&#x5728;&#x6587;&#x4EF6;&#xFF0C;dist&#x53D1;&#x5E03;&#x7684;&#x76EE;&#x5F55;" class="headerlink" title="&#x6253;&#x5305;&#x7684;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x4E2D;src&#x6E90;&#x7801;&#x6240;&#x5728;&#x6587;&#x4EF6;&#xFF0C;dist&#x53D1;&#x5E03;&#x7684;&#x76EE;&#x5F55;"></a>&#x6253;&#x5305;&#x7684;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x4E2D;src&#x6E90;&#x7801;&#x6240;&#x5728;&#x6587;&#x4EF6;&#xFF0C;dist&#x53D1;&#x5E03;&#x7684;&#x76EE;&#x5F55;</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header sidebar-header-show-archive">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 3 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/Webpack学习/" >Webpack打包工具总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript模块化语法总结/" >JavaScript模块化语法总结</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2015/09/22/2015-09-22-js-version/" >ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name"><a href= "#">前端开发</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">JavaScript</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">翻译</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Webpack3.10</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">语法</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">JS</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">模块化</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">规范</a></span>
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
