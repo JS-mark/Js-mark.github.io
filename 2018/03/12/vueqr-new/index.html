@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <title>
         
-        JavaScript模块化语法总结 · Jack--Personal blog
+        Vue二维码组件 · Jack--Personal blog
         
     </title>
     <link rel="icon" href= /assets/favicon.ico>
@@ -71,7 +71,7 @@
                 <a href="/" >Jack--Personal blog.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">JavaScript模块化语法总结</a>
+                <a href="#" class="post-name">Vue二维码组件</a>
             </div>
     </div>
     
@@ -92,7 +92,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            JavaScript模块化语法总结
+            Vue二维码组件
             <!-- 404 -->
             
         </h1>
@@ -100,6 +100,8 @@
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+                vue, qrcode, vueqr, 二维码组件
             
             <!-- 404 -->
             
@@ -110,17 +112,15 @@
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-href = JS>JS</a>
+        <a class="post-tag" href="javascript:void(0);" data-href = 前端开发>前端开发</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = 模块化>模块化</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href = 规范>规范</a>
+        <a class="post-tag" href="javascript:void(0);" data-href = Vue>Vue</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2017/12/29</span>
+                <span class="post-intro-time">2018/03/12</span>
             </div>
         
     </div>
@@ -191,34 +191,53 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="CommonJS服务端模块化规范"><a href="#CommonJS服务端模块化规范" class="headerlink" title="CommonJS服务端模块化规范"></a>CommonJS服务端模块化规范</h1><h1 id="AMD-CMD浏览器（客户端）模块化规范"><a href="#AMD-CMD浏览器（客户端）模块化规范" class="headerlink" title="AMD/CMD浏览器（客户端）模块化规范"></a>AMD/CMD浏览器（客户端）模块化规范</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</span><br><span class="line"></span><br><span class="line">　　math.add(<span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-<p>第二行math.add(2, 3)，在第一行require(‘math’)之后运行，因此必须等math.js加载完成。也就是说，如果加载时间很长，整个应用就会停在那里等。</p>
-<p>这对服务器端不是一个问题，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于”假死”状态。</p>
-<p>因此，浏览器端的模块，不能采用”同步加载”（synchronous），只能采用”异步加载”（asynchronous）。这就是AMD规范诞生的背景。</p>
-<h3 id="AMD规范的模块化插件（require-js和curl-js）"><a href="#AMD规范的模块化插件（require-js和curl-js）" class="headerlink" title="AMD规范的模块化插件（require.js和curl.js）"></a>AMD规范的模块化插件（require.js和curl.js）</h3><p>使用的是require导入模块<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">$, _, Backbone</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="comment">// some code here</span></span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"><span class="built_in">require</span>会先加载jquery，underscore, backbone模块，因为这个模块化都是异步加载，加载完成后，在回调函数中调用这些模块的方法；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//指定路径</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">       baseUrl:<span class="string">'js/lib'</span>,<span class="comment">//放置公共路径</span></span><br><span class="line">　　　　paths: &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="string">"jquery"</span>: <span class="string">"jquery.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"underscore"</span>: <span class="string">"underscore.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"backbone"</span>: <span class="string">"backbone.min"</span></span><br><span class="line"></span><br><span class="line">　　　　&#125;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure></p>
-<h3 id="AMD模块规范写法"><a href="#AMD模块规范写法" class="headerlink" title="AMD模块规范写法"></a>AMD模块规范写法</h3><ul>
-<li>五、AMD模块的写法</li>
-</ul>
-<p>require.js加载的模块，采用AMD规范。也就是说，模块必须按照AMD的规定来写。</p>
-<p>具体来说，就是模块必须采用特定的define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在<code>define()</code>函数之中。</p>
-<p>假定现在有一个math.js文件，它定义了一个math模块。那么，math.js就要这样写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="comment">// math.js</span></span><br><span class="line"></span><br><span class="line">　　define(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="keyword">return</span> x+y;</span><br><span class="line"></span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">return</span> &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　add: add</span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"></span><br><span class="line">加载方法如下：</span><br><span class="line"></span><br><span class="line">　　<span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line">　　<span class="built_in">require</span>([<span class="string">'math'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">math</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　alert(math.add(<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure></p>
+        <h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
+<blockquote>
+<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3><h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>  快速添加 <code>vueqr-new</code> 组件到 app 中<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">import vueQr from 'vueqr-new';</span></span><br><span class="line"><span class="undefined">const config = &#123;</span></span><br><span class="line"><span class="undefined">  // 容错等级</span></span><br><span class="line"><span class="undefined">  errorCorrectionLevel: 'H',</span></span><br><span class="line"><span class="undefined">  // 图片类型</span></span><br><span class="line"><span class="undefined">  type: 'image/png',</span></span><br><span class="line"><span class="undefined">  rendererOpts: &#123;</span></span><br><span class="line"><span class="undefined">  quality: 0.3</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  // 边框与二维码之间的间距</span></span><br><span class="line"><span class="undefined">  margin: 0,</span></span><br><span class="line"><span class="undefined">  // 缩放倍数</span></span><br><span class="line"><span class="undefined">  scale: 4,</span></span><br><span class="line"><span class="undefined">  width: 500,</span></span><br><span class="line"><span class="undefined">  maskPattern:1,</span></span><br><span class="line"><span class="undefined">  color: &#123;</span></span><br><span class="line"><span class="undefined">  dark: '#000000',</span></span><br><span class="line"><span class="undefined">  light : "#ffffff"</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  style: &#123;</span></span><br><span class="line"><span class="undefined">  width: '128px',</span></span><br><span class="line"><span class="undefined">  border: '1px solid #ccc'</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined">export default &#123;</span></span><br><span class="line"><span class="undefined">  data() &#123;</span></span><br><span class="line"><span class="undefined">    return &#123;</span></span><br><span class="line"><span class="undefined">      text: 'https://example.com',</span></span><br><span class="line"><span class="undefined">      config: config</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  components: &#123;</span></span><br><span class="line"><span class="undefined">    vueQr</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>属性描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td>Object</td>
+<td>qrcode option</td>
+</tr>
+<tr>
+<td>text</td>
+<td>String</td>
+<td>qrcode value</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p><a href="https://github.com/zpao/qrcode.react" target="_blank" rel="noopener">“node-qrcode”</a></p>
+<blockquote>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3></blockquote>
+<p><a href="https://github.com/Jack-In/vueQr-new/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-pager">
         
             <li class="next">
-                <a href= "/2017/12/29/Webpack学习/" title= Webpack打包工具总结 >
+                <a href= "/2018/03/12/Vuex/" title= Vuex 状态管理插件学习 >
                     <span>Next Post</span>
-                    <span>Webpack打包工具总结</span>
+                    <span>Vuex 状态管理插件学习</span>
                 </a>
             </li>
         
         
             <li class="previous">
-                <a href= "/2015/09/22/2015-09-22-js-version/" title= ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」 >
+                <a href= "/2017/12/29/WebpackV3.10/" title= Webpack打包工具总结 >
                     <span>Previous Post</span>
-                    <span>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</span>
+                    <span>Webpack打包工具总结</span>
                 </a>
             </li>
         
@@ -274,7 +293,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CommonJS服务端模块化规范"><span class="toc-number">1.</span> <span class="toc-text"><a href="#CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;" class="headerlink" title="CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;"></a>CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AMD-CMD浏览器（客户端）模块化规范"><span class="toc-number">2.</span> <span class="toc-text"><a href="#AMD-CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;" class="headerlink" title="AMD/CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;"></a>AMD/CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD规范的模块化插件（require-js和curl-js）"><span class="toc-number">2.0.1.</span> <span class="toc-text"><a href="#AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require-js&#x548C;curl-js&#xFF09;" class="headerlink" title="AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require.js&#x548C;curl.js&#xFF09;"></a>AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require.js&#x548C;curl.js&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD模块规范写法"><span class="toc-number">2.0.2.</span> <span class="toc-text"><a href="#AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;" class="headerlink" title="AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;"></a>AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-components"><span class="toc-number">1.</span> <span class="toc-text"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快速安装"><span class="toc-number">1.0.1.</span> <span class="toc-text"><a href="#&#x5FEB;&#x901F;&#x5B89;&#x88C5;" class="headerlink" title="&#x5FEB;&#x901F;&#x5B89;&#x88C5;"></a>&#x5FEB;&#x901F;&#x5B89;&#x88C5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">1.0.2.</span> <span class="toc-text"><a href="#install" class="headerlink" title="install"></a>install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#components"><span class="toc-number">1.0.3.</span> <span class="toc-text"><a href="#components" class="headerlink" title="components"></a>components</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Component-props"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x53C2;&#x8003;&#x4EE3;&#x7801;" class="headerlink" title="&#x53C2;&#x8003;&#x4EE3;&#x7801;"></a>&#x53C2;&#x8003;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#License"><span class="toc-number">1.2.1.</span> <span class="toc-text"><a href="#License" class="headerlink" title="License"></a>License</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top">&#xe639;</div>
@@ -315,24 +334,67 @@
     
     
     
-    <div class="total-archive"> Total : 3 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 5 </div>
     
     <div class="post-archive">
     
     
     
     
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Vuex/" >Vuex 状态管理插件学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/vueqr-new/" >Vue二维码组件</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2017 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/Webpack学习/" >Webpack打包工具总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/WebpackV3.10/" >Webpack打包工具总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript模块化语法总结/" >JavaScript模块化语法总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript-modules/" >JavaScript模块化语法总结</a>
         </li>
     
     
@@ -369,6 +431,14 @@
         <span class="sidebar-tag-name"><a href= "#">模块化</a></span>
     
         <span class="sidebar-tag-name"><a href= "#">规范</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">vue</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">vuex</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">V</a></span>
+    
+        <span class="sidebar-tag-name"><a href= "#">Vue</a></span>
     
     </div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
