@@ -2,7 +2,7 @@
 # avatar
 avatar: /avatar/avatar.jpg
 # author name
-author: Jack
+author: Mark
 # signature
 signature: witness me
 # SNS
@@ -29,9 +29,9 @@ about:
 
 # ========== Site ========== #
 # title of the site
-SEO_title: Jack--Personal blog
+SEO_title: Mark--Personal blog
 # main title
-main_title: Jack--Personal blog.
+main_title: Mark--Personal blog.
 # subtitle
 subtitle: it's better to burn out than to fade away
 # site haeder image

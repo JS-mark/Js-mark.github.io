@@ -1,5 +1,6 @@
 ---
-title: 这是自我介绍的题目
+title: This is my self introduction.
 layout: about
 ---
-这是一段自我介绍
+
+This is my self introduction.
