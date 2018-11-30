@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <head><meta name="generator" content="Hexo 3.8.0">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>
         
-        JavaScript模块化语法总结 · Jack--Personal blog
+        JavaScript模块化语法总结 · Mark--Personal blog
         
     </title>
-    <link rel="icon" href= /assets/favicon.ico>
+    <link rel="icon" href="/assets/favicon.ico">
     <!-- TODO: 在font-face加载完毕后改变字体  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
     <!-- 提前加载place holder  -->
@@ -47,7 +47,7 @@
         }
     }
 </style>
-    <link rel="stylesheet" href = /css/style.css?v=20171218 />
+    <link rel="stylesheet" href="/css/style.css?v=20171218">
     <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
     
     <script src="/scripts/main.js" defer></script>
@@ -68,14 +68,14 @@
     
     <div class="banner">
             <div class="blog-title">
-                <a href="/" >Jack--Personal blog.</a>
+                <a href="/">Mark--Personal blog.</a>
             </div>
             <div class="post-title">
                 <a href="#" class="post-name">JavaScript模块化语法总结</a>
             </div>
     </div>
     
-    <a class="home-link" href=/>Jack--Personal blog.</a>
+    <a class="home-link" href="/">Mark--Personal blog.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro">
@@ -108,13 +108,13 @@
         
             <!-- 文章页标签  -->
             
-                <div class= post-intro-tags >
+                <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-href = JS>JS</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="JS">JS</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = 模块化>模块化</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="模块化">模块化</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = 规范>规范</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="规范">规范</a>
     
 </div>
             
@@ -191,24 +191,26 @@
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="CommonJS服务端模块化规范"><a href="#CommonJS服务端模块化规范" class="headerlink" title="CommonJS服务端模块化规范"></a>CommonJS服务端模块化规范</h1><h1 id="AMD-CMD浏览器（客户端）模块化规范"><a href="#AMD-CMD浏览器（客户端）模块化规范" class="headerlink" title="AMD/CMD浏览器（客户端）模块化规范"></a>AMD/CMD浏览器（客户端）模块化规范</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</span><br><span class="line"></span><br><span class="line">　　math.add(<span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-<p>第二行math.add(2, 3)，在第一行require(‘math’)之后运行，因此必须等math.js加载完成。也就是说，如果加载时间很长，整个应用就会停在那里等。</p>
+        <h1 id="CommonJS-服务端模块化规范"><a href="#CommonJS-服务端模块化规范" class="headerlink" title="CommonJS 服务端模块化规范"></a>CommonJS 服务端模块化规范</h1><h1 id="AMD-CMD-浏览器（客户端）模块化规范"><a href="#AMD-CMD-浏览器（客户端）模块化规范" class="headerlink" title="AMD/CMD 浏览器（客户端）模块化规范"></a>AMD/CMD 浏览器（客户端）模块化规范</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>)</span><br><span class="line"></span><br><span class="line">math.add(<span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>第二行 math.add(2, 3)，在第一行 require(‘math’)之后运行，因此必须等 math.js 加载完成。也就是说，如果加载时间很长，整个应用就会停在那里等。</p>
 <p>这对服务器端不是一个问题，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于”假死”状态。</p>
-<p>因此，浏览器端的模块，不能采用”同步加载”（synchronous），只能采用”异步加载”（asynchronous）。这就是AMD规范诞生的背景。</p>
-<h3 id="AMD规范的模块化插件（require-js和curl-js）"><a href="#AMD规范的模块化插件（require-js和curl-js）" class="headerlink" title="AMD规范的模块化插件（require.js和curl.js）"></a>AMD规范的模块化插件（require.js和curl.js）</h3><p>使用的是require导入模块<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">$, _, Backbone</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="comment">// some code here</span></span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"><span class="built_in">require</span>会先加载jquery，underscore, backbone模块，因为这个模块化都是异步加载，加载完成后，在回调函数中调用这些模块的方法；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//指定路径</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">       baseUrl:<span class="string">'js/lib'</span>,<span class="comment">//放置公共路径</span></span><br><span class="line">　　　　paths: &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="string">"jquery"</span>: <span class="string">"jquery.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"underscore"</span>: <span class="string">"underscore.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"backbone"</span>: <span class="string">"backbone.min"</span></span><br><span class="line"></span><br><span class="line">　　　　&#125;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure></p>
-<h3 id="AMD模块规范写法"><a href="#AMD模块规范写法" class="headerlink" title="AMD模块规范写法"></a>AMD模块规范写法</h3><ul>
-<li>五、AMD模块的写法</li>
+<p>因此，浏览器端的模块，不能采用”同步加载”（synchronous），只能采用”异步加载”（asynchronous）。这就是 AMD 规范诞生的背景。</p>
+<h3 id="AMD-规范的模块化插件（require-js-和-curl-js）"><a href="#AMD-规范的模块化插件（require-js-和-curl-js）" class="headerlink" title="AMD 规范的模块化插件（require.js 和 curl.js）"></a>AMD 规范的模块化插件（require.js 和 curl.js）</h3><p>使用的是 require 导入模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">$, _, Backbone</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="comment">// some code here</span></span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"><span class="built_in">require</span>会先加载jquery，underscore, backbone模块，因为这个模块化都是异步加载，加载完成后，在回调函数中调用这些模块的方法；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//指定路径</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">       baseUrl:<span class="string">'js/lib'</span>,<span class="comment">//放置公共路径</span></span><br><span class="line">　　　　paths: &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="string">"jquery"</span>: <span class="string">"jquery.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"underscore"</span>: <span class="string">"underscore.min"</span>,</span><br><span class="line">　　　　　　<span class="string">"backbone"</span>: <span class="string">"backbone.min"</span></span><br><span class="line"></span><br><span class="line">　　　　&#125;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="AMD-模块规范写法"><a href="#AMD-模块规范写法" class="headerlink" title="AMD 模块规范写法"></a>AMD 模块规范写法</h3><ul>
+<li>五、AMD 模块的写法</li>
 </ul>
-<p>require.js加载的模块，采用AMD规范。也就是说，模块必须按照AMD的规定来写。</p>
-<p>具体来说，就是模块必须采用特定的define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在<code>define()</code>函数之中。</p>
-<p>假定现在有一个math.js文件，它定义了一个math模块。那么，math.js就要这样写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="comment">// math.js</span></span><br><span class="line"></span><br><span class="line">　　define(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="keyword">return</span> x+y;</span><br><span class="line"></span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">return</span> &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　add: add</span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"></span><br><span class="line">加载方法如下：</span><br><span class="line"></span><br><span class="line">　　<span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line">　　<span class="built_in">require</span>([<span class="string">'math'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">math</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　alert(math.add(<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>require.js 加载的模块，采用 AMD 规范。也就是说，模块必须按照 AMD 的规定来写。</p>
+<p>具体来说，就是模块必须采用特定的 define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在<code>define()</code>函数之中。</p>
+<p>假定现在有一个 math.js 文件，它定义了一个 math 模块。那么，math.js 就要这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="comment">// math.js</span></span><br><span class="line"></span><br><span class="line">　　define(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="keyword">return</span> x+y;</span><br><span class="line"></span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">return</span> &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　add: add</span><br><span class="line">　　　　&#125;;</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br><span class="line"></span><br><span class="line">加载方法如下：</span><br><span class="line"></span><br><span class="line">　　<span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line">　　<span class="built_in">require</span>([<span class="string">'math'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">math</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　alert(math.add(<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">　　&#125;);</span><br></pre></td></tr></table></figure>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-pager">
         
             <li class="next">
-                <a href= "/2017/12/29/WebpackV3.10/" title= Webpack打包工具总结 >
+                <a href="/2017/12/29/Webpack/" title="Webpack打包工具总结">
                     <span>Next Post</span>
                     <span>Webpack打包工具总结</span>
                 </a>
@@ -216,7 +218,7 @@
         
         
             <li class="previous">
-                <a href= "/2015/09/22/2015-09-22-js-version/" title= ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」 >
+                <a href="/2015/09/22/2015-09-22-js-version/" title="ES5," es6,="" es2016,="" es.next:="" javascript="" 的版本是怎么回事？「译」="">
                     <span>Previous Post</span>
                     <span>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</span>
                 </a>
@@ -247,7 +249,7 @@
     
         
             
-                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title=email ></a>
+                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title="email"></a>
             
         
     
@@ -274,7 +276,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CommonJS服务端模块化规范"><span class="toc-number">1.</span> <span class="toc-text"><a href="#CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;" class="headerlink" title="CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;"></a>CommonJS&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AMD-CMD浏览器（客户端）模块化规范"><span class="toc-number">2.</span> <span class="toc-text"><a href="#AMD-CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;" class="headerlink" title="AMD/CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;"></a>AMD/CMD&#x6D4F;&#x89C8;&#x5668;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x6A21;&#x5757;&#x5316;&#x89C4;&#x8303;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD规范的模块化插件（require-js和curl-js）"><span class="toc-number">2.0.1.</span> <span class="toc-text"><a href="#AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require-js&#x548C;curl-js&#xFF09;" class="headerlink" title="AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require.js&#x548C;curl.js&#xFF09;"></a>AMD&#x89C4;&#x8303;&#x7684;&#x6A21;&#x5757;&#x5316;&#x63D2;&#x4EF6;&#xFF08;require.js&#x548C;curl.js&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD模块规范写法"><span class="toc-number">2.0.2.</span> <span class="toc-text"><a href="#AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;" class="headerlink" title="AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;"></a>AMD&#x6A21;&#x5757;&#x89C4;&#x8303;&#x5199;&#x6CD5;</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CommonJS-服务端模块化规范"><span class="toc-number">1.</span> <span class="toc-text">CommonJS 服务端模块化规范</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AMD-CMD-浏览器（客户端）模块化规范"><span class="toc-number">2.</span> <span class="toc-text">AMD/CMD 浏览器（客户端）模块化规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD-规范的模块化插件（require-js-和-curl-js）"><span class="toc-number">2.0.1.</span> <span class="toc-text">AMD 规范的模块化插件（require.js 和 curl.js）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AMD-模块规范写法"><span class="toc-number">2.0.2.</span> <span class="toc-text">AMD 模块规范写法</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top">&#xe639;</div>
@@ -350,10 +352,6 @@
     
     
     
-    
-    
-    
-    
     <div class="total-archive"> Total : 6 </div>
     
     <div class="post-archive">
@@ -366,17 +364,17 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/typora/" >Typora For Markdown 语法</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/typora/">Typora For Markdown 语法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/vueqr-new/" >Vue二维码组件</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/vueqr-new/">Vue二维码组件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Vuex/" >Vuex 状态管理插件学习</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/Vuex/">Vuex 状态管理插件学习</a>
         </li>
     
     
@@ -390,12 +388,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/WebpackV3.10/" >Webpack打包工具总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/Webpack/">Webpack打包工具总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript-modules/" >JavaScript模块化语法总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/JavaScript-modules/">JavaScript模块化语法总结</a>
         </li>
     
     
@@ -409,46 +407,46 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2015/09/22/2015-09-22-js-version/" >ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href="/2015/09/22/2015-09-22-js-version/">ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
         </li>
     
-    </div>
+    </ul></div>
   </div>
         <div class="sidebar-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name"><a href= "#">前端开发</a></span>
+        <span class="sidebar-tag-name"><a href="#">前端开发</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JavaScript</a></span>
+        <span class="sidebar-tag-name"><a href="#">JavaScript</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">翻译</a></span>
+        <span class="sidebar-tag-name"><a href="#">翻译</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Webpack3.10</a></span>
+        <span class="sidebar-tag-name"><a href="#">Webpack3.10</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">语法</a></span>
+        <span class="sidebar-tag-name"><a href="#">语法</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JS</a></span>
+        <span class="sidebar-tag-name"><a href="#">JS</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">模块化</a></span>
+        <span class="sidebar-tag-name"><a href="#">模块化</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">规范</a></span>
+        <span class="sidebar-tag-name"><a href="#">规范</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vuex</a></span>
+        <span class="sidebar-tag-name"><a href="#">vuex</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">V</a></span>
+        <span class="sidebar-tag-name"><a href="#">V</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">Vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Markdown</a></span>
+        <span class="sidebar-tag-name"><a href="#">Markdown</a></span>
     
     </div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
     3、在根目录_config.yml里添加配置：
     <pre style="color: #787878; font-size: 0.6rem;">
 jsonContent:

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <head><meta name="generator" content="Hexo 3.8.0">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>
         
-        Vue二维码组件 · Jack--Personal blog
+        Vue二维码组件 · Mark--Personal blog
         
     </title>
-    <link rel="icon" href= /assets/favicon.ico>
+    <link rel="icon" href="/assets/favicon.ico">
     <!-- TODO: 在font-face加载完毕后改变字体  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
     <!-- 提前加载place holder  -->
@@ -47,7 +47,7 @@
         }
     }
 </style>
-    <link rel="stylesheet" href = /css/style.css?v=20171218 />
+    <link rel="stylesheet" href="/css/style.css?v=20171218">
     <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
     
     <script src="/scripts/main.js" defer></script>
@@ -68,14 +68,14 @@
     
     <div class="banner">
             <div class="blog-title">
-                <a href="/" >Jack--Personal blog.</a>
+                <a href="/">Mark--Personal blog.</a>
             </div>
             <div class="post-title">
                 <a href="#" class="post-name">Vue二维码组件</a>
             </div>
     </div>
     
-    <a class="home-link" href=/>Jack--Personal blog.</a>
+    <a class="home-link" href="/">Mark--Personal blog.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro">
@@ -110,11 +110,11 @@
         
             <!-- 文章页标签  -->
             
-                <div class= post-intro-tags >
+                <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-href = 前端开发>前端开发</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="前端开发">前端开发</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = Vue>Vue</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="Vue">Vue</a>
     
 </div>
             
@@ -193,9 +193,10 @@
     <article class="article-entry">
         <h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
 <blockquote>
-<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3><h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>  快速添加 <code>vueqr-new</code> 组件到 app 中<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">import vueQr from 'vueqr-new';</span></span><br><span class="line"><span class="undefined">const config = &#123;</span></span><br><span class="line"><span class="undefined">  // 容错等级</span></span><br><span class="line"><span class="undefined">  errorCorrectionLevel: 'H',</span></span><br><span class="line"><span class="undefined">  // 图片类型</span></span><br><span class="line"><span class="undefined">  type: 'image/png',</span></span><br><span class="line"><span class="undefined">  rendererOpts: &#123;</span></span><br><span class="line"><span class="undefined">  quality: 0.3</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  // 边框与二维码之间的间距</span></span><br><span class="line"><span class="undefined">  margin: 0,</span></span><br><span class="line"><span class="undefined">  // 缩放倍数</span></span><br><span class="line"><span class="undefined">  scale: 4,</span></span><br><span class="line"><span class="undefined">  width: 500,</span></span><br><span class="line"><span class="undefined">  maskPattern:1,</span></span><br><span class="line"><span class="undefined">  color: &#123;</span></span><br><span class="line"><span class="undefined">  dark: '#000000',</span></span><br><span class="line"><span class="undefined">  light : "#ffffff"</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  style: &#123;</span></span><br><span class="line"><span class="undefined">  width: '128px',</span></span><br><span class="line"><span class="undefined">  border: '1px solid #ccc'</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined">export default &#123;</span></span><br><span class="line"><span class="undefined">  data() &#123;</span></span><br><span class="line"><span class="undefined">    return &#123;</span></span><br><span class="line"><span class="undefined">      text: 'https://example.com',</span></span><br><span class="line"><span class="undefined">      config: config</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  components: &#123;</span></span><br><span class="line"><span class="undefined">    vueQr</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3></blockquote>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>快速添加 <code>vueqr-new</code> 组件到 app 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></table></figure>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> vueQr <span class="keyword">from</span> <span class="string">'vueqr-new'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> config = &#123;</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 容错等级</span></span></span><br><span class="line"><span class="javascript">  errorCorrectionLevel: <span class="string">'H'</span>,</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 图片类型</span></span></span><br><span class="line"><span class="javascript">  type: <span class="string">'image/png'</span>,</span></span><br><span class="line"><span class="undefined">  rendererOpts: &#123;</span></span><br><span class="line"><span class="undefined">  quality: 0.3</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 边框与二维码之间的间距</span></span></span><br><span class="line"><span class="undefined">  margin: 0,</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 缩放倍数</span></span></span><br><span class="line"><span class="undefined">  scale: 4,</span></span><br><span class="line"><span class="undefined">  width: 500,</span></span><br><span class="line"><span class="undefined">  maskPattern:1,</span></span><br><span class="line"><span class="undefined">  color: &#123;</span></span><br><span class="line"><span class="javascript">  dark: <span class="string">'#000000'</span>,</span></span><br><span class="line"><span class="javascript">  light : <span class="string">"#ffffff"</span></span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  style: &#123;</span></span><br><span class="line"><span class="javascript">  width: <span class="string">'128px'</span>,</span></span><br><span class="line"><span class="javascript">  border: <span class="string">'1px solid #ccc'</span></span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="undefined">  data() &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      text: <span class="string">'https://example.com'</span>,</span></span><br><span class="line"><span class="undefined">      config: config</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  components: &#123;</span></span><br><span class="line"><span class="undefined">    vueQr</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
 <thead>
 <tr>
@@ -227,7 +228,7 @@
     <ul class="post-pager">
         
             <li class="next">
-                <a href= "/2018/03/12/typora/" title= Typora For Markdown 语法 >
+                <a href="/2018/03/12/typora/" title="Typora" for="" markdown="" 语法="">
                     <span>Next Post</span>
                     <span>Typora For Markdown 语法</span>
                 </a>
@@ -235,7 +236,7 @@
         
         
             <li class="previous">
-                <a href= "/2018/03/12/Vuex/" title= Vuex 状态管理插件学习 >
+                <a href="/2018/03/12/Vuex/" title="Vuex" 状态管理插件学习="">
                     <span>Previous Post</span>
                     <span>Vuex 状态管理插件学习</span>
                 </a>
@@ -266,7 +267,7 @@
     
         
             
-                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title=email ></a>
+                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title="email"></a>
             
         
     
@@ -293,7 +294,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-components"><span class="toc-number">1.</span> <span class="toc-text"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快速安装"><span class="toc-number">1.0.1.</span> <span class="toc-text"><a href="#&#x5FEB;&#x901F;&#x5B89;&#x88C5;" class="headerlink" title="&#x5FEB;&#x901F;&#x5B89;&#x88C5;"></a>&#x5FEB;&#x901F;&#x5B89;&#x88C5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">1.0.2.</span> <span class="toc-text"><a href="#install" class="headerlink" title="install"></a>install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#components"><span class="toc-number">1.0.3.</span> <span class="toc-text"><a href="#components" class="headerlink" title="components"></a>components</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Component-props"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x53C2;&#x8003;&#x4EE3;&#x7801;" class="headerlink" title="&#x53C2;&#x8003;&#x4EE3;&#x7801;"></a>&#x53C2;&#x8003;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#License"><span class="toc-number">1.2.1.</span> <span class="toc-text"><a href="#License" class="headerlink" title="License"></a>License</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-components"><span class="toc-number">1.</span> <span class="toc-text">vue components</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快速安装"><span class="toc-number">1.0.1.</span> <span class="toc-text">快速安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">1.0.2.</span> <span class="toc-text">install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#components"><span class="toc-number">1.0.3.</span> <span class="toc-text">components</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Component-props"><span class="toc-number">1.1.</span> <span class="toc-text">Component props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">1.2.</span> <span class="toc-text">参考代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#License"><span class="toc-number">1.2.1.</span> <span class="toc-text">License</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top">&#xe639;</div>
@@ -369,10 +370,6 @@
     
     
     
-    
-    
-    
-    
     <div class="total-archive"> Total : 6 </div>
     
     <div class="post-archive">
@@ -385,17 +382,17 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/typora/" >Typora For Markdown 语法</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/typora/">Typora For Markdown 语法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/vueqr-new/" >Vue二维码组件</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/vueqr-new/">Vue二维码组件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Vuex/" >Vuex 状态管理插件学习</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/Vuex/">Vuex 状态管理插件学习</a>
         </li>
     
     
@@ -409,12 +406,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/WebpackV3.10/" >Webpack打包工具总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/Webpack/">Webpack打包工具总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript-modules/" >JavaScript模块化语法总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/JavaScript-modules/">JavaScript模块化语法总结</a>
         </li>
     
     
@@ -428,46 +425,46 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2015/09/22/2015-09-22-js-version/" >ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href="/2015/09/22/2015-09-22-js-version/">ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
         </li>
     
-    </div>
+    </ul></div>
   </div>
         <div class="sidebar-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name"><a href= "#">前端开发</a></span>
+        <span class="sidebar-tag-name"><a href="#">前端开发</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JavaScript</a></span>
+        <span class="sidebar-tag-name"><a href="#">JavaScript</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">翻译</a></span>
+        <span class="sidebar-tag-name"><a href="#">翻译</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Webpack3.10</a></span>
+        <span class="sidebar-tag-name"><a href="#">Webpack3.10</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">语法</a></span>
+        <span class="sidebar-tag-name"><a href="#">语法</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JS</a></span>
+        <span class="sidebar-tag-name"><a href="#">JS</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">模块化</a></span>
+        <span class="sidebar-tag-name"><a href="#">模块化</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">规范</a></span>
+        <span class="sidebar-tag-name"><a href="#">规范</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vuex</a></span>
+        <span class="sidebar-tag-name"><a href="#">vuex</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">V</a></span>
+        <span class="sidebar-tag-name"><a href="#">V</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">Vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Markdown</a></span>
+        <span class="sidebar-tag-name"><a href="#">Markdown</a></span>
     
     </div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
     3、在根目录_config.yml里添加配置：
     <pre style="color: #787878; font-size: 0.6rem;">
 jsonContent:

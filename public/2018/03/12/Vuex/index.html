@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <head><meta name="generator" content="Hexo 3.8.0">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>
         
-        Vuex 状态管理插件学习 · Jack--Personal blog
+        Vuex 状态管理插件学习 · Mark--Personal blog
         
     </title>
-    <link rel="icon" href= /assets/favicon.ico>
+    <link rel="icon" href="/assets/favicon.ico">
     <!-- TODO: 在font-face加载完毕后改变字体  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
     <!-- 提前加载place holder  -->
@@ -47,7 +47,7 @@
         }
     }
 </style>
-    <link rel="stylesheet" href = /css/style.css?v=20171218 />
+    <link rel="stylesheet" href="/css/style.css?v=20171218">
     <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
     
     <script src="/scripts/main.js" defer></script>
@@ -68,14 +68,14 @@
     
     <div class="banner">
             <div class="blog-title">
-                <a href="/" >Jack--Personal blog.</a>
+                <a href="/">Mark--Personal blog.</a>
             </div>
             <div class="post-title">
                 <a href="#" class="post-name">Vuex 状态管理插件学习</a>
             </div>
     </div>
     
-    <a class="home-link" href=/>Jack--Personal blog.</a>
+    <a class="home-link" href="/">Mark--Personal blog.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro">
@@ -108,13 +108,13 @@
         
             <!-- 文章页标签  -->
             
-                <div class= post-intro-tags >
+                <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-href = JS>JS</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="JS">JS</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = vue>vue</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="vue">vue</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href = vuex>vuex</a>
+        <a class="post-tag" href="javascript:void(0);" data-href="vuex">vuex</a>
     
 </div>
             
@@ -192,43 +192,50 @@
             <main class="main post-page">
     <article class="article-entry">
         <h1 id="Vue-状态管理插件学习"><a href="#Vue-状态管理插件学习" class="headerlink" title="Vue 状态管理插件学习"></a>Vue 状态管理插件学习</h1><ul>
-<li>vuex vue提供的数据状态管理插件（俗称数据共享中心）</li>
+<li>vuex vue 提供的数据状态管理插件（俗称数据共享中心）</li>
 <li><p>state（数据商店也就是数据仓库）,mutations（定义更改数据的方法）</p>
 </li>
 <li><p>获取仓库中定义值的方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>&#123;&#123;$store.state.定义的属性&#125;&#125;</span><br><span class="line"><span class="number">2.</span>使用计算属性</span><br><span class="line">computed:&#123;</span><br><span class="line">	count()&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.$store.state.定义的属性</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>3.使用vuex中的mapState，也就是vuex中提供给我们的方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//es6写法</span></span><br><span class="line">computed:mapState(&#123;</span><br><span class="line">	count: <span class="function"><span class="params">state</span> =&gt;</span> state.count</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>等同于</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">computed: mapState(&#123;</span><br><span class="line">	count: <span class="function">(<span class="params">state</span>) =&gt;</span> &#123; <span class="keyword">return</span> state.count &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4.mapState扩展使用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">computed: mapState([<span class="string">'在state中定义的属性'</span>])</span><br><span class="line"><span class="comment">// 这个会根据你定义的属性名绑定到vue实例上</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>5.mutations提交更改仓库中定义值的方法（修改状态）</p>
-</li>
-<li>使用$store.commit(‘调用定义在mutations中定义的方法名’，要传递给调用方法的参数)</li>
-<li><p>获取状态管理器中定义的方法(mutations)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">	<span class="comment">// 定义一个加的方法</span></span><br><span class="line">    add(state)&#123;</span><br><span class="line">        state.count++;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">// 定义一个减的方法</span></span><br><span class="line">    reduce(state)&#123;</span><br><span class="line">        state.count--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line"><span class="comment">// 在vue中使用import导入辅助函数</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState,mapMutations &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line">methods:mapMutations([</span><br><span class="line">  <span class="string">'add'</span>,</span><br><span class="line">  <span class="string">'reduce'</span></span><br><span class="line">])</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line">methods:mapMutations([</span><br><span class="line">  countAdd: <span class="string">'add'</span>,</span><br><span class="line">  countReauce: <span class="string">'reduce'</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>6.vuex中的计算属性（过滤属性）getters</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义方法</span></span><br><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">  count:<span class="function"><span class="keyword">function</span>(<span class="params">state</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> state.count += <span class="number">100</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 或者</span></span><br><span class="line">	count: <span class="function"><span class="params">state</span> =&gt;</span> &#123; <span class="keyword">return</span> state.count += <span class="number">100</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用方法	</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState,mapMutations,mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line">computed: mapGetters(&#123;</span><br><span class="line">	count: <span class="function">(<span class="params">state</span>) =&gt;</span> &#123; <span class="keyword">return</span> state.count &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>7.vuex中的actions，异步提交方式</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions =&#123;</span><br><span class="line">  <span class="comment">// context：上下文对象，这里你可以理解称store本身。</span></span><br><span class="line">  addAction(context)&#123;</span><br><span class="line">    context.commit(<span class="string">'add'</span>,<span class="number">10</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">  <span class="comment">// &#123;commit&#125;：直接把commit对象传递过来，可以让方法体逻辑和代码更清晰明了。</span></span><br><span class="line">  reduceAction(&#123;commit&#125;)&#123;</span><br><span class="line">    commit(<span class="string">'reduce'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>8.module模块组</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义模块，和定义一个store实例一样只不过把封装store的全部方法和属性，又封装在了一个模块中</span></span><br><span class="line"><span class="keyword">const</span> moduleA=&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  getters,</span><br><span class="line">  actions</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line">modules: &#123;</span><br><span class="line">  <span class="comment">//模块别名:模块名，记得要使用import引入模块 </span></span><br><span class="line">	a:moduleA</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用模块值和方法</span></span><br><span class="line">和以上的使用方法一样，只不过前边加一个模块别名</span><br></pre></td></tr></table></figure></li>
 </ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#123;&#123;$store.state.定义的属性&#125;&#125;</span></span><br><span class="line"><span class="comment">// 使用计算属性</span></span><br><span class="line">computed:&#123;</span><br><span class="line">	count()&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.$store.state.定义的属性</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>3.使用 vuex 中的 mapState，也就是 vuex 中提供给我们的方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//es6写法</span></span><br><span class="line">computed: mapState(&#123;</span><br><span class="line">	count: <span class="function"><span class="params">state</span> =&gt;</span> state.count</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>等同于</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: mapState(&#123;</span><br><span class="line">	count: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> state.count</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>4.mapState 扩展使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">computed: mapState([<span class="string">'在state中定义的属性'</span>])</span><br><span class="line"><span class="comment">// 这个会根据你定义的属性名绑定到vue实例上</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>5.mutations 提交更改仓库中定义值的方法（修改状态）</li>
+<li>使用$store.commit(‘调用定义在 mutations 中定义的方法名’，要传递给调用方法的参数)</li>
+<li>获取状态管理器中定义的方法(mutations)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">	<span class="comment">// 定义一个加的方法</span></span><br><span class="line">	add(state) &#123;</span><br><span class="line">		state.count++</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="comment">// 定义一个减的方法</span></span><br><span class="line">	reduce(state) &#123;</span><br><span class="line">		state.count--</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line"><span class="comment">// 在vue中使用import导入辅助函数</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState, mapMutations &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">methods: mapMutations([<span class="string">'add'</span>, <span class="string">'reduce'</span>])</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line">methods: mapMutations([(countAdd: <span class="string">'add'</span>), (countReauce: <span class="string">'reduce'</span>)])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>6.vuex 中的计算属性（过滤属性）getters</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义方法</span></span><br><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">  count:<span class="function"><span class="keyword">function</span>(<span class="params">state</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> state.count += <span class="number">100</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 或者</span></span><br><span class="line">	count: <span class="function"><span class="params">state</span> =&gt;</span> &#123; <span class="keyword">return</span> state.count += <span class="number">100</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line"><span class="keyword">import</span> &#123; mapState,mapMutations,mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line">computed: mapGetters(&#123;</span><br><span class="line">	count: <span class="function">(<span class="params">state</span>) =&gt;</span> &#123; <span class="keyword">return</span> state.count &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>7.vuex 中的 actions，异步提交方式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">	<span class="comment">// context：上下文对象，这里你可以理解称store本身。</span></span><br><span class="line">	addAction(context) &#123;</span><br><span class="line">		context.commit(<span class="string">'add'</span>, <span class="number">10</span>)</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="comment">// &#123;commit&#125;：直接把commit对象传递过来，可以让方法体逻辑和代码更清晰明了。</span></span><br><span class="line">	reduceAction(&#123; commit &#125;) &#123;</span><br><span class="line">		commit(<span class="string">'reduce'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>8.module 模块组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义模块，和定义一个store实例一样只不过把封装store的全部方法和属性，又封装在了一个模块中</span></span><br><span class="line"><span class="keyword">const</span> moduleA=&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  getters,</span><br><span class="line">  actions</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line">modules: &#123;</span><br><span class="line">  <span class="comment">//模块别名:模块名，记得要使用import引入模块</span></span><br><span class="line">	a:moduleA</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用模块值和方法</span></span><br><span class="line">和以上的使用方法一样，只不过前边加一个模块别名</span><br></pre></td></tr></table></figure>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-pager">
         
             <li class="next">
-                <a href= "/2018/03/12/vueqr-new/" title= Vue二维码组件 >
+                <a href="/2018/03/12/vueqr-new/" title="Vue二维码组件">
                     <span>Next Post</span>
                     <span>Vue二维码组件</span>
                 </a>
@@ -236,7 +243,7 @@
         
         
             <li class="previous">
-                <a href= "/2017/12/29/WebpackV3.10/" title= Webpack打包工具总结 >
+                <a href="/2017/12/29/Webpack/" title="Webpack打包工具总结">
                     <span>Previous Post</span>
                     <span>Webpack打包工具总结</span>
                 </a>
@@ -267,7 +274,7 @@
     
         
             
-                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title=email ></a>
+                <a href="mailto:jackBlogs@163.com" class="iconfont-archer email" title="email"></a>
             
         
     
@@ -294,7 +301,7 @@
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-状态管理插件学习"><span class="toc-number">1.</span> <span class="toc-text"><a href="#Vue-&#x72B6;&#x6001;&#x7BA1;&#x7406;&#x63D2;&#x4EF6;&#x5B66;&#x4E60;" class="headerlink" title="Vue &#x72B6;&#x6001;&#x7BA1;&#x7406;&#x63D2;&#x4EF6;&#x5B66;&#x4E60;"></a>Vue &#x72B6;&#x6001;&#x7BA1;&#x7406;&#x63D2;&#x4EF6;&#x5B66;&#x4E60;</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-状态管理插件学习"><span class="toc-number">1.</span> <span class="toc-text">Vue 状态管理插件学习</span></a></li></ol>
     </div>
     
     <div class="back-top">&#xe639;</div>
@@ -370,10 +377,6 @@
     
     
     
-    
-    
-    
-    
     <div class="total-archive"> Total : 6 </div>
     
     <div class="post-archive">
@@ -386,17 +389,17 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/typora/" >Typora For Markdown 语法</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/typora/">Typora For Markdown 语法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/vueqr-new/" >Vue二维码组件</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/vueqr-new/">Vue二维码组件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Vuex/" >Vuex 状态管理插件学习</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href="/2018/03/12/Vuex/">Vuex 状态管理插件学习</a>
         </li>
     
     
@@ -410,12 +413,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/WebpackV3.10/" >Webpack打包工具总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/Webpack/">Webpack打包工具总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2017/12/29/JavaScript-modules/" >JavaScript模块化语法总结</a>
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href="/2017/12/29/JavaScript-modules/">JavaScript模块化语法总结</a>
         </li>
     
     
@@ -429,46 +432,46 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2015/09/22/2015-09-22-js-version/" >ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href="/2015/09/22/2015-09-22-js-version/">ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</a>
         </li>
     
-    </div>
+    </ul></div>
   </div>
         <div class="sidebar-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name"><a href= "#">前端开发</a></span>
+        <span class="sidebar-tag-name"><a href="#">前端开发</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JavaScript</a></span>
+        <span class="sidebar-tag-name"><a href="#">JavaScript</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">翻译</a></span>
+        <span class="sidebar-tag-name"><a href="#">翻译</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Webpack3.10</a></span>
+        <span class="sidebar-tag-name"><a href="#">Webpack3.10</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">语法</a></span>
+        <span class="sidebar-tag-name"><a href="#">语法</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">JS</a></span>
+        <span class="sidebar-tag-name"><a href="#">JS</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">模块化</a></span>
+        <span class="sidebar-tag-name"><a href="#">模块化</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">规范</a></span>
+        <span class="sidebar-tag-name"><a href="#">规范</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">vuex</a></span>
+        <span class="sidebar-tag-name"><a href="#">vuex</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">V</a></span>
+        <span class="sidebar-tag-name"><a href="#">V</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Vue</a></span>
+        <span class="sidebar-tag-name"><a href="#">Vue</a></span>
     
-        <span class="sidebar-tag-name"><a href= "#">Markdown</a></span>
+        <span class="sidebar-tag-name"><a href="#">Markdown</a></span>
     
     </div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
     3、在根目录_config.yml里添加配置：
     <pre style="color: #787878; font-size: 0.6rem;">
 jsonContent:
