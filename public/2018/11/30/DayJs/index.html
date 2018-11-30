@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>
         
-        Mark--Personal blog
+        DayJs使用 · Mark--Personal blog
         
     </title>
     <link rel="icon" href="/assets/favicon.ico">
@@ -57,6 +57,8 @@
     
 </head>
     
+        <body class="post-body">
+    
     
 <header class="header">
 
@@ -64,27 +66,64 @@
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
     
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">Mark--Personal blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">DayJs使用</a>
+            </div>
+    </div>
+    
     <a class="home-link" href="/">Mark--Personal blog.</a>
 </header>
     <div class="wrapper">
         <div class="site-intro">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            DayJs使用
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+                eslint-vscode-setting
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-href="前端开发">前端开发</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href="JavaScript">JavaScript</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-href="JS时间处理">JS时间处理</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/11/30</span>
+            </div>
         
     </div>
 </div>
@@ -152,126 +191,68 @@
             }
         </script>
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="content-show-full" href="/2018/11/30/eslint-vscode-setting/">
-                    <h2 class="abstract-title">
-                        
-                        <span>eslint-vscode-setting</span>
-                    </h2>
-                <div class="abstract-content">
-                    
-第一步：全局安装 eslint,babel-eslint,eslint-plugin-html,eslint-plugin-react,eslint-plugin-vue
-1npm i eslint babel-eslint eslint-plugin-html eslint-plugin-react eslint-plugin-vue -g
+            <main class="main post-page">
+    <article class="article-entry">
+        <p align="center"><a href="#" target="_blank" rel="noopener noreferrer"><img width="550" src="https://user-images.githubusercontent.com/17680888/39081119-3057bbe2-456e-11e8-862c-646133ad4b43.png" alt="Day.js"></a></p><br><p align="center">Moment.js 的 <b>2kB</b> 轻量化方案，拥有同样强大的 API</p><br><br><br><p align="center"><br>    <a href="https://unpkg.com/dayjs/dayjs.min.js" target="_blank" rel="noopener"><img src="http://img.badgesize.io/https://unpkg.com/dayjs/dayjs.min.js?compression=gzip&style=flat-square" alt="Gzip Size"></a><br>    <a href="https://www.npmjs.com/package/dayjs" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/dayjs.svg?style=flat-square" alt="NPM Version"></a><br>    <a href="https://travis-ci.org/iamkun/dayjs" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/iamkun/dayjs/master.svg?style=flat-square" alt="Build Status"></a><br>    <a href="https://codecov.io/gh/iamkun/dayjs" target="_blank" rel="noopener"><img src="https://img.shields.io/codecov/c/github/iamkun/dayjs/master.svg?style=flat-square" alt="Codecov"></a><br>    <a href="https://github.com/iamkun/dayjs/blob/master/LICENSE" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/l/dayjs.svg?style=flat-square" alt="License"></a><br>    <br><br>    <a href="https://saucelabs.com/u/dayjs" target="_blank" rel="noopener"><br>        <img width="750" src="https://user-images.githubusercontent.com/17680888/40040137-8e3323a6-584b-11e8-9dba-bbe577ee8a7b.png" alt="Sauce Test Status"><br>    </a><br></p>
 
-第二步：在任意目录放置.eslintrc.js第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur第四步：在 vscode 中的配置
-1234...
-                </div>
-            </a>
-            <div class="abstract-post-meta">
-                <!-- tags  -->
-                
-                <div class="abstract-tags">
+<blockquote>
+<p>Day.js 是一个轻量的处理时间和日期的 JavaScript 库，和 Moment.js 的 API 设计保持完全一样. 如果您曾经用过 Moment.js, 那么您已经知道如何使用 Day.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dayjs().startOf(<span class="string">'month'</span>).add(<span class="number">1</span>, <span class="string">'day'</span>).set(<span class="string">'year'</span>, <span class="number">2018</span>).format(<span class="string">'YYYY-MM-DD HH:mm:ss'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>🕒 和 Moment.js 相同的 API 和用法</li>
+<li>💪 不可变数据 (Immutable)</li>
+<li>🔥 支持链式操作 (Chainable)</li>
+<li>🌐 国际化 I18n</li>
+<li>📦 仅 2kb 大小的微型库</li>
+<li>👫 全浏览器兼容</li>
+</ul>
+<hr>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dayjs --save</span><br></pre></td></tr></table></figure>
+<p>📚<a href="./Installation.md">安装指南</a></p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>Day.js 有很多 API 来解析、处理、校验、增减、展示时间和日期</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dayjs(<span class="string">'2018-08-08'</span>) <span class="comment">// 解析</span></span><br><span class="line"></span><br><span class="line">dayjs().format(<span class="string">'&#123;YYYY&#125; MM-DDTHH:mm:ss SSS [Z] A'</span>) <span class="comment">// 展示</span></span><br><span class="line"></span><br><span class="line">dayjs().set(<span class="string">'month'</span>, <span class="number">3</span>).month() <span class="comment">// 获取</span></span><br><span class="line"></span><br><span class="line">dayjs().add(<span class="number">1</span>, <span class="string">'year'</span>) <span class="comment">// 处理</span></span><br><span class="line"></span><br><span class="line">dayjs().isBefore(dayjs()) <span class="comment">// 查询</span></span><br></pre></td></tr></table></figure>
+<p>📚<a href="./API-reference.md">API 参考</a></p>
+<h3 id="国际化-I18n"><a href="#国际化-I18n" class="headerlink" title="国际化 I18n"></a>国际化 I18n</h3><p>Day.js 支持国际化</p>
+<p>但除非手动加载，多国语言默认是不会被打包到工程里的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dayjs/locale/es'</span> <span class="comment">// 按需加载</span></span><br><span class="line"></span><br><span class="line">dayjs.locale(<span class="string">'es'</span>) <span class="comment">// 全局使用西班牙语</span></span><br><span class="line"></span><br><span class="line">dayjs(<span class="string">'2018-05-05'</span>).locale(<span class="string">'zh-cn'</span>).format() <span class="comment">// 在这个实例上使用简体中文</span></span><br></pre></td></tr></table></figure>
+<p>📚<a href="./I18n.md">国际化 I18n</a></p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件是一些独立的程序，可以给 Day.js 增加新功能和扩展已有功能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> advancedFormat <span class="keyword">from</span> <span class="string">'dayjs/plugin/advancedFormat'</span> <span class="comment">// 按需加载插件</span></span><br><span class="line"></span><br><span class="line">dayjs.extend(advancedFormat) <span class="comment">// 使用插件</span></span><br><span class="line"></span><br><span class="line">dayjs().format(<span class="string">'Q Do k kk X x'</span>) <span class="comment">// 使用扩展后的API</span></span><br></pre></td></tr></table></figure>
+<p>📚<a href="./Plugin.md">插件列表</a></p>
+<h2 id="开源协议"><a href="#开源协议" class="headerlink" title="开源协议"></a>开源协议</h2><p>Day.js 遵循 <a href="../../LICENSE">MIT 开源协议</a>.</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+            <li class="next">
+                <a href="/2018/11/30/eslint-vscode-setting/" title="eslint-vscode-setting">
+                    <span>Next Post</span>
+                    <span>eslint-vscode-setting</span>
+                </a>
+            </li>
+        
+        
+            <li class="previous">
+                <a href="/2018/03/12/typora/" title="Typora" for="" markdown="" 语法="">
+                    <span>Previous Post</span>
+                    <span>Typora For Markdown 语法</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        <a class="post-tag" href="javascript:void(0);" data-href="前端开发">前端开发</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-href="JavaScript">JavaScript</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="VSCode">VSCode</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="ESLint">ESLint</a>
-    
-</div>
-                
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2018/11/30</span>
-                </div>
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="content-show-full" href="/2018/11/30/DayJs/">
-                    <h2 class="abstract-title">
-                        
-                        <span>DayJs使用</span>
-                    </h2>
-                <div class="abstract-content">
-                    Moment.js 的 2kB 轻量化方案，拥有同样强大的 API                                        
+    <!--PC版-->
+
+    <!--PC版-->
 
 
-Day.js 是一个轻量的处理时间和日期的 JavaScript 库，和 Moment.js 的 API 设计保持完全一样. 如果您曾经用过 Moment.js, 那么您已经知道如何使用 Day.js
-
-1dayjs().startOf('month').add(1, 'day').set('year', 2018).format('YYYY-MM-DD HH:mm:ss');
-
-🕒 和 Moment.js 相同的 API 和用法
-💪...
-                </div>
-            </a>
-            <div class="abstract-post-meta">
-                <!-- tags  -->
-                
-                <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="前端开发">前端开发</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="JavaScript">JavaScript</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="JS时间处理">JS时间处理</a>
-    
-</div>
-                
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2018/11/30</span>
-                </div>
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="content-show-full" href="/2015/09/22/2015-09-22-js-version/">
-                    <h2 class="abstract-title">
-                        
-                        <span>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？「译」</span>
-                    </h2>
-                <div class="abstract-content">
-                    JavaScript 有着很奇怪的命名史。
-1995 年，它作为网景浏览器（Netscape Navigator）的一部分首次发布，网景给这个新语言命名为 LiveScript。一年后，为了搭上当时媒体热炒 Java 的顺风车，临时改名为了 JavaScript （当然，Java 和 JavaScript 的关系，就和雷锋和雷锋塔一样 —— 并没有什么关系）
-歪果仁的笑话怎么一点都不好笑
-
-译者注：wikipedia 的 JavaScript 词条 更详细的叙述了这段历史
-
-1996 年，网景将 JavaScript 提交给 ECMA International（欧洲计算机制造商协会） ...
-                </div>
-            </a>
-            <div class="abstract-post-meta">
-                <!-- tags  -->
-                
-                <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="前端开发">前端开发</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="JavaScript">JavaScript</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-href="翻译">翻译</a>
-    
-</div>
-                
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2015/09/22</span>
-                </div>
-            </div>
-        </article>
-    
-    <!-- paginator  -->
     
 </main>
             <!-- profile -->
@@ -307,6 +288,13 @@ Day.js 是一个轻量的处理时间和日期的 JavaScript 库，和 Moment.js
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#快速开始"><span class="toc-number">1.</span> <span class="toc-text">快速开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API"><span class="toc-number">1.2.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#国际化-I18n"><span class="toc-number">1.3.</span> <span class="toc-text">国际化 I18n</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插件"><span class="toc-number">1.4.</span> <span class="toc-text">插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开源协议"><span class="toc-number">2.</span> <span class="toc-text">开源协议</span></a></li></ol>
+    </div>
     
     <div class="back-top">&#xe639;</div>
     <div class="sidebar">
