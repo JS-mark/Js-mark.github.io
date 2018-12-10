@@ -8,7 +8,7 @@ signature: witness me
 # SNS
 social:
   email: jackBlogs@163.com
-  github: //github.com/Jack-In
+  github: //github.com/Js-mark
   #weibo:
   # zhihu:
   # facebook:
@@ -19,9 +19,7 @@ social:
   # others:
   #rss: /atom.xml
 # friends
-friends:
-  阮一峰博客: //www.ruanyifeng.com/blog/
-  玉伯: //github.com/afc163
+# friends:
   # friendC :
 about:
   enable: true
@@ -74,7 +72,7 @@ CNZZ_analytics:
 # favicon
 favicon: /assets/favicon.ico
 # truncate length (the default is 300)
-truncate_length:
+truncate_length: 200
 # enable toc
 toc: true
 
