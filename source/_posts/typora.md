@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Typora For Markdown 语法'
-date: 2018-03-12 16:48:00
+date: 2018-03-12
 author: 'Mark'
 tags:
   - 前端开发

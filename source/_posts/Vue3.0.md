@@ -2,7 +2,7 @@
 layout: post
 title: "初探Vue3.0新特性(未完待续)"
 subtitle: "修改监察者模式、重写Virtual DOM等等等。。。"
-date: 2018-12-10
+date: 2018-12-10 12:00:00
 author: "Mark"
 header-img: "img/post-bg-js-version.jpg"
 tags:
