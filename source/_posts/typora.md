@@ -10,6 +10,7 @@ tags:
 
 #Typora For Markdown 语法
 
+[Learning-Markdown (Markdown 入门参考)](http://xianbai.me/learn-md/index.html)
 [TOC]
 
 ###数学表达式
