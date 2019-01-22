@@ -5,6 +5,7 @@ subtitle: "shell脚本学习"
 date: 2018-12-24
 author: "Mark"
 header-img: "img/post-bg-js-version.jpg"
+categories: 系统命令 #分类
 tags:
   - 系统底层
   - Shell

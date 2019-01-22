@@ -5,6 +5,7 @@ subtitle: "eslint-vscode-setting"
 date: 2018-11-30
 author: 'Mark'
 header-img: 'img/post-bg-js-version.jpg'
+categories: JavaScript #分类
 tags:
   - 前端开发
   - JavaScript

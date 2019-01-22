@@ -4,6 +4,7 @@ title: 'Vue二维码组件'
 subtitle: 'vue, qrcode, vueqr, 二维码组件'
 date: 2018-03-12 16:30:00
 author: 'Mark'
+categories: Vue #分类
 tags:
   - 前端开发
   - Vue

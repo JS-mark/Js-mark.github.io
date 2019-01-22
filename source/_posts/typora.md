@@ -3,6 +3,7 @@ layout: post
 title: 'Typora For Markdown 语法'
 date: 2018-03-12
 author: 'Mark'
+categories: 软件工具 #分类
 tags:
   - 前端开发
   - Markdown
