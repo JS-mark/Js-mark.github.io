@@ -58,3 +58,4 @@ typings/
 .env
 public/
 package-lock.json
+.deploy_git
