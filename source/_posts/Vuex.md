@@ -5,6 +5,7 @@ tags: [vue, vuex, JS] #文章标签，可空，多标签请用格式，注意:�
 description: Vuex 学习 #附加一段文章摘要，字数最好在 140 字以内，会出现在 meta 的 description 里面
 categories: Vue #分类
 author: 'Mark'
+top: 9
 ---
 
 # Vue 状态管理插件学习

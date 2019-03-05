@@ -6,6 +6,7 @@ date: 2018-12-10 12:00:00
 author: "Mark"
 categories: Vue #分类
 header-img: "img/post-bg-js-version.jpg"
+top: 7
 tags:
   - 前端开发
   - JavaScript

@@ -6,6 +6,7 @@ date: 2018-11-30
 author: 'Mark'
 categories: JavaScript #分类
 header-img: 'img/post-bg-js-version.jpg'
+top: 2
 tags:
   - 前端开发
   - JavaScript
