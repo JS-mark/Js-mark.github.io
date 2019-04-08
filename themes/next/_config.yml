@@ -59,7 +59,7 @@ favicon:
 footer:
   # Specify the date when the site was setup.
   # If not defined, current year will be used.
-  #since: 2015
+  since: 2016
 
   # Icon between year and copyright info.
   icon:
@@ -90,7 +90,7 @@ footer:
   # http://www.miitbeian.gov.cn
   beian:
     enable: false
-    icp: 
+    icp:
 
   # -------------------------------------------------------------
   # Any custom text can be defined here.
@@ -263,6 +263,7 @@ sidebar:
 scroll_to_more: true
 
 # Automatically saving scroll position on each post/page in cookies.
+# 滚动设置
 save_scroll: true
 
 # Automatically excerpt description in homepage as preamble text.
@@ -271,8 +272,8 @@ excerpt_description: false
 # Automatically Excerpt. Not recommend.
 # Use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
-  length: 150
+  enable: true
+  length: 500
 
 # Read more button
 # If true, the read more button would be displayed in excerpt section.
@@ -318,9 +319,10 @@ wechat_subscriber:
 # Reward
 # If true, reward would be displayed in every article by default.
 # And you can show or hide one article specially through add page variable `reward: true/false`.
+# 开启打赏功能
 reward:
   enable: false
-  #comment: Donate comment here
+  #comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
   #wechatpay: /images/wechatpay.jpg
   #alipay: /images/alipay.jpg
   #bitcoin: /images/bitcoin.jpg
@@ -849,7 +851,7 @@ pace_theme: pace-theme-minimal
 # Dependencies: https://github.com/theme-next/theme-next-canvas-nest
 canvas_nest:
   enable: true
-  onmobile: true # display on mobile or not
+  onmobile: false # display on mobile or not
   color: "0,0,255" # RGB values, use ',' to separate
   opacity: 0.5 # the opacity of line: 0~1
   zIndex: -1 # z-index property of the background
