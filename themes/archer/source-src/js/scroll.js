@@ -17,7 +17,7 @@ let scroll = function () {
         $tocWrapper.toggleClass('toc-hide-children');
     });
 
-    // 滚动式切换文章标题和站点标题    
+    // 滚动式切换文章标题和站点标题
     let previousHeight = 0,
         continueScroll = 0;
 
@@ -58,7 +58,6 @@ let scroll = function () {
         return 0;
     }
 
-    
     // 判断是否为post-page
     let isPostPage = false;
     let articleHeight, articleTop;
@@ -121,7 +120,7 @@ let scroll = function () {
         previousHeight = scrollTop;
         tickingScroll = false;
     }
-    
+
     // scroll回调
     function onScroll () {
         let scrollTop = $(document).scrollTop();
