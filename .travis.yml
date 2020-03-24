@@ -16,12 +16,12 @@ script:
 #命令里面的变量都是在Travis CI里配置过的。
 after_script:
   - cd ./public
-  - git init
+  - git init -y
   - git config user.name "${U_NAME}"
   - git config At-Cost Domain Pricing - Domain Cost Club "${U_EMAIL}"
   - git add .
   - git commit -m ":construction_worker:- Build & Deploy by Travis CI"
-  - git push --force --quiet "https://${Travis_Token}@${GH_REF}" gh-pages:gh-pages
+  - git push --force --quiet "https://${Travis_Token}@${GH_REF}" master:master
 # E: Build LifeCycle
 
 # 只有指定的分支提交时才会运行脚本
