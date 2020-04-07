@@ -19,7 +19,7 @@ tags:
 - 支付宝小程序（开发支付宝小程序） [官方网站](https://opendocs.alipay.com/mini/ide/download)
 - HBuilder DCloud 出品 IDE [官方网站](https://dcloud.io/)
 - Webstorm 是 JetBrains 公司旗下一款 JavaScript 开发工具。学生免费。 [官方网站](https://www.jetbrains.com/webstorm/)
-
+<!-- more -->
 ### Git GUI
 
 - SourceTre 一个免费开源的 windows 和 mac 上的 git 客户端 [官方网站](https://www.sourcetreeapp.com/)

@@ -22,7 +22,7 @@ is defined 用来判断一个变量是否已经被赋值。
 foo is defined
 // => false
 ```
-
+<!-- more -->
 或者采用内置函数 lookup(name)：
 
 ```stylus

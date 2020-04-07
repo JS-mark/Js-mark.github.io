@@ -24,7 +24,7 @@ tags:
 ```bash
 npm install --save vueqr-new
 ```
-
+<!-- more -->
 ### components
 
 ```html

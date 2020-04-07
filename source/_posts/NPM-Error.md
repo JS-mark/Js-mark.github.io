@@ -19,7 +19,7 @@ tags:
   npm -g outdated
   # 检测所有全局依赖包更新情况
 ```
-
+<!-- more -->
 - 报错显示
 
 ![image](/assets/img/2019/05/1.jpg)

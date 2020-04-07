@@ -47,7 +47,7 @@ module.exports = {
 	  ]
 };
 ```
-
+<!-- more -->
 - 模块打包（默认只能打包 JS 模块，规则 CommonJS 等模块规范），让 webpack 支持其他文件类型打包，要选择合适的 loader - nodejs 书写模块规范 模块化规范 CommonJs,AMD,ES6 modules,
 - Webpack - build-tool 构建工具 - loader webpack 默认只能打包 JS，loader 可以帮助我们打包其他的文件类型 - sass-loader 下载时，必须安装 ruby 或者 python 环境才能使用； - 安装 webpack-dev-server 热启动插件，必须在项目在安装 webpack，要不然会报错！ - webpack 使用方法：
   在命令行 输入 webpack 入口文件(app.js) 输出文件（build.js） - 配置 webpack ； 使用 webpack.config.js；让 webpack 支持其他文件类型打包，要选择合适的 loader - url-loader 和 file-loader 类似，url-loader 加载不了的使用 file-loader 加载； - HtmlWebpackPlugin 插件(自动在 output 目录中生成文件)以及，配置安装

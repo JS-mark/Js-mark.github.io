@@ -20,7 +20,7 @@ tags:
 要启用这个功能，首先到`Preference`->`Editor`中启用。然后使用`$`符号包裹 Tex 命令，例如：`$lim_{x \to \infty} \ exp(-x)=0$`将产生如下的数学表达式：
 
 $\lim\_{x \to \infty} \exp(-x)=0$
-
+<!-- more -->
 ###下标
 
 下标使用`~`包裹，例如：`H~2~O`将产生 H~2~O, 即水的分子式。

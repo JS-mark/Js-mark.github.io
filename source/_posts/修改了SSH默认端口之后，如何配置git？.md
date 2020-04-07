@@ -15,7 +15,7 @@ tags:
 由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！
 
 现在假设原来的项目的remote设置为git@xxx.com:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错
-
+<!-- more -->
 ### 有两个解决办法
 
 #### 第一种方法

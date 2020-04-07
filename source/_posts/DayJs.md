@@ -19,6 +19,7 @@ tags:
 	</a>
 </p>
 <p align="center">Moment.js 的 <b>2kB</b> 轻量化方案，拥有同样强大的 API</p>
+<!-- more -->
 <br>
 <p align="center">
 	<a href="https://unpkg.com/dayjs/dayjs.min.js">

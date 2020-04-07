@@ -24,7 +24,7 @@ computed:{
 	}
 }
 ```
-
+<!-- more -->
 - 3.使用 vuex 中的 mapState，也就是 vuex 中提供给我们的方法
 
 ```javascript

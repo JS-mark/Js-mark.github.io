@@ -14,7 +14,7 @@ tags:
 ---
 
 <p align="center"><a href="#" target="_blank" rel="noopener noreferrer">
-<img 
+<img
   width="200"
   height="200"
   src="https://cn.vuejs.org/images/logo.png"
@@ -36,7 +36,7 @@ tags:
 > 4.放弃 Object.defineProperty ，使用更快的原生 Proxy;
 > 5.组件实例初始化速度提高 100％;
 > 6.提速一倍/内存使用降低一半。
-
+<!-- more -->
 > ### 对于 3.0 的 proxy 特性有必要讲一讲
 > 对于这个观察者机制的变更，给我带来的好处简直不言而喻。（我们终于不再担心目前官网上提的那个检测数组/检测对象变更了）
 
@@ -46,7 +46,7 @@ tags:
 ![image](/assets/img/2018/12/1.png)
 ![image](/assets/img/2018/12/2.png)
 
-> ### 
+> ###
 >
 
 

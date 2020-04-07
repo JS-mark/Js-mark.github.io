@@ -21,7 +21,7 @@ tags:
 - 那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）
   ![image](/assets/img/2018/12/20150424040700733.jpg)
   好了！那么我们步入今天的正题！
-
+<!-- more -->
 ### 一、shell 中特殊变量
 
 ```sh
@@ -91,7 +91,7 @@ do
 done
 
 ```
-返回结果： 
+返回结果：
 
 ```sh
 
@@ -118,30 +118,30 @@ test2
 ### 二、手工处理参数
 
 ```sh
-while [ -n "$1" ]  
-do  
-  case "$1" in   
-    -a)  
-        echo "发现 -a 选项"  
-        ;;  
-    -b)  
-        echo "发现 -b 选项"  
-        echo "-b 选项的参数值是：$2"   
-        shift  
-        ;;  
-    -c)  
-        echo "发现 -c 选项"  
-        echo "-c 选项的参数值是：$2"  
-        shift  
-        ;;  
-    -d)  
-        echo "发现 -d 选项"  
-        ;;  
-    *)  
-        echo "$1 is not an option"  
-        ;;  
-  esac  
-  shift  
+while [ -n "$1" ]
+do
+  case "$1" in
+    -a)
+        echo "发现 -a 选项"
+        ;;
+    -b)
+        echo "发现 -b 选项"
+        echo "-b 选项的参数值是：$2"
+        shift
+        ;;
+    -c)
+        echo "发现 -c 选项"
+        echo "-c 选项的参数值是：$2"
+        shift
+        ;;
+    -d)
+        echo "发现 -d 选项"
+        ;;
+    *)
+        echo "$1 is not an option"
+        ;;
+  esac
+  shift
 done
 
 # 运行：./test.sh -a -b t2 -c t3 -d
@@ -161,33 +161,33 @@ done
 GETOPTOUT=`getopt ab:c:d "$@"`
   set -- $GETOPTOUT
   while [ -n "$1" ]
-  do  
+  do
   case $1 in
-    -a)  
+    -a)
       echo "发现 -a 选项"
-      ;;  
-    -b)  
+      ;;
+    -b)
       echo "发现 -b 选项"
       echo "-b 选项的参数值是：$2"
-      shift  
-      ;;  
-    -c)  
+      shift
+      ;;
+    -c)
       echo "发现 -c 选项"
       echo "-c 选项的参数值是：$2"
-      shift  
-      ;;  
-    -d)  
+      shift
+      ;;
+    -d)
       echo "发现 -d 选项"
-      ;;  
-    --)  
-      shift  
-      break  
-      ;;  
-    *)  
-      echo "未知选项:"$1""  
-      ;;  
-  esac  
-  shift  
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      echo "未知选项:"$1""
+      ;;
+  esac
+  shift
   done
 
 # 运行
@@ -252,24 +252,24 @@ $foo
 ### 四、getopts 处理参数
 
 ```sh
-while getopts :ab:c:d ARGS  
-do  
-case $ARGS in   
-  a)  
-    echo "发现 -a 选项"  
-    ;;  
-  b)  
-    echo "发现 -b 选项"  
-    echo "-b 选项的值是：$OPTARG"  
-    ;;  
-  c)  
-    echo "发现 -c 选项"  
-    echo "-c 选项的值是：$OPTARG"  
-    ;;  
-  d)  
-    echo "发现 -d 参数"  
-    ;;  
-  *)  
+while getopts :ab:c:d ARGS
+do
+case $ARGS in
+  a)
+    echo "发现 -a 选项"
+    ;;
+  b)
+    echo "发现 -b 选项"
+    echo "-b 选项的值是：$OPTARG"
+    ;;
+  c)
+    echo "发现 -c 选项"
+    echo "-c 选项的值是：$OPTARG"
+    ;;
+  d)
+    echo "发现 -d 参数"
+    ;;
+  *)
     echo "未知选项：$ARGS"
     ;;
 esac
@@ -293,5 +293,5 @@ done
   ;;
 
 ```
-### 参考链接： 
+### 参考链接：
 > [Shell 脚本传参方法总结](https://www.jianshu.com/p/d3cd36c97abc)</br>[Bash 参数和参数扩展](https://www.ibm.com/developerworks/cn/linux/l-bash-parameters.html)</br>[shell中的getopt与getopts](http://www.361way.com/shell-getopt/4981.html)

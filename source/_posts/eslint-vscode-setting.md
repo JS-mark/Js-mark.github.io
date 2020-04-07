@@ -18,7 +18,7 @@ tags:
 ```bash
 npm i eslint babel-eslint eslint-plugin-html eslint-plugin-react eslint-plugin-vue -g
 ```
-
+<!-- more -->
 > ## 第二步：在任意目录放置.eslintrc.js
 >
 > ## 第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur

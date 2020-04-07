@@ -16,7 +16,7 @@ tags:
 JavaScript 有着很奇怪的命名史。
 
 1995 年，它作为网景浏览器（Netscape Navigator）的一部分首次发布，网景给这个新语言命名为 LiveScript。一年后，为了搭上当时媒体热炒 Java 的顺风车，临时改名为了 JavaScript _（当然，Java 和 JavaScript 的关系，就和雷锋和雷锋塔一样 —— 并没有什么关系）_
-
+<!-- more -->
 ![java-javascript](/assets/img/2015/09/javascript-java.jpg)
 <small class="img-hint">歪果仁的笑话怎么一点都不好笑</small>
 

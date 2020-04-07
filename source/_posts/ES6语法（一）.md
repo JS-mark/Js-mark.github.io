@@ -21,7 +21,7 @@ tags:
 ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
 
 以前，为变量赋值，只能直接指定值。
-
+<!-- more -->
 ```javascript
 let a = 1
 let b = 2
