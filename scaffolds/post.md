@@ -4,5 +4,6 @@ date: {{ date }}
 tags:
 type: "categories"
 categories:
-copyright: true #新增,开启
+external_link:
+  enable: true
 ---
