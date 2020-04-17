@@ -1,6 +1,7 @@
 ---
-title: 使'SSH config'文件
+title: 使用'SSH config'文件
 type: categories
+layout: post
 external_link:
   enable: true
 date: 2020-04-11 10:38:08

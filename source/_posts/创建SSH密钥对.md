@@ -1,6 +1,7 @@
 ---
 title: 创建SSH密钥对
 type: categories
+layout: post
 external_link:
   enable: true
 date: 2020-04-11 10:54:43

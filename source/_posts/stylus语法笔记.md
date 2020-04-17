@@ -1,6 +1,7 @@
 ---
 title: 分享 stylus 语法学习笔记
 subtitle: "stylus 语法笔记"
+layout: post
 author: "Mark"
 categories: JavaScript #分类
 date: 2019-05-28 15:51:21
@@ -10,7 +11,7 @@ tags:
   - css
 ---
 
-### 1、定义变量
+### 定义变量
 
 ```stylus
 $var_name = value
@@ -31,7 +32,7 @@ lookup(name) // 变量名，判断是否已经定义该变量
 // => #80e2e9
 ```
 
-### 2、for 循环
+### for 循环
 
 ```stylus
 for $i in (0 .. 24)
@@ -39,7 +40,7 @@ for $i in (0 .. 24)
       width 100 / $i
 ```
 
-### 3、导入
+### 导入
 
 @import "文件路径"
 @import "文件路径/\*"导入目录下所有 styl 文件
@@ -47,7 +48,7 @@ for $i in (0 .. 24)
 @require "文件路径"
 @require "文件路径/\*"导入目录下所有 styl 文件
 
-### 4、插值
+### 插值
 
 {}使用该花括号进行插值
 Stylus 支持使用{}字符包围表达式进行插值，然后表达式成为标识符的一部分。
@@ -105,7 +106,7 @@ mySelectors = '#foo,#bar,.baz'
 }
 ```
 
-### 5、mixin
+### mixin
 
 mixin 和函数都以相同的方式定义，但它们以不同的方式应用。
 
@@ -159,7 +160,7 @@ border-radius()
 
 现在我们可以传递像 border-radius 1px 2px / 3px 4px！
 
-### 6、选择器
+### 选择器
 
 ^[N],选择嵌套选择器的第个
 ^[N]表示部分引用，其中 N 是数字(-1, 0, 1 等等)。
@@ -209,7 +210,7 @@ border-radius()
 }
 ```
 
-### 7、块混合 Block mixins
+### 块混合 Block mixins
 
 我们使用+前缀可以给混合(mixins)传递块(blocks):
 
