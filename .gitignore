@@ -59,3 +59,4 @@ typings/
 public/
 package-lock.json
 .deploy_git/
+.vscode/
