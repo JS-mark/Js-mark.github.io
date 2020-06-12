@@ -11,7 +11,7 @@ tags:
 ---
 
 学习 ES6 语法笔记
-
+<!-- more -->
 #### 变量的解构赋值
 
 ##### 数组的解构赋值
@@ -21,7 +21,7 @@ tags:
 ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
 
 以前，为变量赋值，只能直接指定值。
-<!-- more -->
+
 ```javascript
 let a = 1
 let b = 2
@@ -699,6 +699,6 @@ for (let [, value] of map) {
 const { SourceMapConsumer, SourceNode } = require("source-map")
 ```
 
-#### 参考文档：
+#### 参考文档
 
 - [《ECMAScript 6 入门》](http://es6.ruanyifeng.com/#docs)
