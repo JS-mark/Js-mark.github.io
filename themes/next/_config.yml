@@ -604,6 +604,7 @@ valine:
   appkey: "zXXukDTNJEGlfy84Y3jbQEDa"
   notify: true # Mail notifier
   verify: false # Verification code
+  highlight: true,
   placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!" # Comment box placeholder
   avatar: mm # Gravatar style
   guest_info: nick,mail # Custom comment header , link
