@@ -26,6 +26,7 @@ tags:
 
 - 浏览器的 `Event Loop` 是在html5的规范中明确定义。
 - NodeJS的 `Event Loop` 是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。
+- 为了解决JS `多线程` 高效运行，衍生出了主线程和任务队列（同步任务和异步任务），主线程一直在循环运行任务，当执到异步任务的时候，不等待它执行完，而是把异步任务放入到队列中，当所有的同步任务都执行完毕之后，任务队列就会通知主线程执行队列中的任务。之后再重复之前的步骤，就变成了一个循环，也就是我们说的 `Event Loop` 事件循环机制。
 
 ### 浏览器线程
 
@@ -84,11 +85,14 @@ console.log('done');
 - MutationObserver
 - （注：这里只针对浏览器和NodeJS）
 
+- setTimeout(fn,0),会执行一个异步操作，会放到异步队列中，并在同步任务执行完毕后，尽早执行！
+
 ## 未完待续
 
 ## 参考资料
 
 [彻底理解 JS Event Loop（浏览器环境）](https://juejin.im/post/5aa3332b518825557c011896)
+[JavaScript 运行机制详解：再谈Event Loop](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
 [并发模型与事件循环--MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
 [浏览器与Node的事件循环(Event Loop)有何区别?](https://blog.fundebug.com/2019/01/15/diffrences-of-browser-and-node-in-event-loop/)
 [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
