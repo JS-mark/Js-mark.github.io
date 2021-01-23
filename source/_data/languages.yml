@@ -1,0 +1,10 @@
+# language
+zh-CN:
+  # items
+  post:
+    copyright:
+      # the translation you perfer
+      author: Mark
+en:
+  menu:
+    schedule: Calendar
