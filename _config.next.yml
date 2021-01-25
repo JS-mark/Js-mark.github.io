@@ -609,12 +609,13 @@ changyan:
 # Valine
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
-  enable: true
+  enable: false
   appId: 'DIAnS0Hiky61MuInVHgHkywd-gzGzoHsz'
   appKey: 'zXXukDTNJEGlfy84Y3jbQEDa'
   placeholder: 'ヾﾉ≧∀≦)o 来啊，快活啊!' # Comment box placeholder
-  avatar: '' # Gravatar style
+  avatar: 'robohash' # Gravatar style
   meta: [nick, mail] # Custom comment header , link
+  highlight: true
   pageSize: 10 # Pagination size
   lang: zh-cn # Language, available values: en, zh-cn
   visitor: true # Article reading statistic
@@ -622,7 +623,6 @@ valine:
   recordIP: false # Whether to record the commenter IP
   serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
   #post_meta_order: 0
-  enableQQ: true # Whether to enable the Nickname box to automatically get QQ Nickname and QQ Avatar
   requiredFields: [nick] # Set required fields: [nick] | [nick, mail]
   emojiCDN: '//cdn.jsdelivr.net/gh/haomingvince/ghcdn/'
   emojiMaps:
@@ -747,17 +747,18 @@ livere_uid: # <your_uid>
 # Gitalk
 # For more information: https://gitalk.github.io, https://github.com/gitalk/gitalk
 gitalk:
-  enable: false
-  github_id: # GitHub repo owner
-  repo: # Repository name to store issues
-  client_id: # GitHub Application Client ID
-  client_secret: # GitHub Application Client Secret
-  admin_user: # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  enable: true
+  id: location.pathname
+  github_id: JS-mark # GitHub repo owner
+  repo: Js-mark.github.io # Repository name to store issues
+  client_id: 184bf1de59e5e2bf8dda # GitHub Application Client ID
+  client_secret: dd441722f616fee9ac36516ccaccd9775b5ccb21 # GitHub Application Client Secret
+  admin_user: Mark # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
-  language:
+  language: zh-CN
 
 # ---------------------------------------------------------------
 # Post Widgets & Content Sharing Services
@@ -802,14 +803,14 @@ cnzz_siteid:
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
   enable: false
-  app_id: DIAnS0Hiky61MuInVHgHkywd-gzGzoHsz
-  app_key: zXXukDTNJEGlfy84Y3jbQEDa
+  app_id: # <your server url>
+  app_key: # <your server url>
   # Required for apps from CN region
   server_url: # <your server url>
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
   # If you don't care about security in leancloud counter and just want to use it directly
   # (without hexo-leancloud-counter-security plugin), set `security` to `false`.
-  security: true
+  security: false
 
 # Another tool to show number of visitors to each article.
 # Visit https://console.firebase.google.com/u/0/ to get apiKey and projectId.
@@ -1047,7 +1048,7 @@ vendors:
   # disqusjs_css:
 
   # Valine
-  valine: //cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js
+  valine: //cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js
   # valine: //cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js
   # valine:
 
