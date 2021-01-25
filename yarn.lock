@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@next-theme/utils@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/@next-theme/utils/download/@next-theme/utils-1.2.0.tgz#b062f56d768c7722ab878bf93afd0172d89d76b0"
+  integrity sha1-sGL1bXaMdyKrh4v5Ov0BctiddrA=
+  dependencies:
+    js-yaml "4.0.0"
+    lodash "4.17.20"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.14.0.tgz?cache=0&sync_timestamp=1602542828376&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -1519,6 +1527,12 @@ hexo-log@^2.0.0:
   dependencies:
     chalk "^4.0.0"
 
+hexo-next-valine@next-theme/hexo-next-valine:
+  version "1.0.0"
+  resolved "https://codeload.github.com/next-theme/hexo-next-valine/tar.gz/5bd67c6e67a33c7cf2ce26c1eee44d374eb91f80"
+  dependencies:
+    "@next-theme/utils" "^1.1.0"
+
 hexo-pagination@1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/hexo-pagination/download/hexo-pagination-1.0.0.tgz#c9c0ca3665267b9e9d0a89fc3edcaf3276907dc1"
@@ -2005,7 +2019,7 @@ jju@^1.1.0:
   resolved "https://registry.npm.taobao.org/jju/download/jju-1.4.0.tgz#a3abe2718af241a2b2904f84a625970f389ae32a"
   integrity sha1-o6vicYryQaKykE+EpiWXDzia4yo=
 
-js-yaml@>=3.13.1:
+js-yaml@4.0.0, js-yaml@>=3.13.1:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/js-yaml/download/js-yaml-4.0.0.tgz?cache=0&sync_timestamp=1609680068452&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjs-yaml%2Fdownload%2Fjs-yaml-4.0.0.tgz#f426bc0ff4b4051926cd588c71113183409a121f"
   integrity sha1-9Ca8D/S0BRkmzViMcRExg0CaEh8=
@@ -2146,7 +2160,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash@^4.17.11, lodash@^4.17.15, lodash@^4.2.0, lodash@^4.3.0:
+lodash@4.17.20, lodash@^4.17.11, lodash@^4.17.15, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.20"
   resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.20.tgz?cache=0&sync_timestamp=1602337231142&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha1-tEqbYpe8tpjxxRo1RaKzs2jVnFI=

@@ -1,6 +1,12 @@
+# ===============================================================
+# It's recommended to use Alternate Theme Config to configure the theme
+# Modifying this file may result in merge conflict
+# See: https://theme-next.js.org/docs/getting-started/configuration
+# ===============================================================
+
 # ---------------------------------------------------------------
 # Theme Core Configuration Settings
-# See: https://theme-next.org/docs/theme-settings/
+# See: https://theme-next.js.org/docs/theme-settings/
 # ---------------------------------------------------------------
 
 # If false, merge configs from `_data/next.yml` into default configuration (rewrite).
@@ -22,32 +28,49 @@ minify: true
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  #head: source/_data/head.swig
-  #header: source/_data/header.swig
-  #sidebar: source/_data/sidebar.swig
-  #postMeta: source/_data/post-meta.swig
-  #postBodyEnd: source/_data/post-body-end.swig
-  #footer: source/_data/footer.swig
-  #bodyEnd: source/_data/body-end.swig
+  #head: source/_data/head.njk
+  #header: source/_data/header.njk
+  #sidebar: source/_data/sidebar.njk
+  #postMeta: source/_data/post-meta.njk
+  #postBodyEnd: source/_data/post-body-end.njk
+  #footer: source/_data/footer.njk
+  #bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
   #style: source/_data/styles.styl
 
+# ---------------------------------------------------------------
+# Scheme Settings
+# ---------------------------------------------------------------
+
+# Schemes
+scheme: Gemini
+#scheme: Mist
+#scheme: Pisces
+#scheme: Gemini
+
+# Dark Mode
+darkmode: false
 # ---------------------------------------------------------------
 # Site Information Settings
 # See: https://theme-next.org/docs/getting-started/
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
+  small: https://cdn.jsdelivr.net/gh/haomingvince/ghcdn/avatar.jpg
+  medium: https://cdn.jsdelivr.net/gh/haomingvince/ghcdn/avatar.jpg
+  apple_touch_icon: https://cdn.jsdelivr.net/gh/haomingvince/ghcdn/avatar.jpg
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
 
+# ---------------------------------------------------------------
+# Footer Settings
+# See: https://theme-next.js.org/docs/theme-settings/footer
+# ---------------------------------------------------------------
+
 # Show multilingual switcher in footer.
-language_switcher: true
+language_switcher: false
 
 footer:
   # Specify the date when the site was setup. If not defined, current year will be used.
@@ -60,7 +83,7 @@ footer:
     # If you want to animate the icon, set it to true.
     animated: true
     # Change the color of icon, using Hex Code.
-    color: "#808080"
+    color: '#808080'
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
   copyright: Mark
@@ -91,19 +114,6 @@ creative_commons:
   language:
 
 # ---------------------------------------------------------------
-# Scheme Settings
-# ---------------------------------------------------------------
-
-# Schemes
-# scheme: Muse
-#scheme: Mist
-#scheme: Pisces
-scheme: Gemini
-
-# Dark Mode
-darkmode: false
-
-# ---------------------------------------------------------------
 # Menu Settings
 # ---------------------------------------------------------------
 
@@ -121,6 +131,7 @@ menu:
   # sitemap: /sitemap.xml || sitemap
   about: /about/ || fa fa-user
   commonweal: /404.html || fa fa-heartbeat
+  guestbook: /guestbook/ || fa fa-book
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -153,8 +164,6 @@ sidebar:
   padding: 18
   # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).
   offset: 12
-  # Enable sidebar on narrow view (only for Muse | Mist).
-  onmobile: true
 
 # Sidebar Avatar
 avatar:
@@ -223,7 +232,7 @@ chat:
 
 # ---------------------------------------------------------------
 # Post Settings
-# See: https://theme-next.org/docs/theme-settings/posts
+# See: https://theme-next.js.org/docs/theme-settings/posts
 # ---------------------------------------------------------------
 
 # Automatically excerpt description in homepage as preamble text.
@@ -308,8 +317,8 @@ tagcloud:
   # All values below are same as default, change them by yourself.
   min: 12 # Minimun font size in px
   max: 30 # Maxium font size in px
-  start: "#ccc" # Start color (hex, rgba, hsla or color keywords)
-  end: "#111" # End color (hex, rgba, hsla or color keywords)
+  start: '#ccc' # Start color (hex, rgba, hsla or color keywords)
+  end: '#111' # End color (hex, rgba, hsla or color keywords)
   amount: 200 # Amount of tags, change it if you have more than 200 tags
 
 # Google Calendar
@@ -338,7 +347,7 @@ text_align:
 mobile_layout_economy: true
 
 # Android Chrome header panel color ($brand-bg / $headband-bg => $black-deep).
-android_chrome_color: "#222"
+android_chrome_color: '#222'
 
 # Custom Logo (Do not support scheme Mist)
 custom_logo: #/uploads/custom-logo.jpg
@@ -347,7 +356,7 @@ codeblock:
   # Code Highlight theme
   # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic
   # See: https://github.com/chriskempson/tomorrow-theme
-  highlight_theme: "solarized dark"
+  highlight_theme: 'solarized dark'
   # Add copy button on codeblock
   copy_button:
     enable: true
@@ -368,14 +377,14 @@ reading_progress:
   enable: true
   # Available values: top | bottom
   position: top
-  color: "#37c6c0"
+  color: '#37c6c0'
   height: 3px
 
 # Bookmark Support
 bookmark:
   enable: true
   # Customize the color of the bookmark.
-  color: "#222"
+  color: '#222'
   # If auto, save the reading progress when closing the page or clicking the bookmark-icon.
   # If manual, only save it by clicking the bookmark-icon.
   save: auto
@@ -388,7 +397,7 @@ github_banner:
 
 # ---------------------------------------------------------------
 # Font Settings
-# See: https://theme-next.org/docs/theme-settings/#Fonts-Customization
+# See: https://theme-next.js.org/docs/theme-settings/#Fonts-Customization
 # ---------------------------------------------------------------
 # Find fonts on Google Fonts (https://www.google.com/fonts)
 # All fonts set here will have the following styles:
@@ -440,6 +449,7 @@ font:
 
 # ---------------------------------------------------------------
 # SEO Settings
+# See: https://theme-next.js.org/docs/theme-settings/seo
 # ---------------------------------------------------------------
 
 # Disable Baidu transformation on mobile devices.
@@ -473,7 +483,7 @@ baidu_push: false
 
 # ---------------------------------------------------------------
 # Third Party Plugins & Services Settings
-# See: https://theme-next.org/docs/third-party-services/
+# See: https://theme-next.js.org/docs/third-party-services/
 # More plugins: https://github.com/theme-next/awesome-next
 # You may need to install dependencies or set CDN URLs in `vendors`
 # There are two different CDN providers by default:
@@ -546,7 +556,7 @@ quicklink:
 
 # ---------------------------------------------------------------
 # Comments Settings
-# See: https://theme-next.org/docs/third-party-services/comments
+# See: https://theme-next.js.org/docs/third-party-services/comments
 # ---------------------------------------------------------------
 
 # Multiple Comment System Support
@@ -555,11 +565,11 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: changyan | disqus | disqusjs | gitalk | livere | valine
-  active: true
+  active: valine
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
-  lazyload: true
+  lazyload: false
   # Modify texts or order for any navs, here are some examples.
   nav:
     #disqus:
@@ -600,21 +610,135 @@ changyan:
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
   enable: true
-  appid: "DIAnS0Hiky61MuInVHgHkywd-gzGzoHsz"
-  appkey: "zXXukDTNJEGlfy84Y3jbQEDa"
-  notify: true # Mail notifier
-  verify: true # Verification code
-  highlight: true,
-  placeholder: "ヾﾉ≧∀≦)o 来啊，快活啊!" # Comment box placeholder
-  avatar: mm # Gravatar style
-  guest_info: nick,mail # Custom comment header , link
+  appId: 'DIAnS0Hiky61MuInVHgHkywd-gzGzoHsz'
+  appKey: 'zXXukDTNJEGlfy84Y3jbQEDa'
+  placeholder: 'ヾﾉ≧∀≦)o 来啊，快活啊!' # Comment box placeholder
+  avatar: '' # Gravatar style
+  meta: [nick, mail] # Custom comment header , link
   pageSize: 10 # Pagination size
-  language: zh-cn # Language, available values: en, zh-cn
+  lang: zh-cn # Language, available values: en, zh-cn
   visitor: true # Article reading statistic
   comment_count: true # If false, comment count will only be displayed in post page, not in home page
   recordIP: false # Whether to record the commenter IP
   serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
   #post_meta_order: 0
+  enableQQ: true # Whether to enable the Nickname box to automatically get QQ Nickname and QQ Avatar
+  requiredFields: [nick] # Set required fields: [nick] | [nick, mail]
+  emojiCDN: '//cdn.jsdelivr.net/gh/haomingvince/ghcdn/'
+  emojiMaps:
+    {
+      'bilibili_doge.png': 'CommentEmote/bilibili_doge.png',
+      'bilibili_baiyan.png': 'CommentEmote/bilibili_baiyan.png',
+      'bilibili_bishi.png': 'CommentEmote/bilibili_bishi.png',
+      'bilibili_bizui.png': 'CommentEmote/bilibili_bizui.png',
+      'bilibili_chan.png': 'CommentEmote/bilibili_chan.png',
+      'bilibili_dai.png': 'CommentEmote/bilibili_dai.png',
+      'bilibili_daku.png': 'CommentEmote/bilibili_daku.png',
+      'bilibili_dalao.png': 'CommentEmote/bilibili_dalao.png',
+      'bilibili_dalian.png': 'CommentEmote/bilibili_dalian.png',
+      'bilibili_dianzan.png': 'CommentEmote/bilibili_dianzan.png',
+      'bilibili_facai.png': 'CommentEmote/bilibili_facai.png',
+      'bilibili_fanu.png': 'CommentEmote/bilibili_fanu.png',
+      'bilibili_ganga.png': 'CommentEmote/bilibili_ganga.png',
+      'bilibili_guilian.png': 'CommentEmote/bilibili_guilian.png',
+      'bilibili_guzhang.png': 'CommentEmote/bilibili_guzhang.png',
+      'bilibili_haixiu.png': 'CommentEmote/bilibili_haixiu.png',
+      'bilibili_heirenwenhao.png': 'CommentEmote/bilibili_heirenwenhao.png',
+      'bilibili_huaixiao.png': 'CommentEmote/bilibili_huaixiao.png',
+      'bilibili_jingxia.png': 'CommentEmote/bilibili_jingxia.png',
+      'bilibili_keai.png': 'CommentEmote/bilibili_keai.png',
+      'bilibili_koubi.png': 'CommentEmote/bilibili_koubi.png',
+      'bilibili_kun.png': 'CommentEmote/bilibili_kun.png',
+      'bilibili_lengmo.png': 'CommentEmote/bilibili_lengmo.png',
+      'bilibili_liubixue.png': 'CommentEmote/bilibili_liubixue.png',
+      'bilibili_liuhan.png': 'CommentEmote/bilibili_liuhan.png',
+      'bilibili_liulei.png': 'CommentEmote/bilibili_liulei.png',
+      'bilibili_miantian.png': 'CommentEmote/bilibili_miantian.png',
+      'bilibili_mudengkoudai.png': 'CommentEmote/bilibili_mudengkoudai.png',
+      'bilibili_nanguo.png': 'CommentEmote/bilibili_nanguo.png',
+      'bilibili_outu.png': 'CommentEmote/bilibili_outu.png',
+      'bilibili_qinqin.png': 'CommentEmote/bilibili_qinqin.png',
+      'bilibili_se.png': 'CommentEmote/bilibili_se.png',
+      'bilibili_shengbing.png': 'CommentEmote/bilibili_shengbing.png',
+      'bilibili_shengqi.png': 'CommentEmote/bilibili_shengqi.png',
+      'bilibili_shuizhao.png': 'CommentEmote/bilibili_shuizhao.png',
+      'bilibili_sikao.png': 'CommentEmote/bilibili_sikao.png',
+      'bilibili_tiaokan.png': 'CommentEmote/bilibili_tiaokan.png',
+      'bilibili_tiaopi.png': 'CommentEmote/bilibili_tiaopi.png',
+      'bilibili_touxiao.png': 'CommentEmote/bilibili_touxiao.png',
+      'bilibili_tuxie.png': 'CommentEmote/bilibili_tuxie.png',
+      'bilibili_weiqu.png': 'CommentEmote/bilibili_weiqu.png',
+      'bilibili_weixiao.png': 'CommentEmote/bilibili_weixiao.png',
+      'bilibili_wunai.png': 'CommentEmote/bilibili_wunai.png',
+      'bilibili_xiaoku.png': 'CommentEmote/bilibili_xiaoku.png',
+      'bilibili_xieyanxiao.png': 'CommentEmote/bilibili_xieyanxiao.png',
+      'bilibili_yiwen.png': 'CommentEmote/bilibili_yiwen.png',
+      'bilibili_yun.png': 'CommentEmote/bilibili_yun.png',
+      'bilibili_zaijian.png': 'CommentEmote/bilibili_zaijian.png',
+      'bilibili_zhoumei.png': 'CommentEmote/bilibili_zhoumei.png',
+      'bilibili_zhuakuang.png': 'CommentEmote/bilibili_zhuakuang.png',
+      'tieba_1.png': 'CommentEmote/tieba_1.png',
+      'tieba_2.png': 'CommentEmote/tieba_2.png',
+      'tieba_3.png': 'CommentEmote/tieba_3.png',
+      'tieba_4.png': 'CommentEmote/tieba_4.png',
+      'tieba_5.png': 'CommentEmote/tieba_5.png',
+      'tieba_6.png': 'CommentEmote/tieba_6.png',
+      'tieba_7.png': 'CommentEmote/tieba_7.png',
+      'tieba_8.png': 'CommentEmote/tieba_8.png',
+      'tieba_9.png': 'CommentEmote/tieba_9.png',
+      'tieba_10.png': 'CommentEmote/tieba_10.png',
+      'tieba_11.png': 'CommentEmote/tieba_11.png',
+      'tieba_12.png': 'CommentEmote/tieba_12.png',
+      'tieba_13.png': 'CommentEmote/tieba_13.png',
+      'tieba_14.png': 'CommentEmote/tieba_14.png',
+      'tieba_15.png': 'CommentEmote/tieba_15.png',
+      'tieba_16.png': 'CommentEmote/tieba_16.png',
+      'tieba_17.png': 'CommentEmote/tieba_17.png',
+      'tieba_18.png': 'CommentEmote/tieba_18.png',
+      'tieba_19.png': 'CommentEmote/tieba_19.png',
+      'tieba_20.png': 'CommentEmote/tieba_20.png',
+      'tieba_21.png': 'CommentEmote/tieba_21.png',
+      'tieba_22.png': 'CommentEmote/tieba_22.png',
+      'tieba_23.png': 'CommentEmote/tieba_23.png',
+      'tieba_24.png': 'CommentEmote/tieba_24.png',
+      'tieba_25.png': 'CommentEmote/tieba_25.png',
+      'tieba_26.png': 'CommentEmote/tieba_26.png',
+      'tieba_27.png': 'CommentEmote/tieba_27.png',
+      'tieba_28.png': 'CommentEmote/tieba_28.png',
+      'tieba_29.png': 'CommentEmote/tieba_29.png',
+      'tieba_30.png': 'CommentEmote/tieba_30.png',
+      'tieba_31.png': 'CommentEmote/tieba_31.png',
+      'tieba_32.png': 'CommentEmote/tieba_32.png',
+      'tieba_33.png': 'CommentEmote/tieba_33.png',
+      'tieba_46.png': 'CommentEmote/tieba_46.png',
+      'tieba_47.png': 'CommentEmote/tieba_47.png',
+      'tieba_48.png': 'CommentEmote/tieba_48.png',
+      'tieba_49.png': 'CommentEmote/tieba_49.png',
+      'tieba_50.png': 'CommentEmote/tieba_50.png',
+      'tieba_66.png': 'CommentEmote/tieba_66.png',
+      'tieba_67.png': 'CommentEmote/tieba_67.png',
+      'tieba_68.png': 'CommentEmote/tieba_68.png',
+      'tieba_69.png': 'CommentEmote/tieba_69.png',
+      'tieba_70.png': 'CommentEmote/tieba_70.png',
+      'tieba_71.png': 'CommentEmote/tieba_71.png',
+      'tieba_72.png': 'CommentEmote/tieba_72.png',
+      'tieba_73.png': 'CommentEmote/tieba_73.png',
+      'tieba_74.png': 'CommentEmote/tieba_74.png',
+      'tieba_75.png': 'CommentEmote/tieba_75.png',
+      'tieba_76.png': 'CommentEmote/tieba_76.png',
+      'tieba_86.png': 'CommentEmote/tieba_86.png',
+      'tieba_87.png': 'CommentEmote/tieba_87.png',
+      'tieba_88.png': 'CommentEmote/tieba_88.png',
+      'tieba_89.png': 'CommentEmote/tieba_89.png',
+      'tieba_90.png': 'CommentEmote/tieba_90.png',
+      'tieba_91.png': 'CommentEmote/tieba_91.png',
+      'tieba_92.png': 'CommentEmote/tieba_92.png',
+      'tieba_93.png': 'CommentEmote/tieba_93.png',
+      'tieba_95.png': 'CommentEmote/tieba_95.png',
+      'tieba_96.png': 'CommentEmote/tieba_96.png',
+      'tieba_97.png': 'CommentEmote/tieba_97.png',
+      'tieba_98.png': 'CommentEmote/tieba_98.png',
+    }
 
 # LiveRe comments system
 # You can get your uid from https://livere.com/insight/myCode (General web site)
@@ -637,7 +761,7 @@ gitalk:
 
 # ---------------------------------------------------------------
 # Post Widgets & Content Sharing Services
-# See: https://theme-next.org/docs/third-party-services/post-widgets
+# See: https://theme-next.js.org/docs/third-party-services/post-widgets
 # ---------------------------------------------------------------
 
 # Star rating support to each article.
@@ -645,7 +769,7 @@ gitalk:
 rating:
   enable: false
   id: # <app_id>
-  color: fc6423
+  color: '#fc6423'
 
 # AddThis Share. See: https://www.addthis.com
 # Go to https://www.addthis.com/dashboard to customize your tools.
@@ -653,7 +777,7 @@ add_this_id:
 
 # ---------------------------------------------------------------
 # Statistics and Analytics
-# See: https://theme-next.org/docs/third-party-services/statistics-and-analytics
+# See: https://theme-next.js.org/docs/third-party-services/statistics-and-analytics
 # ---------------------------------------------------------------
 
 # Google Analytics
@@ -678,8 +802,8 @@ cnzz_siteid:
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
   enable: false
-  app_id: # <your app id>
-  app_key: # <your app key>
+  app_id: DIAnS0Hiky61MuInVHgHkywd-gzGzoHsz
+  app_key: zXXukDTNJEGlfy84Y3jbQEDa
   # Required for apps from CN region
   server_url: # <your server url>
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
@@ -709,7 +833,7 @@ busuanzi_count:
 
 # ---------------------------------------------------------------
 # Search Services
-# See: https://theme-next.org/docs/third-party-services/search-services
+# See: https://theme-next.js.org/docs/third-party-services/search-services
 # ---------------------------------------------------------------
 
 # Algolia Search
@@ -721,7 +845,7 @@ algolia_search:
   labels:
     input_placeholder: Search for Posts
     hits_empty: "We didn't find any results for the search: ${query}"
-    hits_stats: "${hits} results found in ${time} ms"
+    hits_stats: '${hits} results found in ${time} ms'
 
 # Local Search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
@@ -763,7 +887,7 @@ tidio:
 
 # ---------------------------------------------------------------
 # Tags Settings
-# See: https://theme-next.org/docs/tag-plugins/
+# See: https://theme-next.js.org/docs/tag-plugins/
 # ---------------------------------------------------------------
 
 # Note tag (bs-callout)
@@ -851,11 +975,11 @@ canvas_ribbon:
   alpha: 0.6 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon
 
-#! ---------------------------------------------------------------
+#! ==============================================================
 #! DO NOT EDIT THE FOLLOWING SETTINGS
 #! UNLESS YOU KNOW WHAT YOU ARE DOING
-#! See: https://theme-next.org/docs/advanced-settings
-#! ---------------------------------------------------------------
+#! See: https://theme-next.js.org/docs/advanced-settings/vendors
+#! ==============================================================
 
 # Script Vendors. Set a CDN address for the vendor you want to customize.
 # Be aware that you would better use the same version as internal ones to avoid potential problems.
@@ -923,7 +1047,7 @@ vendors:
   # disqusjs_css:
 
   # Valine
-  valine: //cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js
+  valine: //cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js
   # valine: //cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js
   # valine:
 
@@ -978,3 +1102,7 @@ vendors:
 css: css
 js: js
 images: images
+
+# darkmode.js
+darkmode_js:
+  enable: true
