@@ -1,6 +1,7 @@
 ---
 title: 自我介绍（Introduce Yourself）
 layout: about
+comments: false
 ---
 
 ## 自我介绍
