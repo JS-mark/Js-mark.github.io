@@ -1038,7 +1038,7 @@ vendors:
   # pangu:
 
   # Quicklink
-  quicklink: //cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js
+  quicklink: //cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js
   # quicklink:
 
   # DisqusJS
