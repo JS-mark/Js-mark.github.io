@@ -60,3 +60,5 @@ public/
 package-lock.json
 .deploy_git/
 .vscode/
+
+db.json
