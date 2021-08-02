@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/mark-blog
+    steps:
+      - checkout
+      - run:
+          command: |
+            git clone -b blog https://github.com/JS-mark/Js-mark.github.io.git
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - run:
+          command: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-{{ checksum "package.json" }}
+      - run:
+          command: |
+            yarn clean
+            yarn deploy
+workflows:
+  version: 2.1
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - blog
