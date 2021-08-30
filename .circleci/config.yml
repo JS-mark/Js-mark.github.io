@@ -32,10 +32,11 @@ jobs:
           name: Deploy
           command: yarn deploy
 workflows:
-  version: 2.1
+  version: 2
   build_and_deploy:
     jobs:
       - build:
           filters:
             branches:
-              only: blog
+              only:
+                - blog
