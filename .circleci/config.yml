@@ -2,9 +2,6 @@ version: 2.1
 
 jobs:
   build:
-    filters:
-      branches:
-        only: blog
     docker:
       - image: circleci/node:10
     working_directory: ~/mark-blog
