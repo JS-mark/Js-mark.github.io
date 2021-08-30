@@ -4,6 +4,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
+    branches: #分支
+      only:
+        - blog
     working_directory: ~/mark-blog
     steps:
       - checkout
@@ -15,17 +18,23 @@ jobs:
             - dependencies-{{ checksum "package.json" }}
             - dependencies-
       - run:
+          name: Install
           command: yarn
       - save_cache:
           paths:
             - node_modules
           key: dependencies-{{ checksum "package.json" }}
       - run:
+          name: Set Var
           command: |
             git config --global user.email "sunduo3195@qq.com"
             git config --global user.name "Mark"
-            yarn clean
-            yarn deploy
+      - run:
+          name: Clean
+          command: yarn clean
+      - run:
+          name: Deploy
+          command: yarn deploy
 workflows:
   version: 2.1
   build_and_deploy:
