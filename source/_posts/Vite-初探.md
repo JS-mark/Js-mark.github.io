@@ -8,8 +8,6 @@ external_link:
 date: 2021-08-30 15:20:27
 categories: 前端工程化 #分类
 top: 12
-external_link:
-  enable: true
 tags:
   - 前端工程化
   - Vite
