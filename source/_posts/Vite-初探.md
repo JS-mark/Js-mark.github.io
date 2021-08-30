@@ -19,7 +19,7 @@ tags:
 春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？
 
 vite官方介绍地址: [vitejs.dev/guide/why.h…](https://link.juejin.cn/?target=https%3A%2F%2Fvitejs.dev%2Fguide%2Fwhy.html%23slow-server-start "https://vitejs.dev/guide/why.html#slow-server-start")
-
+<!-- more -->
 首先我们要知道，vite为何而诞生？
 
 为什么需要打包工具？
