@@ -38,5 +38,4 @@ workflows:
       - build:
           filters:
             branches:
-              only:
-                - blog
+              only: blog
