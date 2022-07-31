@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/JS-mark/Js-mark.github.io/tree/blog.svg?style=svg)](https://circleci.com/gh/JS-mark/Js-mark.github.io/tree/blog)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/JS-mark/Js-mark.github.io/tree/blog.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/JS-mark/Js-mark.github.io/tree/blog)
 
 # 开发
 
