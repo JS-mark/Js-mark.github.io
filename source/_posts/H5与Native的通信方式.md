@@ -1,5 +1,5 @@
 ---
-title: Web与native的通信方式 "JSBridge"
+title: H5与Native的通信方式 "JSBridge"
 type: categories
 author: Mark
 comments: true
@@ -16,12 +16,12 @@ tags:
 
 > 导读
 
-写这篇的博客起因是由于公司app的H5 Hybrid项目引发的本文的撰写！由于公司内部JSBridge方案有些庞大，并且端上开发人力紧张等这些客观原因，所以和客户端学基于js2native的原理简单实现了一版JSBridge SDK，自我感觉写的还ok，所以分享下！！！
+写这篇的博客起因是由于公司app的H5 Hybrid项目引发的本文的撰写！由于公司内部JSBridge方案有些庞大，并且端上开发人力紧张等这些客观因素，简单的基于js2native的原理实现了一版简陋版JSBridge SDK，不妥之处还请大家批评指正！！！
 <!-- more -->
 
 ### JSBridge起源
 
-JSBridge 是一种 JS 实现的 Bridge，连接着桥两端的 Native 和 H5。它在 APP 内方便地让 Native 调用 JS，JS 调用 Native ，是双向通信的通道。JSBridge 主要提供了 JS 调用 Native 代码的能力，实现原生功能如查看本地相册、打开摄像头、指纹支付等。
+首先我们讲下Bridge 的起源。JSBridge 是一种 JS 实现的 Bridge，连接着桥两端的 Native 和 H5。它在 APP 内方便地让 Native 调用 JS，JS 调用 Native ，是双向通信的通道。JSBridge 主要提供了 JS 调用 Native 代码的能力，实现原生功能如查看本地相册、打开摄像头、指纹支付等。
 
 ### JSBridge 的双向通信原理
 
