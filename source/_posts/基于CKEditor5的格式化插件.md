@@ -1,5 +1,5 @@
 ---
-title: 基于 CKEditor5 的格式化插件
+title: 基于CKEditor5的格式化插件
 type: categories
 author: Mark
 comments: true
@@ -17,7 +17,7 @@ tags:
 ### 前言
 
 写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路
-
+<!-- more -->
 ### 实现功能
 
 - 实现了文字与段落的属性Copy
