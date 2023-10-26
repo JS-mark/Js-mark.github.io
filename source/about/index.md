@@ -12,23 +12,21 @@ comments: false
 
 > Da前端方面
 
-- Vue 全家桶（移动、pc均涉及）
-- Weex
-- Flutter
-- Typescript
-- Vite（新兴产品学习研究中）
-- Vue 3.0（正在学习中）
-- Angular 全家桶（主要偏pc端）
-- React（接触过一点点，学习中）
-- 微信小程序（学习中）
-- Node （学习中）
-- ios（调试会那么点）
+- Vue2\3 全家桶（移动、pc均涉及）
+- Weex (过时了)
+- TypeScript
+- Vite
+- React
+- uni-app
+- Taro
 
 > 后端方面吧！
 
 - NodeJS
+- Golang
 - Python
-- mysql(会点简单的sql语句)
+- Redis
+- mysql
 
 > 其他
 
