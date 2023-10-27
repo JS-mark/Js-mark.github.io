@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"js-mark.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="注：转载于前端工程化 – vite 初探 春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？ vite官方介绍地址: vitejs.dev&#x2F;guide&#x2F;why.h…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vite 初探">
+<meta property="og:url" content="https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:site_name" content="Mark&#39;s Blog">
+<meta property="og:description" content="注：转载于前端工程化 – vite 初探 春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？ vite官方介绍地址: vitejs.dev&#x2F;guide&#x2F;why.h…">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3bfc28338f14f2ab6a25ba0f33c856c~tplv-k3u1fbpfcp-watermark.awebp">
+<meta property="article:published_time" content="2021-08-30T07:20:27.000Z">
+<meta property="article:modified_time" content="2021-12-04T03:23:58.000Z">
+<meta property="article:author" content="Mark">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="前端工程化">
+<meta property="article:tag" content="Vite">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp">
+
+
+<link rel="canonical" href="https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/","path":"/2021/08/30/Vite-初探/","title":"Vite 初探"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vite 初探 | Mark's Blog</title>
+  
+
+
+
+
+
+
+
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Mark's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mark's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">为什么需要打包工具？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B7%E5%90%AF%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">冷启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">热更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vite%E7%9A%84%E5%85%B6%E4%BB%96%E8%83%BD%E5%8A%9B"><span class="nav-number">4.</span> <span class="nav-text">vite的其他能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#typescript"><span class="nav-number">4.1.</span> <span class="nav-text">typescript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssr-ssg"><span class="nav-number">4.2.</span> <span class="nav-text">ssr&#x2F;ssg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sass-less"><span class="nav-number">4.3.</span> <span class="nav-text">sass&#x2F;less</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9E%84%E5%BB%BA"><span class="nav-number">4.4.</span> <span class="nav-text">预构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BC%93%E5%AD%98"><span class="nav-number">4.5.</span> <span class="nav-text">文件缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vite%E7%9A%84%E7%94%9F%E4%BA%A7%E6%9E%84%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">vite的生产构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vite%E5%AF%B9%E6%AF%94snowpack"><span class="nav-number">6.</span> <span class="nav-text">vite对比snowpack</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mark"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mark</p>
+  <div class="site-description" itemprop="description">Personal Technology Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcms=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JS-mark"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnN1bmR1bzMxOTVAcXEuY29t" title="E-Mail → mailto:sunduo3195@qq.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdS8yMzUzMzgyOTYx" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2353382961"><i class="fab fa-weibo fa-fw"></i></span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mark">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mark's Blog">
+      <meta itemprop="description" content="Personal Technology Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vite 初探 | Mark's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vite 初探
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-30 15:20:27" itemprop="dateCreated datePublished" datetime="2021-08-30T15:20:27+08:00">2021-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-12-04 11:23:58" itemprop="dateModified" datetime="2021-12-04T11:23:58+08:00">2021-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>注：转载于<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTM2ODAwNTUxMjM3NTgyODg0">前端工程化 – vite 初探<i class="fa fa-external-link-alt"></i></span></p>
+<p>春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？</p>
+<p>vite官方介绍地址: <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vdml0ZWpzLmRldi9ndWlkZS93aHkuaHRtbCUyM3Nsb3ctc2VydmVyLXN0YXJ0" title="https://vitejs.dev/guide/why.html#slow-server-start">vitejs.dev&#x2F;guide&#x2F;why.h…<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+<p>首先我们要知道，vite为何而诞生？</p>
+<h2 id="为什么需要打包工具？"><a href="#为什么需要打包工具？" class="headerlink" title="为什么需要打包工具？"></a>为什么需要打包工具？</h2><p>在前端工程化的今天，前端的技术栈越来越丰富，配套的工具也越来越多，为了提升前端的开发效率各种各样框架是层出不穷，</p>
+<p>但是，随着前端项目越来越大，造成了项目依赖越来越多，而这些依赖又会有着自己的依赖，这就造成了很大的一棵依赖树，打开一个项目的node_modules目录看看，随随便便就有上百个文件夹。加上之前JavaScript 一直没有模块（module）体系，社区为此制定了一些模块加载方法，但是不同的依赖项目使用不同的加载方法。而浏览器并不支持这些加载方法，因此我们的js代码只能打包后才能在浏览器运行，因此之前的前端开发一直需要打包工具。</p>
+<p>打包工具帮助我们实现了前端工程化，但是随着依赖越来越多，我们打包构建的速度越来越慢，并且开发中如果改动代码，热更新时还可以丢失当前正在进行的工作，vite就是为了解决这些问题而诞生的。</p>
+<p>毫无疑问，vite最诱人的特性有以下两点：</p>
+<ul>
+<li>极快的冷启动速度</li>
+<li>极快的热更新速度</li>
+</ul>
+<p>我们知道，es6中加入了模块这个特性，为的就是能有一个统一的文件加载标准，让浏览器能够根据这个标准去加载我们的代码，这样就可以提升前端开发的效率。</p>
+<p>为何vite在冷启动和热更新性能上面可以比现代的构建工具更优秀？</p>
+<h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>比如webpack，在我们往命令行中输入npm run命令把项目启动起来的时候，webpack需要把我们的依赖读出来，打包成一个一个浏览器可以识别的js文件，打包结束后，我们的服务器才真正可用。但是依赖是树状的，我们知道树的层级越深，遍历的开销就越大，这是造成webpack在热更新和冷启动上效率不高的主要原因。</p>
+<p>我们来看看vite官网的图，webpack需要根据我们提供的文件入口去搜集依赖(由于依赖树太深，因此webpack做了很多工作希望能实现按需加载)，然后打包输出浏览器可以识别的文件，打包结束后我们的前端服务器才真正开始工作</p>
+<p><img data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp"></p>
+<p>根据vite官网的图，vite是通过接受浏览器的url，来识别所需的哪些依赖，由于vite是针对es module(下文统称esm)的，es module是可以直接被浏览器识别的，因此输入命令后，项目不需要打包就可用，而且可以根据url所需的文件去返回js代码，做到了真正的按需加载。而对于非esm标准的代码，vite则是转化成esm标准的代码。 <img data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3bfc28338f14f2ab6a25ba0f33c856c~tplv-k3u1fbpfcp-watermark.awebp"></p>
+<p>由于webpack是把js代码打包好，当收到请求就直接返回跟浏览器(往往一个请求就可以拿到全部需要的js代码给浏览器执行，代码太多的时候则会拆分成几个文件)，而vite则是收到请求之后才去找代码，而依赖很多，可能会需要浏览器加载很多的js文件，这就可能要发很多个请求才能拿到全部的js代码，这会不会造成网络的波动？有木有可能造成页面加载的时间过长？</p>
+<p>vite针对这种情况,在收到请求时做了一个叫pre-bundle的优化，也就是</p>
+<ul>
+<li>把非esm的js代码转换成esm代码</li>
+<li>把一个依赖打成一个一个js文件返回给前端(而不是每个文件独立返回，比如lodash-es这个依赖有600多个内部模块，最终只会返回lodash-es这一个文件，里面包含了全部的内部模块)，避免网络波动，过度占用网络端口(这里会把打包的代码放在node_modules&#x2F;.vite&#x2F;下)</li>
+<li>在请求js代码时加入了缓存信息在http请求的头部，实现浏览器缓存</li>
+<li>对于monorepo，vite会把依赖的项目也一起通过esm的方式引入进来</li>
+</ul>
+<h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>热更新时，webpack由于是树状的依赖，因此其中的每一个节点改变，其祖先节点都需要重新编译加载(其实在应用中感觉开销比想象中更大)。并且由于热更新导致页面重新加载，页面上原本的状态也会丢失。（具体的原理还需要深入学习一下）</p>
+<p>而vite由于基于esm，一个节点改变，大部分情况下那就只要重新请求这个节点就好了，我们知道算法中O(1)和O(n)区别还是很大的。并且vite热更新的时候，会在请求头中加入缓存的信息，服务器对于没有修改的文件返回304，极大程度的避免了不必要的重新加载</p>
+<h2 id="vite的其他能力"><a href="#vite的其他能力" class="headerlink" title="vite的其他能力"></a>vite的其他能力</h2><h3 id="typescript"><a href="#typescript" class="headerlink" title="typescript"></a>typescript</h3><p>Vite仅执行.t 文件的转译工作，并不执行任何类型检查(请确保ts错误都已经处理完)。Vite 使用 esbuild 将 TypeScript 转译到 JavaScript，约是 tsc 速度的 20~30 倍</p>
+<h3 id="ssr-ssg"><a href="#ssr-ssg" class="headerlink" title="ssr&#x2F;ssg"></a>ssr&#x2F;ssg</h3><p>vite的官网很明确的说vite对ssr(服务端渲染)和ssg(静态页面生成)的特性还不稳定，而且由于笔者对这两块都不怎么了解，因此暂不介绍</p>
+<h3 id="sass-less"><a href="#sass-less" class="headerlink" title="sass&#x2F;less"></a>sass&#x2F;less</h3><p>vite支持css预处理器如less和sass，如果在css文件的后缀名中加入<code>.module</code>，vite会把css文件识别成模块，于是可以像使用对象由于使用css。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./index.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">&#x27;./style.module.scss&#x27;</span>;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;style[</span>&#x27;<span class="attr">home__title</span>&#x27;]&#125; /&gt;</span></span></span><br><span class="line"></span><br><span class="line">./style.<span class="property">module</span>.<span class="property">scss</span></span><br><span class="line">.<span class="property">home__title</span> &#123;</span><br><span class="line">    <span class="attr">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="预构建"><a href="#预构建" class="headerlink" title="预构建"></a>预构建</h3><p>这里主要是两个目的</p>
+<ol>
+<li>性能：很多依赖，比如lodash里面有600+个js文件，如果一个一个文件请求，会产生http的开销(比如不必要的http头)，所以预构建的时候会合成一个请求。</li>
+</ol>
+<p>2.转译cjs和UMD规范的代码。</p>
+<h3 id="文件缓存"><a href="#文件缓存" class="headerlink" title="文件缓存"></a>文件缓存</h3><p>为了优化开发时的性能，vite做了两个缓存。</p>
+<p>在预构建的时候，把预构建的产物存在本地文件系统，这样即使关掉电脑，下次重启也不需要重新预构建，节省了冷启动的时间。</p>
+<p>在浏览器请求js文件的时候，在请求头中加上缓存信息，只要js文件没有被改动，浏览器就无须重新请求文件，节省网络请求的时间。</p>
+<h2 id="vite的生产构建"><a href="#vite的生产构建" class="headerlink" title="vite的生产构建"></a>vite的生产构建</h2><p>vite目前提供的生产构建方案是通过rollup来打包发布，也就是说，现在vite的优势只能发挥在开发的时候，vite不认为基于esm的构建方式适合在生产上使用。</p>
+<p>vite官网指出，esm应用到生产上个问题，那就是http请求开销问题。一个项目涉及的js文件很容易就几百上千个，用esm逐个请求的方式会带来不必要的开销。</p>
+<p>那么为什么不用esbuild来打生产的包？（<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vZXNidWlsZC5naXRodWIuaW8v" title="https://esbuild.github.io/">esbuild<i class="fa fa-external-link-alt"></i></span>是一个基于esm的打包根据，速度比webpack快）</p>
+<p>esbuild主要是处理js和ts文件的，在css处理方面存在问题，而且esbuild在代码分割方面也不如rollup，所以打包工作还是让更成熟的rollup来承担。</p>
+<h2 id="vite对比snowpack"><a href="#vite对比snowpack" class="headerlink" title="vite对比snowpack"></a>vite对比snowpack</h2><p>snowpack是早于vite的一款基于es build的构建工具，vite有有一些设计是参考了snowpack的。但是青出于蓝而胜于蓝的vite有以下的优势:</p>
+<ul>
+<li>支持多出口输出，换言之vite可以同时打包输出多个文件，这在做多入口页面应用时非常有意义</li>
+<li>可以打包成库的模式(毕竟不是所有的工程都是为了输出html，比如vue只是为了输出vuejs)</li>
+<li>自动分割css代码</li>
+<li>异步块加载优化</li>
+<li>对旧浏览器的兼容</li>
+</ul>
+<p>其中，vite的生产构建是基于rollup封装好了的，而snowpack则可以用户自己决定webpack、rollup还是其他构建工具，感觉尤玉溪是真的钟爱rollup，因为vue3也是用的这个，有机会需要学习一下。</p>
+<p>最后说一下自己的看法：vite和snowpack在我看来，区别真不算大。但是使用vite意味着现在webpack打包的那一套配置都得改，甚至可能要修改打包的流水线，某种程度上提高了使用vite的门槛，有可能会阻塞vite的推广。毕竟一项技术能否普及，首先要看市场的需要，其次是上车的门槛和社区生态。但是vite有一个天然的优势就是尤雨溪这个名字，可以让vite获得更高的曝光度，吸引更多人来关注，但是实际应用还是需要尤雨溪团队再推动一下才行。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="Mark 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Mark 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>Mark
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/" title="Vite 初探">https://js-mark.com/2021/08/30/Vite-初探/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/mark_blog">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/Wechat.jpeg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"><i class="fa fa-tag"></i> Javascript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 前端工程化</a>
+              <a href="/tags/Vite/" rel="tag"><i class="fa fa-tag"></i> Vite</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/07/%E4%BD%BF%E7%94%A8Volta%E8%BF%9B%E8%A1%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" rel="prev" title="使用Volta进行版本管理">
+                  <i class="fa fa-angle-left"></i> 使用Volta进行版本管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/12/%E5%A4%9ANode%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE/" rel="next" title="多Node环境设置">
+                  多Node环境设置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mark</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pzLW1hcms=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"https://js-mark.com/2021/08/30/Vite-%E5%88%9D%E6%8E%A2/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"JS-mark","repo":"Js-mark.github.io","client_id":"771111cf1a5ef33c99d5","client_secret":"00254dd1456d8593ede120f4158193706ac7b3fb","admin_user":"JS-mark","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","perPage":10,"pagerDirection":"last","js":{"url":"//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"},"path_md5":"36a9093609c1b1a397f9c5345c0d68d5"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

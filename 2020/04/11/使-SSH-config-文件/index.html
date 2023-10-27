@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"js-mark.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ssh的介绍及使用参看：SSH简介、创建SSH密钥对。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用&#39;SSH config&#39;文件">
+<meta property="og:url" content="https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Mark&#39;s Blog">
+<meta property="og:description" content="ssh的介绍及使用参看：SSH简介、创建SSH密钥对。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T02:38:08.000Z">
+<meta property="article:modified_time" content="2020-06-23T14:09:26.000Z">
+<meta property="article:author" content="Mark">
+<meta property="article:tag" content="全栈开发">
+<meta property="article:tag" content="SSH">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/","path":"/2020/04/11/使-SSH-config-文件/","title":"使用'SSH config'文件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用'SSH config'文件 | Mark's Blog</title>
+  
+
+
+
+
+
+
+
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Mark's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mark's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E9%A1%B9"><span class="nav-number">2.</span> <span class="nav-text">常用配置项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Host"><span class="nav-number">2.1.</span> <span class="nav-text">Host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GlobalKnownHostsFile"><span class="nav-number">2.2.</span> <span class="nav-text">GlobalKnownHostsFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HostName"><span class="nav-number">2.3.</span> <span class="nav-text">HostName</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IdentityFile"><span class="nav-number">2.4.</span> <span class="nav-text">IdentityFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Port"><span class="nav-number">2.5.</span> <span class="nav-text">Port</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User"><span class="nav-number">2.6.</span> <span class="nav-text">User</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UserKnownHostsFile"><span class="nav-number">2.7.</span> <span class="nav-text">UserKnownHostsFile</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E8%AE%A4%E8%AF%81%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F%E4%B8%BA"><span class="nav-number">3.1.</span> <span class="nav-text">密码认证登录方式为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">密钥认证登录方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">使用配置文件方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">4.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E7%9C%8B"><span class="nav-number">5.</span> <span class="nav-text">参看</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mark"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mark</p>
+  <div class="site-description" itemprop="description">Personal Technology Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcms=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JS-mark"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnN1bmR1bzMxOTVAcXEuY29t" title="E-Mail → mailto:sunduo3195@qq.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdS8yMzUzMzgyOTYx" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2353382961"><i class="fab fa-weibo fa-fw"></i></span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mark">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mark's Blog">
+      <meta itemprop="description" content="Personal Technology Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用'SSH config'文件 | Mark's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用'SSH config'文件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-11 10:38:08" itemprop="dateCreated datePublished" datetime="2020-04-11T10:38:08+08:00">2020-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-06-23 22:09:26" itemprop="dateModified" datetime="2020-06-23T22:09:26+08:00">2020-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/SSH/" itemprop="url" rel="index"><span itemprop="name">SSH</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>ssh</code>的介绍及使用参看：<a href="/SSH/SSH-%E7%AE%80%E4%BB%8B/#more" title="SSH 简介"><code>SSH简介</code></a>、<a href="/SSH/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/#more" title="创建 SSH 密钥对"><code>创建SSH密钥对</code></a>。</p>
+<span id="more"></span>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><code>ssh</code>程序可以从以下途径获取配置参数：</p>
+<ol>
+<li>命令行选项</li>
+<li>用户配置文件 (~&#x2F;.ssh&#x2F;config)</li>
+<li>系统配置文件 (&#x2F;etc&#x2F;ssh&#x2F;ssh_config)</li>
+</ol>
+<p>配置文件可分为多个配置区段，每个配置区段使用<code>Host</code>来区分。我们可以在命令行中输入不同的<code>host</code>来加载不同的配置段。</p>
+<p>对每一个配置项来说，首次获取的参数值将被采用，因此通用的设置应该放到文件的后面，特定<code>host</code>相关的配置项应放到文件的前面。</p>
+<h1 id="常用配置项"><a href="#常用配置项" class="headerlink" title="常用配置项"></a>常用配置项</h1><p>下面介绍一些常用的<code>SSH</code>配置项：</p>
+<h2 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h2><p><code>Host</code>配置项标识了一个配置区段。</p>
+<p><code>ssh</code>配置项参数值可以使用通配符：<code>*</code>代表0～n个非空白字符，<code>?</code>代表一个非空白字符，<code>!</code>表示例外通配。</p>
+<p>我们可以在系统配置文件中看到一个匹配所有<code>host</code>的默认配置区段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/ssh/ssh_config | grep &#x27;^Host&#x27;</span><br><span class="line">Host *</span><br></pre></td></tr></table></figure>
+
+<p>这里有一些默认配置项，我们可以在用户配置文件中覆盖这些默认配置。</p>
+<h2 id="GlobalKnownHostsFile"><a href="#GlobalKnownHostsFile" class="headerlink" title="GlobalKnownHostsFile"></a>GlobalKnownHostsFile</h2><p>指定一个或多个全局认证主机缓存文件，用来缓存通过认证的远程主机的密钥，多个文件用空格分隔。默认缓存文件为：&#x2F;etc&#x2F;ssh&#x2F;ssh_known_hosts, &#x2F;etc&#x2F;ssh&#x2F;ssh_known_hosts2.</p>
+<h2 id="HostName"><a href="#HostName" class="headerlink" title="HostName"></a>HostName</h2><p>指定远程主机名，可以直接使用数字IP地址。如果主机名中包含 ‘%h’ ，则实际使用时会被命令行中的主机名替换。</p>
+<h2 id="IdentityFile"><a href="#IdentityFile" class="headerlink" title="IdentityFile"></a>IdentityFile</h2><p>指定密钥认证使用的私钥文件路径。默认为 ~&#x2F;.ssh&#x2F;id_dsa, ~&#x2F;.ssh&#x2F;id_ecdsa, ~&#x2F;.ssh&#x2F;id_ed25519 或 ~&#x2F;.ssh&#x2F;id_rsa 中的一个。文件名称可以使用以下转义符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x27;%d&#x27; 本地用户目录</span><br><span class="line">&#x27;%u&#x27; 本地用户名称</span><br><span class="line">&#x27;%l&#x27; 本地主机名</span><br><span class="line">&#x27;%h&#x27; 远程主机名</span><br><span class="line">&#x27;%r&#x27; 远程用户名</span><br></pre></td></tr></table></figure>
+
+<p>可以指定多个密钥文件，在连接的过程中会依次尝试这些密钥文件。</p>
+<h2 id="Port"><a href="#Port" class="headerlink" title="Port"></a>Port</h2><p>指定远程主机端口号，默认为 22 。</p>
+<h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><p>指定登录用户名。</p>
+<h2 id="UserKnownHostsFile"><a href="#UserKnownHostsFile" class="headerlink" title="UserKnownHostsFile"></a>UserKnownHostsFile</h2><p>指定一个或多个用户认证主机缓存文件，用来缓存通过认证的远程主机的密钥，多个文件用空格分隔。默认缓存文件为： ~&#x2F;.ssh&#x2F;known_hosts, ~&#x2F;.ssh&#x2F;known_hosts2.</p>
+<p>还有更多参数的介绍，可以参看用户手册：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man ssh config</span><br></pre></td></tr></table></figure>
+
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ul>
+<li>以下连接为例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SSH 服务器： ssh.test.com</span><br><span class="line">端口号： 2200</span><br><span class="line">账户： user</span><br><span class="line">密钥文件： ~/.ssh/id_rsa_test</span><br></pre></td></tr></table></figure>
+
+<h2 id="密码认证登录方式为"><a href="#密码认证登录方式为" class="headerlink" title="密码认证登录方式为"></a>密码认证登录方式为</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -p 2200 -i ~/.ssh/id_rsa_test user@ssh.test.com</span><br><span class="line">user@ssh.test.com&#x27;s password:</span><br></pre></td></tr></table></figure>
+
+<h2 id="密钥认证登录方式"><a href="#密钥认证登录方式" class="headerlink" title="密钥认证登录方式"></a>密钥认证登录方式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i ~/.ssh/id_rsa_test user@ssh.test.com</span><br><span class="line">/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</span><br><span class="line">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</span><br><span class="line">user@ssh.test.com&#x27;s password:</span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   &quot;ssh &#x27;user@ssh.test.com&#x27;&quot;</span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br><span class="line"></span><br><span class="line">$ ssh user@ssh.test.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用配置文件方式"><a href="#使用配置文件方式" class="headerlink" title="使用配置文件方式"></a>使用配置文件方式</h2><ul>
+<li>有如下配置文件：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ vim ~/.ssh/config</span><br><span class="line">Host sshtest</span><br><span class="line">    HostName ssh.test.com</span><br><span class="line">    User user</span><br><span class="line">    Port 2200</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_test</span><br><span class="line"></span><br><span class="line">Host ssttest2</span><br><span class="line">    HostName ssh.test2.com</span><br><span class="line">    User user2</span><br><span class="line">    Port 2345</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_test2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用配置文件登录：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh sshtest</span><br></pre></td></tr></table></figure>
+
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
+<li><p>1. Ubuntu</p>
+</li>
+<li><p>2. macOs High Sierra(10.13.2)</p>
+</li>
+</ul>
+<h1 id="参看"><a href="#参看" class="headerlink" title="参看"></a>参看</h1><p><a href="/SSH/SSH-%E7%AE%80%E4%BB%8B/#more" title="SSH 简介">SSH简介</a></p>
+<p><a href="/SSH/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/#more" title="创建 SSH 密钥对">创建 SSH 密钥对</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="Mark 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Mark 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Mark： </strong>Mark
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/" title="使用&#39;SSH config&#39;文件">https://js-mark.com/2020/04/11/使-SSH-config-文件/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/mark_blog">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/Wechat.jpeg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> 全栈开发</a>
+              <a href="/tags/SSH/" rel="tag"><i class="fa fa-tag"></i> SSH</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/11/SSH-%E7%AE%80%E4%BB%8B/" rel="prev" title="SSH 简介">
+                  <i class="fa fa-angle-left"></i> SSH 简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/" rel="next" title="修改了SSH默认端口之后，如何配置git？">
+                  修改了SSH默认端口之后，如何配置git？ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mark</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pzLW1hcms=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"https://js-mark.com/2020/04/11/%E4%BD%BF-SSH-config-%E6%96%87%E4%BB%B6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"JS-mark","repo":"Js-mark.github.io","client_id":"771111cf1a5ef33c99d5","client_secret":"00254dd1456d8593ede120f4158193706ac7b3fb","admin_user":"JS-mark","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","perPage":10,"pagerDirection":"last","js":{"url":"//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"},"path_md5":"8a734ec8754ed4a45dbf6a6e9decb9e1"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
