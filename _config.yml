@@ -8,7 +8,7 @@ subtitle:
 description: Personal Technology Blog
 author: Mark
 language: zh-CN
-timezone: 'Asia/Shanghai'
+timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -37,6 +37,9 @@ external_link:
 filename_case: 0
 render_drafts: true
 post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 highlight:

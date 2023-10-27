@@ -565,11 +565,11 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: changyan | disqus | disqusjs | gitalk | livere | valine
-  active: valine
+  active: gitalk
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
-  lazyload: false
+  lazyload: true
   # Modify texts or order for any navs, here are some examples.
   nav:
     #disqus:
@@ -751,9 +751,10 @@ gitalk:
   github_id: JS-mark # GitHub repo owner
   repo: Js-mark.github.io # Repository name to store issues
   perPage: 10
+  pagerDirection: last
   client_id: 771111cf1a5ef33c99d5 # GitHub Application Client ID
   client_secret: 00254dd1456d8593ede120f4158193706ac7b3fb # GitHub Application Client Secret
-  admin_user: ['JS-mark'] # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  admin_user: 'JS-mark' # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
