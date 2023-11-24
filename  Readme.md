@@ -6,6 +6,8 @@
 # 执行开发构建的server
 hexo s
 # 创建一篇新文章
+hexo new post xx
+# 创建新页面
 hexo new page xx
 ```
 
