@@ -7,12 +7,9 @@ jobs:
       - checkout
       - run: node --version
       - run:
-          name: Update NPM
-          command: npm install -g npm@latest
-      - run:
           name: Install Hexo CLI
           command: |
-            sudo npm install hexo-cli -g
+            npm install hexo-cli -g
       - restore_cache:
           key: node-cache-{{ checksum "package-lock.json" }}
       - run:
