@@ -90,7 +90,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">45</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">48</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">31</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -155,18 +155,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -210,6 +210,100 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://js-mark.com/2020/04/11/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mark">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mark's Blog">
+      <meta itemprop="description" content="Personal Technology Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Mark's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/11/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/" class="post-title-link" itemprop="url">创建SSH密钥对</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-11 10:54:43" itemprop="dateCreated datePublished" datetime="2020-04-11T10:54:43+00:00">2020-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/SSH/" itemprop="url" rel="index"><span itemprop="name">SSH</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>SSH 密钥对可以让用户无需输入密码即可登录到 SSH 服务器中。由于登录的过程不需要密码，因此可以防止由于密码被拦截、破解造成的账户密码泄露。再加上密码短语(passphrase)的使用，使得 SSH 的安全性更高一层。</p>
+<p>SSH 密钥对总是一把公钥、一把私钥的成对出现；公钥可以自由的添加到远程 SSH 服务器中用来验证用户是否合法；私钥相当于自己的身份认证，需要妥善保存不能泄露。</p>
+<p>SSH 密钥的其使用原理很简单：用户将公钥添加到远程主机中，登录的时候，远程主机会向用户发送一段随即字符串，用户使用自己的私钥加密后，再发送到远程主机。远程主机使用本地存储的公钥进行解密，如果成功，证明用户时可信的，直接允许登录 shell ，不再要求密码。这样就保证了整个登录过程的安全，防止了中间人攻击。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/11/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://js-mark.com/2020/04/11/SSH-%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -239,14 +333,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-04-11 10:47:31" itemprop="dateCreated datePublished" datetime="2020-04-11T10:47:31+08:00">2020-04-11</time>
+      <time title="创建时间：2020-04-11 10:47:31" itemprop="dateCreated datePublished" datetime="2020-04-11T10:47:31+00:00">2020-04-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-17 16:47:32" itemprop="dateModified" datetime="2020-04-17T16:47:32+08:00">2020-04-17</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,14 +429,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-04-11 10:38:08" itemprop="dateCreated datePublished" datetime="2020-04-11T10:38:08+08:00">2020-04-11</time>
+      <time title="创建时间：2020-04-11 10:38:08" itemprop="dateCreated datePublished" datetime="2020-04-11T10:38:08+00:00">2020-04-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-06-23 22:09:26" itemprop="dateModified" datetime="2020-06-23T22:09:26+08:00">2020-06-23</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -427,14 +521,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-01-19 23:24:30" itemprop="dateCreated datePublished" datetime="2020-01-19T23:24:30+08:00">2020-01-19</time>
+      <time title="创建时间：2020-01-19 23:24:30" itemprop="dateCreated datePublished" datetime="2020-01-19T23:24:30+00:00">2020-01-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-07 01:52:37" itemprop="dateModified" datetime="2020-04-07T01:52:37+08:00">2020-04-07</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -457,7 +551,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjMTAzOyYjeDY5OyYjMTE2OyYjNjQ7JiMxMjA7JiN4Nzg7JiN4Nzg7JiN4MmU7JiM5OTsmIzExMTsmI3g2ZDs=">&#103;&#x69;&#116;&#64;&#120;&#x78;&#x78;&#x2e;&#99;&#111;&#x6d;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjeDY5OyYjMTE2OyYjNjQ7JiMxMjA7JiN4Nzg7JiN4Nzg7JiM0NjsmIzk5OyYjeDZmOyYjeDZkOw==">&#x67;&#x69;&#116;&#64;&#120;&#x78;&#x78;&#46;&#99;&#x6f;&#x6d;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/#more" rel="contents">
@@ -520,14 +614,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-06-10 09:44:40" itemprop="dateCreated datePublished" datetime="2019-06-10T09:44:40+08:00">2019-06-10</time>
+      <time title="创建时间：2019-06-10 09:44:40" itemprop="dateCreated datePublished" datetime="2019-06-10T09:44:40+00:00">2019-06-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-17 16:50:41" itemprop="dateModified" datetime="2020-04-17T16:50:41+08:00">2020-04-17</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -619,14 +713,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-05-28 15:51:21" itemprop="dateCreated datePublished" datetime="2019-05-28T15:51:21+08:00">2019-05-28</time>
+      <time title="创建时间：2019-05-28 15:51:21" itemprop="dateCreated datePublished" datetime="2019-05-28T15:51:21+00:00">2019-05-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-17 16:49:49" itemprop="dateModified" datetime="2020-04-17T16:49:49+08:00">2020-04-17</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -714,14 +808,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-05-28 14:59:35" itemprop="dateCreated datePublished" datetime="2019-05-28T14:59:35+08:00">2019-05-28</time>
+      <time title="创建时间：2019-05-28 14:59:35" itemprop="dateCreated datePublished" datetime="2019-05-28T14:59:35+00:00">2019-05-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-17 16:47:24" itemprop="dateModified" datetime="2020-04-17T16:47:24+08:00">2020-04-17</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -809,14 +903,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-03-25 14:51:56" itemprop="dateCreated datePublished" datetime="2019-03-25T14:51:56+08:00">2019-03-25</time>
+      <time title="创建时间：2019-03-25 14:51:56" itemprop="dateCreated datePublished" datetime="2019-03-25T14:51:56+00:00">2019-03-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-06-12 19:04:10" itemprop="dateModified" datetime="2020-06-12T19:04:10+08:00">2020-06-12</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -901,14 +995,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-03-25 14:10:48" itemprop="dateCreated datePublished" datetime="2019-03-25T14:10:48+08:00">2019-03-25</time>
+      <time title="创建时间：2019-03-25 14:10:48" itemprop="dateCreated datePublished" datetime="2019-03-25T14:10:48+00:00">2019-03-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-07 22:39:20" itemprop="dateModified" datetime="2020-04-07T22:39:20+08:00">2020-04-07</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -994,14 +1088,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-01-29 09:15:16" itemprop="dateCreated datePublished" datetime="2019-01-29T09:15:16+08:00">2019-01-29</time>
+      <time title="创建时间：2019-01-29 09:15:16" itemprop="dateCreated datePublished" datetime="2019-01-29T09:15:16+00:00">2019-01-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-17 16:47:03" itemprop="dateModified" datetime="2020-04-17T16:47:03+08:00">2020-04-17</time>
+      <time title="修改时间：2023-11-24 07:10:38" itemprop="dateModified" datetime="2023-11-24T07:10:38+00:00">2023-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1049,103 +1143,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://js-mark.com/2018/12/24/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Mark">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mark's Blog">
-      <meta itemprop="description" content="Personal Technology Blog">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Mark's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/24/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">shell脚本学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-12-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-24T00:00:00+08:00">2018-12-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2020-04-07 22:40:02" itemprop="dateModified" datetime="2020-04-07T22:40:02+08:00">2020-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">系统命令</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
-<li>为什么学习脚本编写???</li>
-<li>你有没有遇到过这样场景，繁杂并且重复的操作 N 多件~~~</li>
-<li>那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）<br><img data-src="/assets/img/2018/12/20150424040700733.jpg" alt="image"><br>好了！那么我们步入今天的正题！
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/24/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

@@ -448,75 +448,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vite 初探</title>
-    <url>//2021/08/30/Vite-%E5%88%9D%E6%8E%A2/</url>
-    <content><![CDATA[<p>注：转载于<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTM2ODAwNTUxMjM3NTgyODg0">前端工程化 – vite 初探<i class="fa fa-external-link-alt"></i></span></p>
-<p>春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？</p>
-<p>vite官方介绍地址: <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vdml0ZWpzLmRldi9ndWlkZS93aHkuaHRtbCUyM3Nsb3ctc2VydmVyLXN0YXJ0" title="https://vitejs.dev/guide/why.html#slow-server-start">vitejs.dev&#x2F;guide&#x2F;why.h…<i class="fa fa-external-link-alt"></i></span></p>
-<span id="more"></span>
-<p>首先我们要知道，vite为何而诞生？</p>
-<h2 id="为什么需要打包工具？"><a href="#为什么需要打包工具？" class="headerlink" title="为什么需要打包工具？"></a>为什么需要打包工具？</h2><p>在前端工程化的今天，前端的技术栈越来越丰富，配套的工具也越来越多，为了提升前端的开发效率各种各样框架是层出不穷，</p>
-<p>但是，随着前端项目越来越大，造成了项目依赖越来越多，而这些依赖又会有着自己的依赖，这就造成了很大的一棵依赖树，打开一个项目的node_modules目录看看，随随便便就有上百个文件夹。加上之前JavaScript 一直没有模块（module）体系，社区为此制定了一些模块加载方法，但是不同的依赖项目使用不同的加载方法。而浏览器并不支持这些加载方法，因此我们的js代码只能打包后才能在浏览器运行，因此之前的前端开发一直需要打包工具。</p>
-<p>打包工具帮助我们实现了前端工程化，但是随着依赖越来越多，我们打包构建的速度越来越慢，并且开发中如果改动代码，热更新时还可以丢失当前正在进行的工作，vite就是为了解决这些问题而诞生的。</p>
-<p>毫无疑问，vite最诱人的特性有以下两点：</p>
-<ul>
-<li>极快的冷启动速度</li>
-<li>极快的热更新速度</li>
-</ul>
-<p>我们知道，es6中加入了模块这个特性，为的就是能有一个统一的文件加载标准，让浏览器能够根据这个标准去加载我们的代码，这样就可以提升前端开发的效率。</p>
-<p>为何vite在冷启动和热更新性能上面可以比现代的构建工具更优秀？</p>
-<h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>比如webpack，在我们往命令行中输入npm run命令把项目启动起来的时候，webpack需要把我们的依赖读出来，打包成一个一个浏览器可以识别的js文件，打包结束后，我们的服务器才真正可用。但是依赖是树状的，我们知道树的层级越深，遍历的开销就越大，这是造成webpack在热更新和冷启动上效率不高的主要原因。</p>
-<p>我们来看看vite官网的图，webpack需要根据我们提供的文件入口去搜集依赖(由于依赖树太深，因此webpack做了很多工作希望能实现按需加载)，然后打包输出浏览器可以识别的文件，打包结束后我们的前端服务器才真正开始工作</p>
-<p><img data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp"></p>
-<p>根据vite官网的图，vite是通过接受浏览器的url，来识别所需的哪些依赖，由于vite是针对es module(下文统称esm)的，es module是可以直接被浏览器识别的，因此输入命令后，项目不需要打包就可用，而且可以根据url所需的文件去返回js代码，做到了真正的按需加载。而对于非esm标准的代码，vite则是转化成esm标准的代码。 <img data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3bfc28338f14f2ab6a25ba0f33c856c~tplv-k3u1fbpfcp-watermark.awebp"></p>
-<p>由于webpack是把js代码打包好，当收到请求就直接返回跟浏览器(往往一个请求就可以拿到全部需要的js代码给浏览器执行，代码太多的时候则会拆分成几个文件)，而vite则是收到请求之后才去找代码，而依赖很多，可能会需要浏览器加载很多的js文件，这就可能要发很多个请求才能拿到全部的js代码，这会不会造成网络的波动？有木有可能造成页面加载的时间过长？</p>
-<p>vite针对这种情况,在收到请求时做了一个叫pre-bundle的优化，也就是</p>
-<ul>
-<li>把非esm的js代码转换成esm代码</li>
-<li>把一个依赖打成一个一个js文件返回给前端(而不是每个文件独立返回，比如lodash-es这个依赖有600多个内部模块，最终只会返回lodash-es这一个文件，里面包含了全部的内部模块)，避免网络波动，过度占用网络端口(这里会把打包的代码放在node_modules&#x2F;.vite&#x2F;下)</li>
-<li>在请求js代码时加入了缓存信息在http请求的头部，实现浏览器缓存</li>
-<li>对于monorepo，vite会把依赖的项目也一起通过esm的方式引入进来</li>
-</ul>
-<h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>热更新时，webpack由于是树状的依赖，因此其中的每一个节点改变，其祖先节点都需要重新编译加载(其实在应用中感觉开销比想象中更大)。并且由于热更新导致页面重新加载，页面上原本的状态也会丢失。（具体的原理还需要深入学习一下）</p>
-<p>而vite由于基于esm，一个节点改变，大部分情况下那就只要重新请求这个节点就好了，我们知道算法中O(1)和O(n)区别还是很大的。并且vite热更新的时候，会在请求头中加入缓存的信息，服务器对于没有修改的文件返回304，极大程度的避免了不必要的重新加载</p>
-<h2 id="vite的其他能力"><a href="#vite的其他能力" class="headerlink" title="vite的其他能力"></a>vite的其他能力</h2><h3 id="typescript"><a href="#typescript" class="headerlink" title="typescript"></a>typescript</h3><p>Vite仅执行.t 文件的转译工作，并不执行任何类型检查(请确保ts错误都已经处理完)。Vite 使用 esbuild 将 TypeScript 转译到 JavaScript，约是 tsc 速度的 20~30 倍</p>
-<h3 id="ssr-ssg"><a href="#ssr-ssg" class="headerlink" title="ssr&#x2F;ssg"></a>ssr&#x2F;ssg</h3><p>vite的官网很明确的说vite对ssr(服务端渲染)和ssg(静态页面生成)的特性还不稳定，而且由于笔者对这两块都不怎么了解，因此暂不介绍</p>
-<h3 id="sass-less"><a href="#sass-less" class="headerlink" title="sass&#x2F;less"></a>sass&#x2F;less</h3><p>vite支持css预处理器如less和sass，如果在css文件的后缀名中加入<code>.module</code>，vite会把css文件识别成模块，于是可以像使用对象由于使用css。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">./index.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">&#x27;./style.module.scss&#x27;</span>;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;style[</span>&#x27;<span class="attr">home__title</span>&#x27;]&#125; /&gt;</span></span></span><br><span class="line"></span><br><span class="line">./style.<span class="property">module</span>.<span class="property">scss</span></span><br><span class="line">.<span class="property">home__title</span> &#123;</span><br><span class="line">    <span class="attr">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="预构建"><a href="#预构建" class="headerlink" title="预构建"></a>预构建</h3><p>这里主要是两个目的</p>
-<ol>
-<li>性能：很多依赖，比如lodash里面有600+个js文件，如果一个一个文件请求，会产生http的开销(比如不必要的http头)，所以预构建的时候会合成一个请求。</li>
-</ol>
-<p>2.转译cjs和UMD规范的代码。</p>
-<h3 id="文件缓存"><a href="#文件缓存" class="headerlink" title="文件缓存"></a>文件缓存</h3><p>为了优化开发时的性能，vite做了两个缓存。</p>
-<p>在预构建的时候，把预构建的产物存在本地文件系统，这样即使关掉电脑，下次重启也不需要重新预构建，节省了冷启动的时间。</p>
-<p>在浏览器请求js文件的时候，在请求头中加上缓存信息，只要js文件没有被改动，浏览器就无须重新请求文件，节省网络请求的时间。</p>
-<h2 id="vite的生产构建"><a href="#vite的生产构建" class="headerlink" title="vite的生产构建"></a>vite的生产构建</h2><p>vite目前提供的生产构建方案是通过rollup来打包发布，也就是说，现在vite的优势只能发挥在开发的时候，vite不认为基于esm的构建方式适合在生产上使用。</p>
-<p>vite官网指出，esm应用到生产上个问题，那就是http请求开销问题。一个项目涉及的js文件很容易就几百上千个，用esm逐个请求的方式会带来不必要的开销。</p>
-<p>那么为什么不用esbuild来打生产的包？（<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vZXNidWlsZC5naXRodWIuaW8v" title="https://esbuild.github.io/">esbuild<i class="fa fa-external-link-alt"></i></span>是一个基于esm的打包根据，速度比webpack快）</p>
-<p>esbuild主要是处理js和ts文件的，在css处理方面存在问题，而且esbuild在代码分割方面也不如rollup，所以打包工作还是让更成熟的rollup来承担。</p>
-<h2 id="vite对比snowpack"><a href="#vite对比snowpack" class="headerlink" title="vite对比snowpack"></a>vite对比snowpack</h2><p>snowpack是早于vite的一款基于es build的构建工具，vite有有一些设计是参考了snowpack的。但是青出于蓝而胜于蓝的vite有以下的优势:</p>
-<ul>
-<li>支持多出口输出，换言之vite可以同时打包输出多个文件，这在做多入口页面应用时非常有意义</li>
-<li>可以打包成库的模式(毕竟不是所有的工程都是为了输出html，比如vue只是为了输出vuejs)</li>
-<li>自动分割css代码</li>
-<li>异步块加载优化</li>
-<li>对旧浏览器的兼容</li>
-</ul>
-<p>其中，vite的生产构建是基于rollup封装好了的，而snowpack则可以用户自己决定webpack、rollup还是其他构建工具，感觉尤玉溪是真的钟爱rollup，因为vue3也是用的这个，有机会需要学习一下。</p>
-<p>最后说一下自己的看法：vite和snowpack在我看来，区别真不算大。但是使用vite意味着现在webpack打包的那一套配置都得改，甚至可能要修改打包的流水线，某种程度上提高了使用vite的门槛，有可能会阻塞vite的推广。毕竟一项技术能否普及，首先要看市场的需要，其次是上车的门槛和社区生态。但是vite有一个天然的优势就是尤雨溪这个名字，可以让vite获得更高的曝光度，吸引更多人来关注，但是实际应用还是需要尤雨溪团队再推动一下才行。</p>
-]]></content>
-      <categories>
-        <category>前端工程化</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
-        <tag>前端工程化</tag>
-        <tag>Vite</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SSH 简介</title>
     <url>//2020/04/11/SSH-%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<p>SSH(即 Secure Shell)，是一项创建在应用层和传输层基础上的安全协议，为计算机 Shell 提供安全的传输和使用环境。</p>
@@ -592,6 +523,117 @@
       <tags>
         <tag>全栈开发</tag>
         <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vite 初探</title>
+    <url>//2021/08/30/Vite-%E5%88%9D%E6%8E%A2/</url>
+    <content><![CDATA[<p>注：转载于<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTM2ODAwNTUxMjM3NTgyODg0">前端工程化 – vite 初探<i class="fa fa-external-link-alt"></i></span></p>
+<p>春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？</p>
+<p>vite官方介绍地址: <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vdml0ZWpzLmRldi9ndWlkZS93aHkuaHRtbCUyM3Nsb3ctc2VydmVyLXN0YXJ0" title="https://vitejs.dev/guide/why.html#slow-server-start">vitejs.dev&#x2F;guide&#x2F;why.h…<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+<p>首先我们要知道，vite为何而诞生？</p>
+<h2 id="为什么需要打包工具？"><a href="#为什么需要打包工具？" class="headerlink" title="为什么需要打包工具？"></a>为什么需要打包工具？</h2><p>在前端工程化的今天，前端的技术栈越来越丰富，配套的工具也越来越多，为了提升前端的开发效率各种各样框架是层出不穷，</p>
+<p>但是，随着前端项目越来越大，造成了项目依赖越来越多，而这些依赖又会有着自己的依赖，这就造成了很大的一棵依赖树，打开一个项目的node_modules目录看看，随随便便就有上百个文件夹。加上之前JavaScript 一直没有模块（module）体系，社区为此制定了一些模块加载方法，但是不同的依赖项目使用不同的加载方法。而浏览器并不支持这些加载方法，因此我们的js代码只能打包后才能在浏览器运行，因此之前的前端开发一直需要打包工具。</p>
+<p>打包工具帮助我们实现了前端工程化，但是随着依赖越来越多，我们打包构建的速度越来越慢，并且开发中如果改动代码，热更新时还可以丢失当前正在进行的工作，vite就是为了解决这些问题而诞生的。</p>
+<p>毫无疑问，vite最诱人的特性有以下两点：</p>
+<ul>
+<li>极快的冷启动速度</li>
+<li>极快的热更新速度</li>
+</ul>
+<p>我们知道，es6中加入了模块这个特性，为的就是能有一个统一的文件加载标准，让浏览器能够根据这个标准去加载我们的代码，这样就可以提升前端开发的效率。</p>
+<p>为何vite在冷启动和热更新性能上面可以比现代的构建工具更优秀？</p>
+<h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>比如webpack，在我们往命令行中输入npm run命令把项目启动起来的时候，webpack需要把我们的依赖读出来，打包成一个一个浏览器可以识别的js文件，打包结束后，我们的服务器才真正可用。但是依赖是树状的，我们知道树的层级越深，遍历的开销就越大，这是造成webpack在热更新和冷启动上效率不高的主要原因。</p>
+<p>我们来看看vite官网的图，webpack需要根据我们提供的文件入口去搜集依赖(由于依赖树太深，因此webpack做了很多工作希望能实现按需加载)，然后打包输出浏览器可以识别的文件，打包结束后我们的前端服务器才真正开始工作</p>
+<p><img data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp"></p>
+<p>根据vite官网的图，vite是通过接受浏览器的url，来识别所需的哪些依赖，由于vite是针对es module(下文统称esm)的，es module是可以直接被浏览器识别的，因此输入命令后，项目不需要打包就可用，而且可以根据url所需的文件去返回js代码，做到了真正的按需加载。而对于非esm标准的代码，vite则是转化成esm标准的代码。 <img data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3bfc28338f14f2ab6a25ba0f33c856c~tplv-k3u1fbpfcp-watermark.awebp"></p>
+<p>由于webpack是把js代码打包好，当收到请求就直接返回跟浏览器(往往一个请求就可以拿到全部需要的js代码给浏览器执行，代码太多的时候则会拆分成几个文件)，而vite则是收到请求之后才去找代码，而依赖很多，可能会需要浏览器加载很多的js文件，这就可能要发很多个请求才能拿到全部的js代码，这会不会造成网络的波动？有木有可能造成页面加载的时间过长？</p>
+<p>vite针对这种情况,在收到请求时做了一个叫pre-bundle的优化，也就是</p>
+<ul>
+<li>把非esm的js代码转换成esm代码</li>
+<li>把一个依赖打成一个一个js文件返回给前端(而不是每个文件独立返回，比如lodash-es这个依赖有600多个内部模块，最终只会返回lodash-es这一个文件，里面包含了全部的内部模块)，避免网络波动，过度占用网络端口(这里会把打包的代码放在node_modules&#x2F;.vite&#x2F;下)</li>
+<li>在请求js代码时加入了缓存信息在http请求的头部，实现浏览器缓存</li>
+<li>对于monorepo，vite会把依赖的项目也一起通过esm的方式引入进来</li>
+</ul>
+<h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>热更新时，webpack由于是树状的依赖，因此其中的每一个节点改变，其祖先节点都需要重新编译加载(其实在应用中感觉开销比想象中更大)。并且由于热更新导致页面重新加载，页面上原本的状态也会丢失。（具体的原理还需要深入学习一下）</p>
+<p>而vite由于基于esm，一个节点改变，大部分情况下那就只要重新请求这个节点就好了，我们知道算法中O(1)和O(n)区别还是很大的。并且vite热更新的时候，会在请求头中加入缓存的信息，服务器对于没有修改的文件返回304，极大程度的避免了不必要的重新加载</p>
+<h2 id="vite的其他能力"><a href="#vite的其他能力" class="headerlink" title="vite的其他能力"></a>vite的其他能力</h2><h3 id="typescript"><a href="#typescript" class="headerlink" title="typescript"></a>typescript</h3><p>Vite仅执行.t 文件的转译工作，并不执行任何类型检查(请确保ts错误都已经处理完)。Vite 使用 esbuild 将 TypeScript 转译到 JavaScript，约是 tsc 速度的 20~30 倍</p>
+<h3 id="ssr-ssg"><a href="#ssr-ssg" class="headerlink" title="ssr&#x2F;ssg"></a>ssr&#x2F;ssg</h3><p>vite的官网很明确的说vite对ssr(服务端渲染)和ssg(静态页面生成)的特性还不稳定，而且由于笔者对这两块都不怎么了解，因此暂不介绍</p>
+<h3 id="sass-less"><a href="#sass-less" class="headerlink" title="sass&#x2F;less"></a>sass&#x2F;less</h3><p>vite支持css预处理器如less和sass，如果在css文件的后缀名中加入<code>.module</code>，vite会把css文件识别成模块，于是可以像使用对象由于使用css。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">./index.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">&#x27;./style.module.scss&#x27;</span>;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;style[</span>&#x27;<span class="attr">home__title</span>&#x27;]&#125; /&gt;</span></span></span><br><span class="line"></span><br><span class="line">./style.<span class="property">module</span>.<span class="property">scss</span></span><br><span class="line">.<span class="property">home__title</span> &#123;</span><br><span class="line">    <span class="attr">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="预构建"><a href="#预构建" class="headerlink" title="预构建"></a>预构建</h3><p>这里主要是两个目的</p>
+<ol>
+<li>性能：很多依赖，比如lodash里面有600+个js文件，如果一个一个文件请求，会产生http的开销(比如不必要的http头)，所以预构建的时候会合成一个请求。</li>
+</ol>
+<p>2.转译cjs和UMD规范的代码。</p>
+<h3 id="文件缓存"><a href="#文件缓存" class="headerlink" title="文件缓存"></a>文件缓存</h3><p>为了优化开发时的性能，vite做了两个缓存。</p>
+<p>在预构建的时候，把预构建的产物存在本地文件系统，这样即使关掉电脑，下次重启也不需要重新预构建，节省了冷启动的时间。</p>
+<p>在浏览器请求js文件的时候，在请求头中加上缓存信息，只要js文件没有被改动，浏览器就无须重新请求文件，节省网络请求的时间。</p>
+<h2 id="vite的生产构建"><a href="#vite的生产构建" class="headerlink" title="vite的生产构建"></a>vite的生产构建</h2><p>vite目前提供的生产构建方案是通过rollup来打包发布，也就是说，现在vite的优势只能发挥在开发的时候，vite不认为基于esm的构建方式适合在生产上使用。</p>
+<p>vite官网指出，esm应用到生产上个问题，那就是http请求开销问题。一个项目涉及的js文件很容易就几百上千个，用esm逐个请求的方式会带来不必要的开销。</p>
+<p>那么为什么不用esbuild来打生产的包？（<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vZXNidWlsZC5naXRodWIuaW8v" title="https://esbuild.github.io/">esbuild<i class="fa fa-external-link-alt"></i></span>是一个基于esm的打包根据，速度比webpack快）</p>
+<p>esbuild主要是处理js和ts文件的，在css处理方面存在问题，而且esbuild在代码分割方面也不如rollup，所以打包工作还是让更成熟的rollup来承担。</p>
+<h2 id="vite对比snowpack"><a href="#vite对比snowpack" class="headerlink" title="vite对比snowpack"></a>vite对比snowpack</h2><p>snowpack是早于vite的一款基于es build的构建工具，vite有有一些设计是参考了snowpack的。但是青出于蓝而胜于蓝的vite有以下的优势:</p>
+<ul>
+<li>支持多出口输出，换言之vite可以同时打包输出多个文件，这在做多入口页面应用时非常有意义</li>
+<li>可以打包成库的模式(毕竟不是所有的工程都是为了输出html，比如vue只是为了输出vuejs)</li>
+<li>自动分割css代码</li>
+<li>异步块加载优化</li>
+<li>对旧浏览器的兼容</li>
+</ul>
+<p>其中，vite的生产构建是基于rollup封装好了的，而snowpack则可以用户自己决定webpack、rollup还是其他构建工具，感觉尤玉溪是真的钟爱rollup，因为vue3也是用的这个，有机会需要学习一下。</p>
+<p>最后说一下自己的看法：vite和snowpack在我看来，区别真不算大。但是使用vite意味着现在webpack打包的那一套配置都得改，甚至可能要修改打包的流水线，某种程度上提高了使用vite的门槛，有可能会阻塞vite的推广。毕竟一项技术能否普及，首先要看市场的需要，其次是上车的门槛和社区生态。但是vite有一个天然的优势就是尤雨溪这个名字，可以让vite获得更高的曝光度，吸引更多人来关注，但是实际应用还是需要尤雨溪团队再推动一下才行。</p>
+]]></content>
+      <categories>
+        <category>前端工程化</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>前端工程化</tag>
+        <tag>Vite</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初探Vue3.0新特性(未完待续)</title>
+    <url>//2018/12/10/Vue3.0/</url>
+    <content><![CDATA[<p align="center"><a href="#" target="_blank" rel="noopener noreferrer">
+<img
+  width="200"
+  height="200"
+  data-src="https://cn.vuejs.org/images/logo.png"
+  alt="Vue"></a></p>
+
+<blockquote>
+<h3 id="初探-Vue3-0-新特性"><a href="#初探-Vue3-0-新特性" class="headerlink" title="初探 Vue3.0 新特性"></a>初探 Vue3.0 新特性</h3><p>&emsp;“ 我已经学不动了，只有神可以挽救一下我的膝盖—-” 自 2016 年 10 月 1 日 Vue2.0 版本发布以来到目前为止已经将近快两年的时间了。在这两年里，前端领域风云变化，各种框架层出不穷。小程序横空出世，angular 已经迭代到 angular6,从 angular2 开始已经基本上是将 angularjs 推倒重来，蜕变升级。等等。。。在这两年里，我们看到了太多的框架出现和消失，前端框架基本上是 vue react angular 三足鼎立。感谢各位开源大大，是你们推动了整个前端领域的快速发展。<br>&emsp;与此同时，面对一时间涌现的那么多种前端框架，很多小伙伴们都会感觉力不从心，甚至还出现了众多用户到某知名开源项目上留言：“求求你别写了，我们学不动了~~”<br>&emsp;今天，Vue 的主要开发者尤小右在微博上透露了 Vue3.0 的开发计划，快来看看有哪些新改变吧。</p>
+</blockquote>
+<p><img data-src="/assets/img/2018/12/vue3.0.png" alt="image"></p>
+<blockquote>
+<h3 id="9月30日，尤雨溪在medium个人博客上发布了vue3-0的开发思路，国内有翻译的版本，见文章最后的参考链接。3-0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。"><a href="#9月30日，尤雨溪在medium个人博客上发布了vue3-0的开发思路，国内有翻译的版本，见文章最后的参考链接。3-0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。" class="headerlink" title="9月30日，尤雨溪在medium个人博客上发布了vue3.0的开发思路，国内有翻译的版本，见文章最后的参考链接。3.0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。"></a>9月30日，尤雨溪在medium个人博客上发布了vue3.0的开发思路，国内有翻译的版本，见文章最后的参考链接。3.0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。</h3><p>1.Virtual DOM 完全重写，mounting &amp; patching 提速  100% ;<br>2.更多编译时（compile-time）提醒以减少 runtime 开销;<br>3.基于 Proxy 观察者机制以满足全语言覆盖及更好的性能;<br>4.放弃 Object.defineProperty ，使用更快的原生 Proxy;<br>5.组件实例初始化速度提高 100％;<br>6.提速一倍&#x2F;内存使用降低一半。</p>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<h3 id="对于-3-0-的-proxy-特性有必要讲一讲"><a href="#对于-3-0-的-proxy-特性有必要讲一讲" class="headerlink" title="对于 3.0 的 proxy 特性有必要讲一讲"></a>对于 3.0 的 proxy 特性有必要讲一讲</h3><p>对于这个观察者机制的变更，给我带来的好处简直不言而喻。（我们终于不再担心目前官网上提的那个检测数组&#x2F;检测对象变更了）</p>
+</blockquote>
+<p>&emsp;不久前，也就是11月14日-16日于多伦多举办的 VueConf TO 2018 大会上，尤雨溪发表了名为 Vue3.0 Updates 的主题演讲，对 Vue3.0 的更新计划、方向进行了详细阐述（感兴趣的小伙伴可以看看完整的 [PPT](<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2ds5Yid5o6iLw==">https://docs.googl初探<i class="fa fa-external-link-alt"></i></span> Vue3.0 新特性e.com&#x2F;presentation&#x2F;d&#x2F;1yhPGyhQrJcpJI2ZFvBme3pGKaGNiLi709c37svivv0o&#x2F;edit?usp&#x3D;sharing)），表示已经放弃使用了 Object.defineProperty，而选择了使用更快的原生 Proxy !!<br>&emsp;这将会消除了之前 Vue2.x 中基于 Object.defineProperty 的实现所存在的很多限制：无法监听 属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！</p>
+<p><img data-src="/assets/img/2018/12/1.png" alt="image"><br><img data-src="/assets/img/2018/12/2.png" alt="image"></p>
+<blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3></blockquote>
+<p>最后期待，2019年的VUE3.0的发布，来让前端开发更便捷，更cool！<br>参考文献：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81YmZjYmFiMDUxODgyNTc0MWU3YmQ2N2Y=">初探 Vue3.0 中的一大亮点——Proxy !<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvazZPaE1OcnBhZ3RUbWJoa1ctdG1aZw==">重磅！尤雨溪发布Vue 3.0开发路线<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMXloUEd5aFFySmNwSkkyWkZ2Qm1lM3BHS2FHTmlMaTcwOWMzN3N2aXZ2MG8vZWRpdD91c3A9c2hhcmluZw==">尤大大的PPT(需要翻墙下载)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvUHJveHk=">Proxy MDN<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>JavaScript</tag>
+        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -708,45 +750,24 @@
       </tags>
   </entry>
   <entry>
-    <title>初探Vue3.0新特性(未完待续)</title>
-    <url>//2018/12/10/Vue3.0/</url>
-    <content><![CDATA[<p align="center"><a href="#" target="_blank" rel="noopener noreferrer">
-<img
-  width="200"
-  height="200"
-  data-src="https://cn.vuejs.org/images/logo.png"
-  alt="Vue"></a></p>
-
-<blockquote>
-<h3 id="初探-Vue3-0-新特性"><a href="#初探-Vue3-0-新特性" class="headerlink" title="初探 Vue3.0 新特性"></a>初探 Vue3.0 新特性</h3><p>&emsp;“ 我已经学不动了，只有神可以挽救一下我的膝盖—-” 自 2016 年 10 月 1 日 Vue2.0 版本发布以来到目前为止已经将近快两年的时间了。在这两年里，前端领域风云变化，各种框架层出不穷。小程序横空出世，angular 已经迭代到 angular6,从 angular2 开始已经基本上是将 angularjs 推倒重来，蜕变升级。等等。。。在这两年里，我们看到了太多的框架出现和消失，前端框架基本上是 vue react angular 三足鼎立。感谢各位开源大大，是你们推动了整个前端领域的快速发展。<br>&emsp;与此同时，面对一时间涌现的那么多种前端框架，很多小伙伴们都会感觉力不从心，甚至还出现了众多用户到某知名开源项目上留言：“求求你别写了，我们学不动了~~”<br>&emsp;今天，Vue 的主要开发者尤小右在微博上透露了 Vue3.0 的开发计划，快来看看有哪些新改变吧。</p>
-</blockquote>
-<p><img data-src="/assets/img/2018/12/vue3.0.png" alt="image"></p>
-<blockquote>
-<h3 id="9月30日，尤雨溪在medium个人博客上发布了vue3-0的开发思路，国内有翻译的版本，见文章最后的参考链接。3-0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。"><a href="#9月30日，尤雨溪在medium个人博客上发布了vue3-0的开发思路，国内有翻译的版本，见文章最后的参考链接。3-0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。" class="headerlink" title="9月30日，尤雨溪在medium个人博客上发布了vue3.0的开发思路，国内有翻译的版本，见文章最后的参考链接。3.0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。"></a>9月30日，尤雨溪在medium个人博客上发布了vue3.0的开发思路，国内有翻译的版本，见文章最后的参考链接。3.0带来了很大的变化，他讲了一些改进的思路以及整个开发流程的规划。</h3><p>1.Virtual DOM 完全重写，mounting &amp; patching 提速  100% ;<br>2.更多编译时（compile-time）提醒以减少 runtime 开销;<br>3.基于 Proxy 观察者机制以满足全语言覆盖及更好的性能;<br>4.放弃 Object.defineProperty ，使用更快的原生 Proxy;<br>5.组件实例初始化速度提高 100％;<br>6.提速一倍&#x2F;内存使用降低一半。</p>
-</blockquote>
+    <title>eslint-vscode-setting</title>
+    <url>//2018/11/30/eslint-vscode-setting/</url>
+    <content><![CDATA[<blockquote>
+<h2 id="第一步：全局安装-eslint-babel-eslint-eslint-plugin-html-eslint-plugin-react-eslint-plugin-vue"><a href="#第一步：全局安装-eslint-babel-eslint-eslint-plugin-html-eslint-plugin-react-eslint-plugin-vue" class="headerlink" title="第一步：全局安装 eslint,babel-eslint,eslint-plugin-html,eslint-plugin-react,eslint-plugin-vue"></a>第一步：全局安装 eslint,babel-eslint,eslint-plugin-html,eslint-plugin-react,eslint-plugin-vue</h2></blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i eslint babel-eslint eslint-plugin-html eslint-plugin-react eslint-plugin-vue -g</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <blockquote>
-<h3 id="对于-3-0-的-proxy-特性有必要讲一讲"><a href="#对于-3-0-的-proxy-特性有必要讲一讲" class="headerlink" title="对于 3.0 的 proxy 特性有必要讲一讲"></a>对于 3.0 的 proxy 特性有必要讲一讲</h3><p>对于这个观察者机制的变更，给我带来的好处简直不言而喻。（我们终于不再担心目前官网上提的那个检测数组&#x2F;检测对象变更了）</p>
-</blockquote>
-<p>&emsp;不久前，也就是11月14日-16日于多伦多举办的 VueConf TO 2018 大会上，尤雨溪发表了名为 Vue3.0 Updates 的主题演讲，对 Vue3.0 的更新计划、方向进行了详细阐述（感兴趣的小伙伴可以看看完整的 [PPT](<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2ds5Yid5o6iLw==">https://docs.googl初探<i class="fa fa-external-link-alt"></i></span> Vue3.0 新特性e.com&#x2F;presentation&#x2F;d&#x2F;1yhPGyhQrJcpJI2ZFvBme3pGKaGNiLi709c37svivv0o&#x2F;edit?usp&#x3D;sharing)），表示已经放弃使用了 Object.defineProperty，而选择了使用更快的原生 Proxy !!<br>&emsp;这将会消除了之前 Vue2.x 中基于 Object.defineProperty 的实现所存在的很多限制：无法监听 属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！</p>
-<p><img data-src="/assets/img/2018/12/1.png" alt="image"><br><img data-src="/assets/img/2018/12/2.png" alt="image"></p>
-<blockquote>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3></blockquote>
-<p>最后期待，2019年的VUE3.0的发布，来让前端开发更便捷，更cool！<br>参考文献：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81YmZjYmFiMDUxODgyNTc0MWU3YmQ2N2Y=">初探 Vue3.0 中的一大亮点——Proxy !<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvazZPaE1OcnBhZ3RUbWJoa1ctdG1aZw==">重磅！尤雨溪发布Vue 3.0开发路线<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vcHJlc2VudGF0aW9uL2QvMXloUEd5aFFySmNwSkkyWkZ2Qm1lM3BHS2FHTmlMaTcwOWMzN3N2aXZ2MG8vZWRpdD91c3A9c2hhcmluZw==">尤大大的PPT(需要翻墙下载)<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvUHJveHk=">Proxy MDN<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
+<h2 id="第二步：在任意目录放置-eslintrc-js"><a href="#第二步：在任意目录放置-eslintrc-js" class="headerlink" title="第二步：在任意目录放置.eslintrc.js"></a>第二步：在任意目录放置.eslintrc.js</h2><h2 id="第三步：在-vscode-下载-ESLint-Prettier-Code-formatter-stylus-language-stylus-Vetur"><a href="#第三步：在-vscode-下载-ESLint-Prettier-Code-formatter-stylus-language-stylus-Vetur" class="headerlink" title="第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur"></a>第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur</h2><h2 id="第四步：在-vscode-中的配置"><a href="#第四步：在-vscode-中的配置" class="headerlink" title="第四步：在 vscode 中的配置"></a>第四步：在 vscode 中的配置</h2></blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eslint config start</span></span><br><span class="line"><span class="string">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;eslint.options&quot;</span>: &#123;</span><br><span class="line">	<span class="string">&quot;configFile&quot;</span>: <span class="string">&quot;C:/Users/Mark/.eslint/.eslintrc.js&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">	<span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">	<span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">	<span class="string">&quot;html&quot;</span>,</span><br><span class="line">	<span class="string">&quot;vue&quot;</span>,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">&quot;language&quot;</span>: <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">		<span class="string">&quot;autoFix&quot;</span>: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">],</span><br><span class="line"><span class="string">&quot;vetur.format.options.tabSize&quot;</span>: <span class="number">2</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.options.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatterOptions&quot;</span>: &#123;</span><br><span class="line">	<span class="string">&quot;prettier&quot;</span>: &#123;</span><br><span class="line">		<span class="comment">// Prettier option here</span></span><br><span class="line">		<span class="string">&quot;semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">		<span class="string">&quot;tabWidth&quot;</span>: <span class="number">2</span>,</span><br><span class="line">		<span class="string">&quot;useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">		<span class="string">&quot;singleQuote&quot;</span>: <span class="literal">true</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="string">&quot;prettyhtml&quot;</span>: &#123;</span><br><span class="line">		<span class="string">&quot;printWidth&quot;</span>: <span class="number">100</span>, <span class="comment">// No line exceeds 100 characters</span></span><br><span class="line">		<span class="string">&quot;singleQuote&quot;</span>: <span class="literal">false</span> <span class="comment">// Prefer double quotes over single quotes</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// prettier 格式化配置</span></span><br><span class="line"><span class="string">&quot;prettier.tabWidth&quot;</span>: <span class="number">2</span>,</span><br><span class="line"><span class="string">&quot;prettier.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertColons&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入冒号</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertSemicolons&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入分好</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertBraces&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入大括号</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertNewLineAroundImports&quot;</span>: <span class="literal">false</span>, <span class="comment">// import之后是否换行</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertNewLineAroundBlocks&quot;</span>: <span class="literal">false</span>,</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Vue</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
         <tag>前端开发</tag>
         <tag>JavaScript</tag>
-        <tag>Vue</tag>
+        <tag>VSCode</tag>
+        <tag>ESLint</tag>
       </tags>
   </entry>
   <entry>
@@ -810,24 +831,127 @@
       </tags>
   </entry>
   <entry>
-    <title>eslint-vscode-setting</title>
-    <url>//2018/11/30/eslint-vscode-setting/</url>
-    <content><![CDATA[<blockquote>
-<h2 id="第一步：全局安装-eslint-babel-eslint-eslint-plugin-html-eslint-plugin-react-eslint-plugin-vue"><a href="#第一步：全局安装-eslint-babel-eslint-eslint-plugin-html-eslint-plugin-react-eslint-plugin-vue" class="headerlink" title="第一步：全局安装 eslint,babel-eslint,eslint-plugin-html,eslint-plugin-react,eslint-plugin-vue"></a>第一步：全局安装 eslint,babel-eslint,eslint-plugin-html,eslint-plugin-react,eslint-plugin-vue</h2></blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i eslint babel-eslint eslint-plugin-html eslint-plugin-react eslint-plugin-vue -g</span><br></pre></td></tr></table></figure>
+    <title>rust-analyzer在vscode中的问题</title>
+    <url>//2023/11/24/rust-analyzer%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="rust-analyzer在vscode中的问题-md"><a href="#rust-analyzer在vscode中的问题-md" class="headerlink" title="rust-analyzer在vscode中的问题.md"></a>rust-analyzer在vscode中的问题.md</h2><ul>
+<li><p>无法使用<code>rust-analyzer</code>，或者<code>rust-analyzer</code>一直在加载中</p>
 <span id="more"></span>
-<blockquote>
-<h2 id="第二步：在任意目录放置-eslintrc-js"><a href="#第二步：在任意目录放置-eslintrc-js" class="headerlink" title="第二步：在任意目录放置.eslintrc.js"></a>第二步：在任意目录放置.eslintrc.js</h2><h2 id="第三步：在-vscode-下载-ESLint-Prettier-Code-formatter-stylus-language-stylus-Vetur"><a href="#第三步：在-vscode-下载-ESLint-Prettier-Code-formatter-stylus-language-stylus-Vetur" class="headerlink" title="第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur"></a>第三步：在 vscode 下载 ESLint,Prettier - Code formatter,stylus,language-stylus,Vetur</h2><h2 id="第四步：在-vscode-中的配置"><a href="#第四步：在-vscode-中的配置" class="headerlink" title="第四步：在 vscode 中的配置"></a>第四步：在 vscode 中的配置</h2></blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// eslint config start</span></span><br><span class="line"><span class="string">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;eslint.options&quot;</span>: &#123;</span><br><span class="line">	<span class="string">&quot;configFile&quot;</span>: <span class="string">&quot;C:/Users/Mark/.eslint/.eslintrc.js&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">	<span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">	<span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">	<span class="string">&quot;html&quot;</span>,</span><br><span class="line">	<span class="string">&quot;vue&quot;</span>,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">&quot;language&quot;</span>: <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">		<span class="string">&quot;autoFix&quot;</span>: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">],</span><br><span class="line"><span class="string">&quot;vetur.format.options.tabSize&quot;</span>: <span class="number">2</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.options.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatterOptions&quot;</span>: &#123;</span><br><span class="line">	<span class="string">&quot;prettier&quot;</span>: &#123;</span><br><span class="line">		<span class="comment">// Prettier option here</span></span><br><span class="line">		<span class="string">&quot;semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">		<span class="string">&quot;tabWidth&quot;</span>: <span class="number">2</span>,</span><br><span class="line">		<span class="string">&quot;useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">		<span class="string">&quot;singleQuote&quot;</span>: <span class="literal">true</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="string">&quot;prettyhtml&quot;</span>: &#123;</span><br><span class="line">		<span class="string">&quot;printWidth&quot;</span>: <span class="number">100</span>, <span class="comment">// No line exceeds 100 characters</span></span><br><span class="line">		<span class="string">&quot;singleQuote&quot;</span>: <span class="literal">false</span> <span class="comment">// Prefer double quotes over single quotes</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// prettier 格式化配置</span></span><br><span class="line"><span class="string">&quot;prettier.tabWidth&quot;</span>: <span class="number">2</span>,</span><br><span class="line"><span class="string">&quot;prettier.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertColons&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入冒号</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertSemicolons&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入分好</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertBraces&quot;</span>: <span class="literal">false</span>, <span class="comment">// 是否插入大括号</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertNewLineAroundImports&quot;</span>: <span class="literal">false</span>, <span class="comment">// import之后是否换行</span></span><br><span class="line"><span class="string">&quot;stylusSupremacy.insertNewLineAroundBlocks&quot;</span>: <span class="literal">false</span>,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果确定没有多个程序占用，可以删除rm -rf ~&#x2F;.cargo&#x2F;.package-cache，然后再执行cargo build 或者 cargo run</p>
+</li>
+<li><p>重启 vscode, 问题即可解决</p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>JavaScript</category>
+        <category>rust</category>
+      </categories>
+      <tags>
+        <tag>前端基建</tag>
+        <tag>Rust</tag>
+        <tag>rust-analyzer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell脚本学习</title>
+    <url>//2018/12/24/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
+<li>为什么学习脚本编写???</li>
+<li>你有没有遇到过这样场景，繁杂并且重复的操作 N 多件~~~</li>
+<li>那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）<br><img data-src="/assets/img/2018/12/20150424040700733.jpg" alt="image"><br>好了！那么我们步入今天的正题！<span id="more"></span></li>
+</ul>
+<h3 id="一、shell-中特殊变量"><a href="#一、shell-中特殊变量" class="headerlink" title="一、shell 中特殊变量"></a>一、shell 中特殊变量</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$0</span>    <span class="comment"># 当前脚本的文件名（间接运行时还包括绝对路径）。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$n</span>    <span class="comment"># 传递给脚本或函数的参数。n 是一个数字，表示第几个参数。例如，第一个参数是 $1 。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$#</span>    <span class="comment"># 传递给脚本或函数的参数个数。</span></span><br><span class="line"><span class="built_in">echo</span> $*    <span class="comment"># 传递给脚本或函数的所有参数。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$@</span>    <span class="comment"># 传递给脚本或函数的所有参数。被双引号 (&quot; &quot;) 包含时，与 $* 不同，下面将会讲到。</span></span><br><span class="line"><span class="built_in">echo</span> $?    <span class="comment"># 上个命令的退出状态，或函数的返回值。</span></span><br><span class="line"><span class="built_in">echo</span> $$    <span class="comment"># 当前 Shell 进程 ID。对于 Shell 脚本，就是这些脚本所在的进程 ID。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$_</span>    <span class="comment"># 上一个命令的最后一个参数</span></span><br><span class="line"><span class="built_in">echo</span> $!    <span class="comment"># 后台运行的最后一个进程的 ID 号</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 现在保存为一个test.sh脚本，然后加上几个参数运行：</span></span><br><span class="line">$ ./test.sh <span class="built_in">test</span> test1 test2 test3 test4</span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">./test.sh                      <span class="comment"># $0</span></span><br><span class="line">                               <span class="comment"># $n</span></span><br><span class="line">5                              <span class="comment"># $#</span></span><br><span class="line"><span class="built_in">test</span> test1 test2 test3 test4   <span class="comment"># $*</span></span><br><span class="line"><span class="built_in">test</span> test1 test2 test3 test4   <span class="comment"># $@</span></span><br><span class="line">0                              <span class="comment"># $?</span></span><br><span class="line">12305                          <span class="comment"># $$</span></span><br><span class="line">12305                          <span class="comment"># $_</span></span><br><span class="line">                               <span class="comment"># $!</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&emsp;$* 和 $@ 都表示传递给函数或脚本的所有参数，不被双引号 (“”) 包含时，都以”$1””$2” … “$n” 的形式输出所有参数。<br> &emsp;但是当它们被双引号 (“”) 包含时，”$*”会将所有的参数作为一个整体，以”$1 $2 … $n”的形式输出所有参数；”$@”会将各个参数分开，以”$1””$2” … “$n” 的形式输出所有参数。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$*=&quot;</span> $*</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\&quot;\$*\&quot;=&quot;</span> <span class="string">&quot;$*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$@=&quot;</span> <span class="variable">$@</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\&quot;\$@\&quot;=&quot;</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;print each param from \$*&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> $*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;print each param from \$@&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;从 \&quot;\$*\&quot; 获取并打印每一个参数&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="string">&quot;$*&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;从 \&quot;\$@\&quot; 获取并打印每一个参数&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>返回结果：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$*= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="string">&quot;$*&quot;</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="variable">$@</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="string">&quot;<span class="variable">$@</span>&quot;</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="built_in">print</span> each param from $*</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line"><span class="built_in">print</span> each param from <span class="variable">$@</span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">从 <span class="string">&quot;$*&quot;</span> 获取并打印每一个参数</span><br><span class="line"><span class="built_in">test</span> test1 test2</span><br><span class="line">从 <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 获取并打印每一个参数</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="二、手工处理参数"><a href="#二、手工处理参数" class="headerlink" title="二、手工处理参数"></a>二、手工处理参数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    -a)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    -b)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;-b 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        ;;</span><br><span class="line">    -c)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;-c 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        ;;</span><br><span class="line">    -d)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -d 选项&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is not an option&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line">  <span class="built_in">shift</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行：./test.sh -a -b t2 -c t3 -d</span></span><br><span class="line"><span class="comment"># 返回结果</span></span><br><span class="line">发现 -a 选项</span><br><span class="line">发现 -b 选项</span><br><span class="line">-b 选项的参数值是：t2</span><br><span class="line">发现 -c 选项</span><br><span class="line">-c 选项的参数值是：t3</span><br><span class="line">发现 -d 选项</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、getopt-处理参数"><a href="#三、getopt-处理参数" class="headerlink" title="三、getopt 处理参数"></a>三、getopt 处理参数</h3><p>下面 getopt ab:c:d “$@” 中的 abcd 分别代表四个选项，后面带有冒号的表示选项需要参数值。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GETOPTOUT=`getopt ab:c:d <span class="string">&quot;<span class="variable">$@</span>&quot;</span>`</span><br><span class="line">  <span class="built_in">set</span> -- <span class="variable">$GETOPTOUT</span></span><br><span class="line">  <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    -a)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">    -b)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;-b 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      ;;</span><br><span class="line">    -c)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;-c 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      ;;</span><br><span class="line">    -d)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -d 选项&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">    --)</span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      <span class="built_in">break</span></span><br><span class="line">      ;;</span><br><span class="line">    *)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;未知选项:&quot;</span><span class="variable">$1</span><span class="string">&quot;&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line">  <span class="built_in">shift</span></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line"> ./proxychains4.sh -a -b t2 -c t3 -d</span><br><span class="line"><span class="comment"># 返回</span></span><br><span class="line">发现 -a 选项</span><br><span class="line">发现 -b 选项</span><br><span class="line">-b 选项的参数值是：t2</span><br><span class="line">发现 -c 选项</span><br><span class="line">-c 选项的参数值是：t3</span><br><span class="line">发现 -d 选项</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ARGV=($(getopt -o 短选项1[:]短选项2[:]...[:]短选项n -l 长选项1,长选项2,...,长选项n -- <span class="string">&quot;<span class="variable">$@</span>&quot;</span>))</span><br><span class="line"><span class="built_in">eval</span> <span class="built_in">set</span> -- <span class="string">&quot;<span class="variable">$ARGV</span>&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">  -短选项1|--长选项1)</span><br><span class="line">    process</span><br><span class="line">    <span class="built_in">shift</span></span><br><span class="line">    ;;</span><br><span class="line">  -短选项2|--长选项2)</span><br><span class="line">    <span class="comment"># 获取选项</span></span><br><span class="line">    opt = <span class="variable">$2</span></span><br><span class="line">    process</span><br><span class="line">    <span class="built_in">shift</span> 2</span><br><span class="line">    ;;</span><br><span class="line"></span><br><span class="line">  ... ...</span><br><span class="line"></span><br><span class="line">  -短选项3|--长选项3)</span><br><span class="line">    process</span><br><span class="line">    ;;</span><br><span class="line">  --)</span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于 eval 这个命令，用一个小例子解释：</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">foo=10</span><br><span class="line">x=foo</span><br><span class="line">y=<span class="string">&#x27;$&#x27;</span><span class="variable">$x</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$y</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line"><span class="built_in">eval</span> y=<span class="string">&#x27;$&#x27;</span><span class="variable">$x</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$y</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回</span></span><br><span class="line"><span class="variable">$foo</span></span><br><span class="line">10</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为我一般用这个命令连接构建命令参数，所以你可以简单理解为执行两次（虽然不太对）。通过添加 eval 可以把参数解析后再执行。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四、getopts-处理参数"><a href="#四、getopts-处理参数" class="headerlink" title="四、getopts 处理参数"></a>四、getopts 处理参数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="built_in">getopts</span> :ab:c:d ARGS</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$ARGS</span> <span class="keyword">in</span></span><br><span class="line">  a)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  b)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;-b 选项的值是：<span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  c)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;-c 选项的值是：<span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  d)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -d 参数&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;未知选项：<span class="variable">$ARGS</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这种方法最方便简单。接下来基于这种方法深入讲解。</p>
+<h3 id="五、传参意外处理"><a href="#五、传参意外处理" class="headerlink" title="五、传参意外处理"></a>五、传参意外处理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;?&quot;</span>)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;未知选项 <span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">  ;;</span><br><span class="line"><span class="string">&quot;:&quot;</span>)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;没有输入任何选项 <span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  <span class="comment"># 发生不能预料的错误时。</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;处理选项时出现未知错误&quot;</span></span><br><span class="line">  ;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kM2NkMzZjOTdhYmM=">Shell 脚本传参方法总结<i class="fa fa-external-link-alt"></i></span></br><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWJhc2gtcGFyYW1ldGVycy5odG1s">Bash 参数和参数扩展<i class="fa fa-external-link-alt"></i></span></br><span class="exturl" data-url="aHR0cDovL3d3dy4zNjF3YXkuY29tL3NoZWxsLWdldG9wdC80OTgxLmh0bWw=">shell中的getopt与getopts<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>系统命令</category>
+      </categories>
+      <tags>
+        <tag>VSCode</tag>
+        <tag>系统底层</tag>
+        <tag>Shell</tag>
+        <tag>脚本操作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sourceTree 使用rebase操作</title>
+    <url>//2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p><code>git merge</code> vs <code>git rebase</code></p>
+<span id="more"></span>
+
+<h2 id="我们先来做个简单的对比吧"><a href="#我们先来做个简单的对比吧" class="headerlink" title="我们先来做个简单的对比吧"></a>我们先来做个简单的对比吧</h2><ul>
+<li><p>原始状态<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69b0529uj30sy0pg41h.jpg"></p>
+</li>
+<li><p>使用<code>git merge</code>操作，产生的路径图<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/1.png"></p>
+</li>
+<li><p>使用<code>git rebase</code>操作，产生的路径图<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dtpcenj30zk0fstbx.jpg"></p>
+</li>
+</ul>
+<h2 id="使用git-rebase操作"><a href="#使用git-rebase操作" class="headerlink" title="使用git rebase操作"></a>使用<code>git rebase</code>操作</h2><ul>
+<li><p>完成功能分支之后先不 merge，而是 <code>git checkout 主分支</code> 回到主干分支去 <code>git pull --rebase</code></p>
+</li>
+<li><p>如果主干有更新，<code>git rebase 分支</code> 更新主分支的内容到功能分支来预检一下，看看在加入了最近别人的改动之后我的功能是否依然 OK（在这个过程中可能会有冲突处理，解决冲突之后使用 <code>git add .</code> 更新索引，更新完之后不需要执行 commit，只要执行 <code>git rebase --continue</code> 应用余下的补丁即可）</p>
+</li>
+<li><p>一切就绪之后再次 <code>git fetch</code> 主干看看有没有变动（因为在第二步的进行期间没准又有人 push 了新的变化），有的话重复第二部</p>
+</li>
+<li><p>合并功能分支到主干然后 push，收工。</p>
+</li>
+<li><p>用 git 整合分支的时候，大家更常用的是变基操作 (git rebase) 还是合并操作 (git merge)，你们觉得哪个比较好？</p>
+</li>
+<li><p>在 sourceTree 中使用 rebase （变基）,使用 rebase 命令保持主分支树的整洁</p>
+</li>
+<li><p>git 的 GUI 工具 Sourcetree 使用及命令行对比</p>
+</li>
+<li><p>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支 dev-1<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69bjs148j30t20v2ae7.jpg"><br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69c5ndkcj30u40r2diy.jpg"></p>
+</li>
+<li><p>做一些开发，提交到本地，不要推送（push）到远端,切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69cyad02j30zk0ec0xz.jpg"></p>
+</li>
+<li><p>切换到自己的开发分支 dev-1，选中 master 分支，右键，选择 将当前变更变基到 master<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69daffwqj30ta0mm0wn.jpg"></p>
+</li>
+<li><p>如果有冲突则合并冲突，点击左上角的加号，选择 继续变基<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dg5ei0j30zk0g4434.jpg"></p>
+</li>
+<li><p>此时我们的本地更新是基于最新的 master 分支<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dkjpc8j30uo0h20vf.jpg"></p>
+</li>
+<li><p>最后’推送’我们的开发分支 dev-1 到远端,切换到 master 分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69doxd6zj30ym0h00vp.png"></p>
+</li>
+<li><p>再推送 master 分支，就保证了 git 分支的整洁<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dtpcenj30zk0fstbx.jpg"></p>
+</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9mN2VkM2RkMGQyZDg=">Git rebase使用<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAwOTA2Nzk4NA==">团队开发Git分支管理策略<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>多人协作开发</category>
       </categories>
       <tags>
         <tag>前端开发</tag>
-        <tag>JavaScript</tag>
-        <tag>VSCode</tag>
-        <tag>ESLint</tag>
+        <tag>git 多人协作开发</tag>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -899,61 +1023,6 @@
         <tag>前端开发</tag>
         <tag>stylus</tag>
         <tag>css</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sourceTree 使用rebase操作</title>
-    <url>//2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p><code>git merge</code> vs <code>git rebase</code></p>
-<span id="more"></span>
-
-<h2 id="我们先来做个简单的对比吧"><a href="#我们先来做个简单的对比吧" class="headerlink" title="我们先来做个简单的对比吧"></a>我们先来做个简单的对比吧</h2><ul>
-<li><p>原始状态<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69b0529uj30sy0pg41h.jpg"></p>
-</li>
-<li><p>使用<code>git merge</code>操作，产生的路径图<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/1.png"></p>
-</li>
-<li><p>使用<code>git rebase</code>操作，产生的路径图<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dtpcenj30zk0fstbx.jpg"></p>
-</li>
-</ul>
-<h2 id="使用git-rebase操作"><a href="#使用git-rebase操作" class="headerlink" title="使用git rebase操作"></a>使用<code>git rebase</code>操作</h2><ul>
-<li><p>完成功能分支之后先不 merge，而是 <code>git checkout 主分支</code> 回到主干分支去 <code>git pull --rebase</code></p>
-</li>
-<li><p>如果主干有更新，<code>git rebase 分支</code> 更新主分支的内容到功能分支来预检一下，看看在加入了最近别人的改动之后我的功能是否依然 OK（在这个过程中可能会有冲突处理，解决冲突之后使用 <code>git add .</code> 更新索引，更新完之后不需要执行 commit，只要执行 <code>git rebase --continue</code> 应用余下的补丁即可）</p>
-</li>
-<li><p>一切就绪之后再次 <code>git fetch</code> 主干看看有没有变动（因为在第二步的进行期间没准又有人 push 了新的变化），有的话重复第二部</p>
-</li>
-<li><p>合并功能分支到主干然后 push，收工。</p>
-</li>
-<li><p>用 git 整合分支的时候，大家更常用的是变基操作 (git rebase) 还是合并操作 (git merge)，你们觉得哪个比较好？</p>
-</li>
-<li><p>在 sourceTree 中使用 rebase （变基）,使用 rebase 命令保持主分支树的整洁</p>
-</li>
-<li><p>git 的 GUI 工具 Sourcetree 使用及命令行对比</p>
-</li>
-<li><p>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支 dev-1<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69bjs148j30t20v2ae7.jpg"><br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69c5ndkcj30u40r2diy.jpg"></p>
-</li>
-<li><p>做一些开发，提交到本地，不要推送（push）到远端,切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69cyad02j30zk0ec0xz.jpg"></p>
-</li>
-<li><p>切换到自己的开发分支 dev-1，选中 master 分支，右键，选择 将当前变更变基到 master<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69daffwqj30ta0mm0wn.jpg"></p>
-</li>
-<li><p>如果有冲突则合并冲突，点击左上角的加号，选择 继续变基<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dg5ei0j30zk0g4434.jpg"></p>
-</li>
-<li><p>此时我们的本地更新是基于最新的 master 分支<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dkjpc8j30uo0h20vf.jpg"></p>
-</li>
-<li><p>最后’推送’我们的开发分支 dev-1 到远端,切换到 master 分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69doxd6zj30ym0h00vp.png"></p>
-</li>
-<li><p>再推送 master 分支，就保证了 git 分支的整洁<br><img data-src="/2020/06/12/sourceTree-%E4%BD%BF%E7%94%A8rebase%E6%93%8D%E4%BD%9C/006tNbRwgy1fy69dtpcenj30zk0fstbx.jpg"></p>
-</li>
-</ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9mN2VkM2RkMGQyZDg=">Git rebase使用<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAwOTA2Nzk4NA==">团队开发Git分支管理策略<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>多人协作开发</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>git 多人协作开发</tag>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -1154,53 +1223,6 @@ public Class HelloWorld&#123;
       </tags>
   </entry>
   <entry>
-    <title>shell脚本学习</title>
-    <url>//2018/12/24/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
-<li>为什么学习脚本编写???</li>
-<li>你有没有遇到过这样场景，繁杂并且重复的操作 N 多件~~~</li>
-<li>那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）<br><img data-src="/assets/img/2018/12/20150424040700733.jpg" alt="image"><br>好了！那么我们步入今天的正题！<span id="more"></span></li>
-</ul>
-<h3 id="一、shell-中特殊变量"><a href="#一、shell-中特殊变量" class="headerlink" title="一、shell 中特殊变量"></a>一、shell 中特殊变量</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$0</span>    <span class="comment"># 当前脚本的文件名（间接运行时还包括绝对路径）。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$n</span>    <span class="comment"># 传递给脚本或函数的参数。n 是一个数字，表示第几个参数。例如，第一个参数是 $1 。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$#</span>    <span class="comment"># 传递给脚本或函数的参数个数。</span></span><br><span class="line"><span class="built_in">echo</span> $*    <span class="comment"># 传递给脚本或函数的所有参数。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$@</span>    <span class="comment"># 传递给脚本或函数的所有参数。被双引号 (&quot; &quot;) 包含时，与 $* 不同，下面将会讲到。</span></span><br><span class="line"><span class="built_in">echo</span> $?    <span class="comment"># 上个命令的退出状态，或函数的返回值。</span></span><br><span class="line"><span class="built_in">echo</span> $$    <span class="comment"># 当前 Shell 进程 ID。对于 Shell 脚本，就是这些脚本所在的进程 ID。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$_</span>    <span class="comment"># 上一个命令的最后一个参数</span></span><br><span class="line"><span class="built_in">echo</span> $!    <span class="comment"># 后台运行的最后一个进程的 ID 号</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>示例：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 现在保存为一个test.sh脚本，然后加上几个参数运行：</span></span><br><span class="line">$ ./test.sh <span class="built_in">test</span> test1 test2 test3 test4</span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">./test.sh                      <span class="comment"># $0</span></span><br><span class="line">                               <span class="comment"># $n</span></span><br><span class="line">5                              <span class="comment"># $#</span></span><br><span class="line"><span class="built_in">test</span> test1 test2 test3 test4   <span class="comment"># $*</span></span><br><span class="line"><span class="built_in">test</span> test1 test2 test3 test4   <span class="comment"># $@</span></span><br><span class="line">0                              <span class="comment"># $?</span></span><br><span class="line">12305                          <span class="comment"># $$</span></span><br><span class="line">12305                          <span class="comment"># $_</span></span><br><span class="line">                               <span class="comment"># $!</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>&emsp;$* 和 $@ 都表示传递给函数或脚本的所有参数，不被双引号 (“”) 包含时，都以”$1””$2” … “$n” 的形式输出所有参数。<br> &emsp;但是当它们被双引号 (“”) 包含时，”$*”会将所有的参数作为一个整体，以”$1 $2 … $n”的形式输出所有参数；”$@”会将各个参数分开，以”$1””$2” … “$n” 的形式输出所有参数。</p>
-</blockquote>
-<p>例如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$*=&quot;</span> $*</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\&quot;\$*\&quot;=&quot;</span> <span class="string">&quot;$*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\$@=&quot;</span> <span class="variable">$@</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;\&quot;\$@\&quot;=&quot;</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;print each param from \$*&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> $*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;print each param from \$@&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="variable">$@</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;从 \&quot;\$*\&quot; 获取并打印每一个参数&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="string">&quot;$*&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;从 \&quot;\$@\&quot; 获取并打印每一个参数&quot;</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>返回结果：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$*= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="string">&quot;$*&quot;</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="variable">$@</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="string">&quot;<span class="variable">$@</span>&quot;</span>= <span class="built_in">test</span> test1 test2</span><br><span class="line"><span class="built_in">print</span> each param from $*</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line"><span class="built_in">print</span> each param from <span class="variable">$@</span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">从 <span class="string">&quot;$*&quot;</span> 获取并打印每一个参数</span><br><span class="line"><span class="built_in">test</span> test1 test2</span><br><span class="line">从 <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 获取并打印每一个参数</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="二、手工处理参数"><a href="#二、手工处理参数" class="headerlink" title="二、手工处理参数"></a>二、手工处理参数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    -a)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    -b)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;-b 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        ;;</span><br><span class="line">    -c)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;-c 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        ;;</span><br><span class="line">    -d)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;发现 -d 选项&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is not an option&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line">  <span class="built_in">shift</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行：./test.sh -a -b t2 -c t3 -d</span></span><br><span class="line"><span class="comment"># 返回结果</span></span><br><span class="line">发现 -a 选项</span><br><span class="line">发现 -b 选项</span><br><span class="line">-b 选项的参数值是：t2</span><br><span class="line">发现 -c 选项</span><br><span class="line">-c 选项的参数值是：t3</span><br><span class="line">发现 -d 选项</span><br></pre></td></tr></table></figure>
-
-<h3 id="三、getopt-处理参数"><a href="#三、getopt-处理参数" class="headerlink" title="三、getopt 处理参数"></a>三、getopt 处理参数</h3><p>下面 getopt ab:c:d “$@” 中的 abcd 分别代表四个选项，后面带有冒号的表示选项需要参数值。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GETOPTOUT=`getopt ab:c:d <span class="string">&quot;<span class="variable">$@</span>&quot;</span>`</span><br><span class="line">  <span class="built_in">set</span> -- <span class="variable">$GETOPTOUT</span></span><br><span class="line">  <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    -a)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">    -b)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;-b 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      ;;</span><br><span class="line">    -c)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;-c 选项的参数值是：<span class="variable">$2</span>&quot;</span></span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      ;;</span><br><span class="line">    -d)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;发现 -d 选项&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">    --)</span><br><span class="line">      <span class="built_in">shift</span></span><br><span class="line">      <span class="built_in">break</span></span><br><span class="line">      ;;</span><br><span class="line">    *)</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;未知选项:&quot;</span><span class="variable">$1</span><span class="string">&quot;&quot;</span></span><br><span class="line">      ;;</span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line">  <span class="built_in">shift</span></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line"> ./proxychains4.sh -a -b t2 -c t3 -d</span><br><span class="line"><span class="comment"># 返回</span></span><br><span class="line">发现 -a 选项</span><br><span class="line">发现 -b 选项</span><br><span class="line">-b 选项的参数值是：t2</span><br><span class="line">发现 -c 选项</span><br><span class="line">-c 选项的参数值是：t3</span><br><span class="line">发现 -d 选项</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ARGV=($(getopt -o 短选项1[:]短选项2[:]...[:]短选项n -l 长选项1,长选项2,...,长选项n -- <span class="string">&quot;<span class="variable">$@</span>&quot;</span>))</span><br><span class="line"><span class="built_in">eval</span> <span class="built_in">set</span> -- <span class="string">&quot;<span class="variable">$ARGV</span>&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">  -短选项1|--长选项1)</span><br><span class="line">    process</span><br><span class="line">    <span class="built_in">shift</span></span><br><span class="line">    ;;</span><br><span class="line">  -短选项2|--长选项2)</span><br><span class="line">    <span class="comment"># 获取选项</span></span><br><span class="line">    opt = <span class="variable">$2</span></span><br><span class="line">    process</span><br><span class="line">    <span class="built_in">shift</span> 2</span><br><span class="line">    ;;</span><br><span class="line"></span><br><span class="line">  ... ...</span><br><span class="line"></span><br><span class="line">  -短选项3|--长选项3)</span><br><span class="line">    process</span><br><span class="line">    ;;</span><br><span class="line">  --)</span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>关于 eval 这个命令，用一个小例子解释：</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">foo=10</span><br><span class="line">x=foo</span><br><span class="line">y=<span class="string">&#x27;$&#x27;</span><span class="variable">$x</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$y</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line"><span class="built_in">eval</span> y=<span class="string">&#x27;$&#x27;</span><span class="variable">$x</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$y</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回</span></span><br><span class="line"><span class="variable">$foo</span></span><br><span class="line">10</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为我一般用这个命令连接构建命令参数，所以你可以简单理解为执行两次（虽然不太对）。通过添加 eval 可以把参数解析后再执行。</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="四、getopts-处理参数"><a href="#四、getopts-处理参数" class="headerlink" title="四、getopts 处理参数"></a>四、getopts 处理参数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="built_in">getopts</span> :ab:c:d ARGS</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$ARGS</span> <span class="keyword">in</span></span><br><span class="line">  a)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -a 选项&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  b)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -b 选项&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;-b 选项的值是：<span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  c)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -c 选项&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;-c 选项的值是：<span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  d)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;发现 -d 参数&quot;</span></span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;未知选项：<span class="variable">$ARGS</span>&quot;</span></span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这种方法最方便简单。接下来基于这种方法深入讲解。</p>
-<h3 id="五、传参意外处理"><a href="#五、传参意外处理" class="headerlink" title="五、传参意外处理"></a>五、传参意外处理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;?&quot;</span>)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;未知选项 <span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">  ;;</span><br><span class="line"><span class="string">&quot;:&quot;</span>)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;没有输入任何选项 <span class="variable">$OPTARG</span>&quot;</span></span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  <span class="comment"># 发生不能预料的错误时。</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;处理选项时出现未知错误&quot;</span></span><br><span class="line">  ;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kM2NkMzZjOTdhYmM=">Shell 脚本传参方法总结<i class="fa fa-external-link-alt"></i></span></br><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWJhc2gtcGFyYW1ldGVycy5odG1s">Bash 参数和参数扩展<i class="fa fa-external-link-alt"></i></span></br><span class="exturl" data-url="aHR0cDovL3d3dy4zNjF3YXkuY29tL3NoZWxsLWdldG9wdC80OTgxLmh0bWw=">shell中的getopt与getopts<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>系统命令</category>
-      </categories>
-      <tags>
-        <tag>VSCode</tag>
-        <tag>系统底层</tag>
-        <tag>Shell</tag>
-        <tag>脚本操作</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文彻底弄懂 &quot;Event Loop&quot;</title>
     <url>//2020/06/14/%E4%B8%80%E6%96%87%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82-EventLoop/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
@@ -1386,6 +1408,76 @@ public Class HelloWorld&#123;
       </tags>
   </entry>
   <entry>
+    <title>修改了SSH默认端口之后，如何配置git？</title>
+    <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
+    <content><![CDATA[<h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjeDY5OyYjMTE2OyYjNjQ7JiMxMjA7JiN4Nzg7JiN4Nzg7JiM0NjsmIzk5OyYjeDZmOyYjeDZkOw==">&#x67;&#x69;&#116;&#64;&#120;&#x78;&#x78;&#46;&#99;&#x6f;&#x6d;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<span id="more"></span>
+<h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></table></figure>
+
+<h4 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span>&gt;~/.ssh/config</span><br><span class="line"><span class="comment"># 映射一个别名</span></span><br><span class="line">Host xxx.com</span><br><span class="line">HostName xxxx.com</span><br><span class="line">Port 223</span><br><span class="line">AddKeysToAgent <span class="built_in">yes</span></span><br><span class="line">UseKeychain <span class="built_in">yes</span></span><br><span class="line"><span class="comment">#此处是开启git的ssh翻墙代理</span></span><br><span class="line"><span class="comment">#ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:1086 %h %p</span></span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>修改p1.git项目下的git配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin git@xxx:Projects/p1.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9hYm91dC5naXRsYWIuY29tLzIwMTYvMDIvMTgvZ2l0bGFiLWRvdC1jb20tbm93LXN1cHBvcnRzLWFuLWFsdGVybmF0ZS1naXQtcGx1cy1zc2gtcG9ydC8=">gitlab 社区解决方案<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>git操作</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>git</tag>
+        <tag>sourceTree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建SSH密钥对</title>
+    <url>//2020/04/11/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/</url>
+    <content><![CDATA[<p>SSH 密钥对可以让用户无需输入密码即可登录到 SSH 服务器中。由于登录的过程不需要密码，因此可以防止由于密码被拦截、破解造成的账户密码泄露。再加上密码短语(passphrase)的使用，使得 SSH 的安全性更高一层。</p>
+<p>SSH 密钥对总是一把公钥、一把私钥的成对出现；公钥可以自由的添加到远程 SSH 服务器中用来验证用户是否合法；私钥相当于自己的身份认证，需要妥善保存不能泄露。</p>
+<p>SSH 密钥的其使用原理很简单：用户将公钥添加到远程主机中，登录的时候，远程主机会向用户发送一段随即字符串，用户使用自己的私钥加密后，再发送到远程主机。远程主机使用本地存储的公钥进行解密，如果成功，证明用户时可信的，直接允许登录 shell ，不再要求密码。这样就保证了整个登录过程的安全，防止了中间人攻击。</p>
+<span id="more"></span>
+<h1 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h1><h2 id="ssh-keygen-命令"><a href="#ssh-keygen-命令" class="headerlink" title="ssh-keygen 命令"></a>ssh-keygen 命令</h2><p>我们可以使用 <em>ssh-keygen</em> 命令来生成密钥对：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t ecdsa -b 521 -C &quot;$(whoami)@$(hostname)-$(date -I)&quot;</span><br><span class="line">Generating public/private ecdsa key pair.</span><br><span class="line">Enter file in which to save the key (/home/username/.ssh/id_ecdsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /home/username/.ssh/id_ecdsa.</span><br><span class="line">Your public key has been saved in /home/username/.ssh/id_ecdsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">dd:15:ee:24:20:14:11:01:b8:72:a2:0f:99:4c:79:7f username@localhost-2015-03-08</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+--[ECDSA  521]---+</span><br><span class="line">|     ..oB=.   .  |</span><br><span class="line">|    .    . . . . |</span><br><span class="line">|  .  .      . +  |</span><br><span class="line">| oo.o    . . =   |</span><br><span class="line">|o+.+.   S . . .  |</span><br><span class="line">|=.   . E         |</span><br><span class="line">| o    .          |</span><br><span class="line">|  .              |</span><br><span class="line">|                 |</span><br><span class="line">+-----------------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中可使用 <em>-t</em> 指定加密算法，使用 <em>-b</em> 自定生成密钥长度，使用 <em>-C</em> 添加密钥对的说明comment。生成的密钥对默认存储在用户目录下的 <em>.ssh</em> 目录中，私钥默认名称为 <em>id</em>***_ (即 id_ + 加密算法名称)。还可以使用 <em>-f</em> 指定生成的私钥存储的文件全路径名称；也可以不使用 <em>-f</em> 指定密钥文件路径，在密钥的创建过程中还会提示用户输入密钥文件全路径名称。私钥对应的公钥文件为_私钥文件全名称 + .pub_。</p>
+<p>上面例子中创建了一对长度为512位的椭圆加密算法(ECDSA)加密的密钥对。创建 SSH 密钥对可选择多种加密算法，例如 <em>RSA</em> 、 <em>DSA</em> 、 <em>ECDSA</em> 等。</p>
+<h2 id="密码短语-Passphras"><a href="#密码短语-Passphras" class="headerlink" title="密码短语(Passphras)"></a>密码短语(Passphras)</h2><p>密码短语(passphras)是一连串的单词或文本组成，用来控制对电脑系统的访问。它的用法类似于密码(Password)，但是通常会比密码长度更长，这样就增加了破解的复杂度。密码短语不同于密码，它可以是有实际意义的一段话，便于用户记忆。</p>
+<p>密码短语默认可以不创建，但是这会导致不安全性。私钥是未经加密存储在电脑上的，电脑遗失或被窃取后，任何人拿到你的私钥后都可以随意访问 SSH 服务器；另外，电脑的 <em>root</em> 用户有权限访问电脑上的任意文件，这也包括你的私钥文件。因此，为了提高安全性还是建议用户设置自己的密码短语。</p>
+<p>已经生成的密钥对也可以修改密码短语。假设使用的是 RSA 加密的密钥对，存储到默认路径，输入以下命令即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ssh-keygen -f ~/.ssh/id_rsa -p</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="SSH-agent"><a href="#SSH-agent" class="headerlink" title="SSH agent"></a>SSH agent</h1><p>SSH agent 是 OpenSSH 或其它 SSH 程序提供的一个程序，提供了存储私钥的安全方法。如果用户的私钥使用了密码短语来加密的话，那么每一次使用 SSH密钥进行登录时，都需要用户输入正确的的密钥短语。而 SSH agent 程序能够将已经解密的私钥缓存起来，在需要的时候提供给 SSH 客户端，这样用户只需要在将私钥加入 SSH agent 缓存的时候输入一次密码短语就可以了。</p>
+<p>首先确保当前 SSH agent 可用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># start the ssh-agent in the background</span><br><span class="line">$ eval &quot;$(ssh-agent -s)&quot;</span><br><span class="line">Agent pid 29393</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="ssh-add"><a href="#ssh-add" class="headerlink" title="ssh-add"></a>ssh-add</h2><p>添加 SSH 密钥到 SSH agent：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br><span class="line">Enter passphrase for /home/username/.ssh/id_rsa:</span><br><span class="line">Identity added: /home/username/.ssh/id_rsa (/home/username/.ssh/id_rsa)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-SSH-agent-缓存密钥列表"><a href="#查看-SSH-agent-缓存密钥列表" class="headerlink" title="查看 SSH agent 缓存密钥列表"></a>查看 SSH agent 缓存密钥列表</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br><span class="line">2048 b9:a7:f0:44:a5:47:79:a5:ff:9d:14:5c:d3:78:04:65 /home/username/.ssh/id_rsa (RSA)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试连接"><a href="#测试连接" class="headerlink" title="测试连接"></a>测试连接</h2><p>将 SSH 公钥添加到 SSH 服务端后，就可以使用 SSH 来连接远程主机了。下面以 GitHub为例测试连接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这说明连接成功了。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly9oZWxwLmdpdGh1Yi5jb20vYXJ0aWNsZXMvZ2VuZXJhdGluZy1zc2gta2V5cy8=" title="generating ssh keys">Generating SSH keys<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9QYXNzcGhyYXNlJTIwUGFzc3BocmFzZQ==">Passphrase(维基百科)<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kYWVtb24zNjkuZ2l0aHViLmlvL3NzaC8yMDE1LzAzLzA4LyUyMmh0dHBzOi8vd2lraS5hcmNobGludXgub3JnL2luZGV4LnBocC9TU0hfS2V5c18oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KSUyMg==" title="SSH Keys(简体中文)">SSH Keys(简体中文)<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9Tc2gtYWdlbnQlMjBzc2gtYWdlbnQ=">ssh-agent<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3lldW5nZWVrLmNvbS8yMDE0LzA2LzI2L0dpdCVFNSVBNCU5QSVFNSVCOCU5MCVFNSU4RiVCNyVFOSU4NSU4RCVFNyVCRCVBRS8lMjBHaXQlRTUlQTQlOUElRTUlQjglOTAlRTUlOEYlQjclRTklODUlOEQlRTclQkQlQUU=">Git多帐号配置<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>SSH</category>
+      </categories>
+      <tags>
+        <tag>全栈开发</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端面试题整理</title>
     <url>//2020/04/17/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
@@ -1539,106 +1631,6 @@ public Class HelloWorld&#123;
       </tags>
   </entry>
   <entry>
-    <title>修改了SSH默认端口之后，如何配置git？</title>
-    <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
-    <content><![CDATA[<h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjMTAzOyYjeDY5OyYjMTE2OyYjNjQ7JiMxMjA7JiN4Nzg7JiN4Nzg7JiN4MmU7JiM5OTsmIzExMTsmI3g2ZDs=">&#103;&#x69;&#116;&#64;&#120;&#x78;&#x78;&#x2e;&#99;&#111;&#x6d;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
-<span id="more"></span>
-<h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></table></figure>
-
-<h4 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span>&gt;~/.ssh/config</span><br><span class="line"><span class="comment"># 映射一个别名</span></span><br><span class="line">Host xxx.com</span><br><span class="line">HostName xxxx.com</span><br><span class="line">Port 223</span><br><span class="line">AddKeysToAgent <span class="built_in">yes</span></span><br><span class="line">UseKeychain <span class="built_in">yes</span></span><br><span class="line"><span class="comment">#此处是开启git的ssh翻墙代理</span></span><br><span class="line"><span class="comment">#ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:1086 %h %p</span></span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<p>修改p1.git项目下的git配置文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin git@xxx:Projects/p1.git</span><br></pre></td></tr></table></figure>
-
-<h3 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h3><blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9hYm91dC5naXRsYWIuY29tLzIwMTYvMDIvMTgvZ2l0bGFiLWRvdC1jb20tbm93LXN1cHBvcnRzLWFuLWFsdGVybmF0ZS1naXQtcGx1cy1zc2gtcG9ydC8=">gitlab 社区解决方案<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>git操作</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>git</tag>
-        <tag>sourceTree</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>创建SSH密钥对</title>
-    <url>//2020/04/11/%E5%88%9B%E5%BB%BASSH%E5%AF%86%E9%92%A5%E5%AF%B9/</url>
-    <content><![CDATA[<p>SSH 密钥对可以让用户无需输入密码即可登录到 SSH 服务器中。由于登录的过程不需要密码，因此可以防止由于密码被拦截、破解造成的账户密码泄露。再加上密码短语(passphrase)的使用，使得 SSH 的安全性更高一层。</p>
-<p>SSH 密钥对总是一把公钥、一把私钥的成对出现；公钥可以自由的添加到远程 SSH 服务器中用来验证用户是否合法；私钥相当于自己的身份认证，需要妥善保存不能泄露。</p>
-<p>SSH 密钥的其使用原理很简单：用户将公钥添加到远程主机中，登录的时候，远程主机会向用户发送一段随即字符串，用户使用自己的私钥加密后，再发送到远程主机。远程主机使用本地存储的公钥进行解密，如果成功，证明用户时可信的，直接允许登录 shell ，不再要求密码。这样就保证了整个登录过程的安全，防止了中间人攻击。</p>
-<span id="more"></span>
-<h1 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h1><h2 id="ssh-keygen-命令"><a href="#ssh-keygen-命令" class="headerlink" title="ssh-keygen 命令"></a>ssh-keygen 命令</h2><p>我们可以使用 <em>ssh-keygen</em> 命令来生成密钥对：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t ecdsa -b 521 -C &quot;$(whoami)@$(hostname)-$(date -I)&quot;</span><br><span class="line">Generating public/private ecdsa key pair.</span><br><span class="line">Enter file in which to save the key (/home/username/.ssh/id_ecdsa):</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /home/username/.ssh/id_ecdsa.</span><br><span class="line">Your public key has been saved in /home/username/.ssh/id_ecdsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">dd:15:ee:24:20:14:11:01:b8:72:a2:0f:99:4c:79:7f username@localhost-2015-03-08</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+--[ECDSA  521]---+</span><br><span class="line">|     ..oB=.   .  |</span><br><span class="line">|    .    . . . . |</span><br><span class="line">|  .  .      . +  |</span><br><span class="line">| oo.o    . . =   |</span><br><span class="line">|o+.+.   S . . .  |</span><br><span class="line">|=.   . E         |</span><br><span class="line">| o    .          |</span><br><span class="line">|  .              |</span><br><span class="line">|                 |</span><br><span class="line">+-----------------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中可使用 <em>-t</em> 指定加密算法，使用 <em>-b</em> 自定生成密钥长度，使用 <em>-C</em> 添加密钥对的说明comment。生成的密钥对默认存储在用户目录下的 <em>.ssh</em> 目录中，私钥默认名称为 <em>id</em>***_ (即 id_ + 加密算法名称)。还可以使用 <em>-f</em> 指定生成的私钥存储的文件全路径名称；也可以不使用 <em>-f</em> 指定密钥文件路径，在密钥的创建过程中还会提示用户输入密钥文件全路径名称。私钥对应的公钥文件为_私钥文件全名称 + .pub_。</p>
-<p>上面例子中创建了一对长度为512位的椭圆加密算法(ECDSA)加密的密钥对。创建 SSH 密钥对可选择多种加密算法，例如 <em>RSA</em> 、 <em>DSA</em> 、 <em>ECDSA</em> 等。</p>
-<h2 id="密码短语-Passphras"><a href="#密码短语-Passphras" class="headerlink" title="密码短语(Passphras)"></a>密码短语(Passphras)</h2><p>密码短语(passphras)是一连串的单词或文本组成，用来控制对电脑系统的访问。它的用法类似于密码(Password)，但是通常会比密码长度更长，这样就增加了破解的复杂度。密码短语不同于密码，它可以是有实际意义的一段话，便于用户记忆。</p>
-<p>密码短语默认可以不创建，但是这会导致不安全性。私钥是未经加密存储在电脑上的，电脑遗失或被窃取后，任何人拿到你的私钥后都可以随意访问 SSH 服务器；另外，电脑的 <em>root</em> 用户有权限访问电脑上的任意文件，这也包括你的私钥文件。因此，为了提高安全性还是建议用户设置自己的密码短语。</p>
-<p>已经生成的密钥对也可以修改密码短语。假设使用的是 RSA 加密的密钥对，存储到默认路径，输入以下命令即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ssh-keygen -f ~/.ssh/id_rsa -p</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="SSH-agent"><a href="#SSH-agent" class="headerlink" title="SSH agent"></a>SSH agent</h1><p>SSH agent 是 OpenSSH 或其它 SSH 程序提供的一个程序，提供了存储私钥的安全方法。如果用户的私钥使用了密码短语来加密的话，那么每一次使用 SSH密钥进行登录时，都需要用户输入正确的的密钥短语。而 SSH agent 程序能够将已经解密的私钥缓存起来，在需要的时候提供给 SSH 客户端，这样用户只需要在将私钥加入 SSH agent 缓存的时候输入一次密码短语就可以了。</p>
-<p>首先确保当前 SSH agent 可用：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># start the ssh-agent in the background</span><br><span class="line">$ eval &quot;$(ssh-agent -s)&quot;</span><br><span class="line">Agent pid 29393</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="ssh-add"><a href="#ssh-add" class="headerlink" title="ssh-add"></a>ssh-add</h2><p>添加 SSH 密钥到 SSH agent：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br><span class="line">Enter passphrase for /home/username/.ssh/id_rsa:</span><br><span class="line">Identity added: /home/username/.ssh/id_rsa (/home/username/.ssh/id_rsa)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="查看-SSH-agent-缓存密钥列表"><a href="#查看-SSH-agent-缓存密钥列表" class="headerlink" title="查看 SSH agent 缓存密钥列表"></a>查看 SSH agent 缓存密钥列表</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br><span class="line">2048 b9:a7:f0:44:a5:47:79:a5:ff:9d:14:5c:d3:78:04:65 /home/username/.ssh/id_rsa (RSA)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试连接"><a href="#测试连接" class="headerlink" title="测试连接"></a>测试连接</h2><p>将 SSH 公钥添加到 SSH 服务端后，就可以使用 SSH 来连接远程主机了。下面以 GitHub为例测试连接：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>这说明连接成功了。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly9oZWxwLmdpdGh1Yi5jb20vYXJ0aWNsZXMvZ2VuZXJhdGluZy1zc2gta2V5cy8=" title="generating ssh keys">Generating SSH keys<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cDovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9QYXNzcGhyYXNlJTIwUGFzc3BocmFzZQ==">Passphrase(维基百科)<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9kYWVtb24zNjkuZ2l0aHViLmlvL3NzaC8yMDE1LzAzLzA4LyUyMmh0dHBzOi8vd2lraS5hcmNobGludXgub3JnL2luZGV4LnBocC9TU0hfS2V5c18oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KSUyMg==" title="SSH Keys(简体中文)">SSH Keys(简体中文)<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cDovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9Tc2gtYWdlbnQlMjBzc2gtYWdlbnQ=">ssh-agent<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cDovL3lldW5nZWVrLmNvbS8yMDE0LzA2LzI2L0dpdCVFNSVBNCU5QSVFNSVCOCU5MCVFNSU4RiVCNyVFOSU4NSU4RCVFNyVCRCVBRS8lMjBHaXQlRTUlQTQlOUElRTUlQjglOTAlRTUlOEYlQjclRTklODUlOEQlRTclQkQlQUU=">Git多帐号配置<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>SSH</category>
-      </categories>
-      <tags>
-        <tag>全栈开发</tag>
-        <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于CKEditor5的格式化插件</title>
-    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
-<span id="more"></span>
-<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
-<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
-<li>获取选中元素的 attribute 将其存起来</li>
-<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
-<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
-</ul>
-</li>
-<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
-<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; model &#125; = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; schema &#125; = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">&quot;textProxy&quot;</span>) || item.<span class="title function_">is</span>(<span class="string">&quot;text&quot;</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) &#123;</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) &#123;</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (block) &#123;</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) &#123;</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>JavaScript</tag>
-        <tag>NPM</tag>
-        <tag>CKEditor5</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>命令行配置代理服务</title>
     <url>//2019/01/29/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<ul>
@@ -1679,6 +1671,97 @@ public Class HelloWorld&#123;
       <tags>
         <tag>windows</tag>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于CKEditor5的格式化插件</title>
+    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
+<span id="more"></span>
+<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
+<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>获取选中元素的 attribute 将其存起来</li>
+<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
+<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
+</ul>
+</li>
+<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
+<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; model &#125; = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; schema &#125; = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">&quot;textProxy&quot;</span>) || item.<span class="title function_">is</span>(<span class="string">&quot;text&quot;</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) &#123;</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) &#123;</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (block) &#123;</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) &#123;</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>JavaScript</tag>
+        <tag>NPM</tag>
+        <tag>CKEditor5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多Node环境设置</title>
+    <url>//2020/09/12/%E5%A4%9ANode%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE/</url>
+    <content><![CDATA[<p>建议使用 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyZWF0aW9uaXgvbnZt">NVM<i class="fa fa-external-link-alt"></i></span> 对<code>Node</code>进行管理，在安装Node之前可以先安装好<code>NVM</code>，下面几种安装方式任选其一即可。</p>
+<span id="more"></span>
+
+<h2 id="安装NVM"><a href="#安装NVM" class="headerlink" title="安装NVM"></a><a href="#%E5%AE%89%E8%A3%85NVM" title="安装NVM"></a>安装NVM</h2><ul>
+<li><p>curl</p>
+<p>curl -o- <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2NyZWF0aW9uaXgvbnZtL3YwLjMzLjAvaW5zdGFsbC5zaA==">https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh<i class="fa fa-external-link-alt"></i></span> | bash</p>
+</li>
+<li><p>wget</p>
+<p>  wget -qO- <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2NyZWF0aW9uaXgvbnZtL3YwLjMzLjAvaW5zdGFsbC5zaA==">https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh<i class="fa fa-external-link-alt"></i></span> | bash</p>
+</li>
+<li><p><strong>git</strong>（建议这种安装方法，能够获取到最新的NVM版本）</p>
+<p>git clone <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyZWF0aW9uaXgvbnZtLmdpdA==">https://github.com/creationix/nvm.git<i class="fa fa-external-link-alt"></i></span> ~&#x2F;.nvm &amp;&amp; cd ~&#x2F;.nvm &amp;&amp; git checkout `git describe –abbrev&#x3D;0 –tags`</p>
+<p>  . ~&#x2F;.nvm&#x2F;nvm.sh</p>
+</li>
+</ul>
+<p>上述操作成功之后，打开<code>Terminal</code>输入<code>NVM</code>，若能看到帮助信息说明安装成功。</p>
+<h2 id="使用NVM"><a href="#使用NVM" class="headerlink" title="使用NVM"></a><a href="#%E4%BD%BF%E7%94%A8NVM" title="使用NVM"></a>使用NVM</h2><p>安装好 <code>NVM</code> 之后就可以安装指定版本的<code>Node</code>了，假设安装4.2版本的可以执行下面命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm install 8.0</span><br></pre></td></tr></table></figure>
+
+<p><code>NVM</code>可以同时安装多个版本的<code>Node</code>，切换使用也是相当方便，下面命令指定使用4.2版本的：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm use 8.0</span><br></pre></td></tr></table></figure>
+
+<p>查看你安装的<code>Node</code>列表：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p><code>NVM</code>默认从 <span class="exturl" data-url="aHR0cDovL25vZGVqcy5vcmcvZGlzdC8=">http://nodejs.org/dist/<i class="fa fa-external-link-alt"></i></span> 下载资源，速度相对较慢，我们可以切换到国内的源：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/dist</span><br><span class="line"><span class="built_in">source</span> ~/git/nvm/nvm.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a><a href="#NPM" title="NPM"></a>NPM</h2><p><code>NPM</code>作为<code>Node</code>的包管理器，现在是随着<code>Node</code>的安装同时进行安装的，通过<code>NPM</code>可以很方便地对包进行管理。</p>
+<h3 id="NPM加速"><a href="#NPM加速" class="headerlink" title="NPM加速"></a><a href="#NPM%E5%8A%A0%E9%80%9F" title="NPM加速"></a>NPM加速</h3><p><code>NPM</code>默认是从 <span class="exturl" data-url="aHR0cDovL3JlZ2lzdGVyLm5wbWpzLm9yZy8=">http://register.npmjs.org/<i class="fa fa-external-link-alt"></i></span> 进行资源的下载，在碰到需要<code>node-gyp</code>进行编译的时候还要从 <span class="exturl" data-url="aHR0cDovL25vZGVqcy5vcmcvZGlzdC8=">http://nodejs.org/dist/<i class="fa fa-external-link-alt"></i></span> 重新下载一次资源，这会导致下载速度非常慢，通过下面命令切换下载源加速<code>NPM</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm --registry=https://registry.npm.taobao.org --disturl=https://npm.taobao.org/dist</span><br></pre></td></tr></table></figure>
+
+<h3 id="解决NPM全局安装需要Sudo的问题"><a href="#解决NPM全局安装需要Sudo的问题" class="headerlink" title="解决NPM全局安装需要Sudo的问题"></a><a href="#%E8%A7%A3%E5%86%B3NPM%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81Sudo%E7%9A%84%E9%97%AE%E9%A2%98" title="解决NPM全局安装需要Sudo的问题"></a>解决NPM全局安装需要Sudo的问题</h3><ol>
+<li><p>创建全局包目录</p>
+<p> $ mkdir “${HOME}&#x2F;.npm-packages”</p>
+</li>
+<li><p>在.bash_profile&#x2F;.zshrc中增加下面代码</p>
+<p> NPM_PACKAGES&#x3D;”${HOME}&#x2F;.npm-packages”</p>
+<p> NODE_PATH&#x3D;”$NPM_PACKAGES&#x2F;lib&#x2F;node_modules:$NODE_PATH”</p>
+<p> PATH&#x3D;”$NPM_PACKAGES&#x2F;bin:$PATH”</p>
+</li>
+<li><p>在 $HOME&#x2F;.npmrc 中增加下面代码</p>
+<p> prefix&#x3D;${HOME}&#x2F;.npm-packages</p>
+</li>
+</ol>
+<p>如果你很懒，那么你可以看看 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dsZW5waWtlL25wbS1nX25vc3Vkbw==">这里<i class="fa fa-external-link-alt"></i></span> 的说明进行自动化帮你解决问题！</p>
+<h3 id="npm-install-xxx报-EACCESS-mkdir错误"><a href="#npm-install-xxx报-EACCESS-mkdir错误" class="headerlink" title="npm install xxx报 EACCESS,mkdir错误"></a><a href="#npm-install-xxx%E6%8A%A5-EACCESS-mkdir%E9%94%99%E8%AF%AF" title="npm install xxx报 EACCESS,mkdir错误"></a>npm install xxx报 EACCESS,mkdir错误</h3><p>~&#x2F;.npm目录权限问题，</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> -R <span class="variable">$USER</span>:<span class="variable">$GROUP</span> ~/.npm</span><br><span class="line"></span><br><span class="line">npm cache clean</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>JavaScript</tag>
+        <tag>NPM</tag>
       </tags>
   </entry>
   <entry>
@@ -1747,103 +1830,6 @@ public Class HelloWorld&#123;
       </tags>
   </entry>
   <entry>
-    <title>多Node环境设置</title>
-    <url>//2020/09/12/%E5%A4%9ANode%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE/</url>
-    <content><![CDATA[<p>建议使用 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyZWF0aW9uaXgvbnZt">NVM<i class="fa fa-external-link-alt"></i></span> 对<code>Node</code>进行管理，在安装Node之前可以先安装好<code>NVM</code>，下面几种安装方式任选其一即可。</p>
-<span id="more"></span>
-
-<h2 id="安装NVM"><a href="#安装NVM" class="headerlink" title="安装NVM"></a><a href="#%E5%AE%89%E8%A3%85NVM" title="安装NVM"></a>安装NVM</h2><ul>
-<li><p>curl</p>
-<p>curl -o- <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2NyZWF0aW9uaXgvbnZtL3YwLjMzLjAvaW5zdGFsbC5zaA==">https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh<i class="fa fa-external-link-alt"></i></span> | bash</p>
-</li>
-<li><p>wget</p>
-<p>  wget -qO- <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2NyZWF0aW9uaXgvbnZtL3YwLjMzLjAvaW5zdGFsbC5zaA==">https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh<i class="fa fa-external-link-alt"></i></span> | bash</p>
-</li>
-<li><p><strong>git</strong>（建议这种安装方法，能够获取到最新的NVM版本）</p>
-<p>git clone <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyZWF0aW9uaXgvbnZtLmdpdA==">https://github.com/creationix/nvm.git<i class="fa fa-external-link-alt"></i></span> ~&#x2F;.nvm &amp;&amp; cd ~&#x2F;.nvm &amp;&amp; git checkout `git describe –abbrev&#x3D;0 –tags`</p>
-<p>  . ~&#x2F;.nvm&#x2F;nvm.sh</p>
-</li>
-</ul>
-<p>上述操作成功之后，打开<code>Terminal</code>输入<code>NVM</code>，若能看到帮助信息说明安装成功。</p>
-<h2 id="使用NVM"><a href="#使用NVM" class="headerlink" title="使用NVM"></a><a href="#%E4%BD%BF%E7%94%A8NVM" title="使用NVM"></a>使用NVM</h2><p>安装好 <code>NVM</code> 之后就可以安装指定版本的<code>Node</code>了，假设安装4.2版本的可以执行下面命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm install 8.0</span><br></pre></td></tr></table></figure>
-
-<p><code>NVM</code>可以同时安装多个版本的<code>Node</code>，切换使用也是相当方便，下面命令指定使用4.2版本的：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm use 8.0</span><br></pre></td></tr></table></figure>
-
-<p>查看你安装的<code>Node</code>列表：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<p><code>NVM</code>默认从 <span class="exturl" data-url="aHR0cDovL25vZGVqcy5vcmcvZGlzdC8=">http://nodejs.org/dist/<i class="fa fa-external-link-alt"></i></span> 下载资源，速度相对较慢，我们可以切换到国内的源：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/dist</span><br><span class="line"><span class="built_in">source</span> ~/git/nvm/nvm.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a><a href="#NPM" title="NPM"></a>NPM</h2><p><code>NPM</code>作为<code>Node</code>的包管理器，现在是随着<code>Node</code>的安装同时进行安装的，通过<code>NPM</code>可以很方便地对包进行管理。</p>
-<h3 id="NPM加速"><a href="#NPM加速" class="headerlink" title="NPM加速"></a><a href="#NPM%E5%8A%A0%E9%80%9F" title="NPM加速"></a>NPM加速</h3><p><code>NPM</code>默认是从 <span class="exturl" data-url="aHR0cDovL3JlZ2lzdGVyLm5wbWpzLm9yZy8=">http://register.npmjs.org/<i class="fa fa-external-link-alt"></i></span> 进行资源的下载，在碰到需要<code>node-gyp</code>进行编译的时候还要从 <span class="exturl" data-url="aHR0cDovL25vZGVqcy5vcmcvZGlzdC8=">http://nodejs.org/dist/<i class="fa fa-external-link-alt"></i></span> 重新下载一次资源，这会导致下载速度非常慢，通过下面命令切换下载源加速<code>NPM</code>。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm --registry=https://registry.npm.taobao.org --disturl=https://npm.taobao.org/dist</span><br></pre></td></tr></table></figure>
-
-<h3 id="解决NPM全局安装需要Sudo的问题"><a href="#解决NPM全局安装需要Sudo的问题" class="headerlink" title="解决NPM全局安装需要Sudo的问题"></a><a href="#%E8%A7%A3%E5%86%B3NPM%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81Sudo%E7%9A%84%E9%97%AE%E9%A2%98" title="解决NPM全局安装需要Sudo的问题"></a>解决NPM全局安装需要Sudo的问题</h3><ol>
-<li><p>创建全局包目录</p>
-<p> $ mkdir “${HOME}&#x2F;.npm-packages”</p>
-</li>
-<li><p>在.bash_profile&#x2F;.zshrc中增加下面代码</p>
-<p> NPM_PACKAGES&#x3D;”${HOME}&#x2F;.npm-packages”</p>
-<p> NODE_PATH&#x3D;”$NPM_PACKAGES&#x2F;lib&#x2F;node_modules:$NODE_PATH”</p>
-<p> PATH&#x3D;”$NPM_PACKAGES&#x2F;bin:$PATH”</p>
-</li>
-<li><p>在 $HOME&#x2F;.npmrc 中增加下面代码</p>
-<p> prefix&#x3D;${HOME}&#x2F;.npm-packages</p>
-</li>
-</ol>
-<p>如果你很懒，那么你可以看看 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dsZW5waWtlL25wbS1nX25vc3Vkbw==">这里<i class="fa fa-external-link-alt"></i></span> 的说明进行自动化帮你解决问题！</p>
-<h3 id="npm-install-xxx报-EACCESS-mkdir错误"><a href="#npm-install-xxx报-EACCESS-mkdir错误" class="headerlink" title="npm install xxx报 EACCESS,mkdir错误"></a><a href="#npm-install-xxx%E6%8A%A5-EACCESS-mkdir%E9%94%99%E8%AF%AF" title="npm install xxx报 EACCESS,mkdir错误"></a>npm install xxx报 EACCESS,mkdir错误</h3><p>~&#x2F;.npm目录权限问题，</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> -R <span class="variable">$USER</span>:<span class="variable">$GROUP</span> ~/.npm</span><br><span class="line"></span><br><span class="line">npm cache clean</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>JavaScript</tag>
-        <tag>NPM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Vscode 终端抱怨解析环境需要过多时间问题</title>
-    <url>//2022/07/31/%E8%A7%A3%E5%86%B3-Vscode-%E7%BB%88%E7%AB%AF%E6%8A%B1%E6%80%A8%E8%A7%A3%E6%9E%90%E7%8E%AF%E5%A2%83%E9%9C%80%E8%A6%81%E8%BF%87%E5%A4%9A%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>当我从 Dock 启动 VSCode 时，它​​总是抱怨</p>
-<blockquote>
-<p>解析您的 shell 环境需要很长时间。请<br>检查您的外壳配置。</p>
-</blockquote>
-<span id="more"></span>
-
-<p>然后稍后</p>
-<blockquote>
-<p>无法在合理的时间内解析您的 shell 环境。<br>请检查您的外壳配置。</p>
-</blockquote>
-<p>根据这个页面，<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9zdXBwb3J0aW5nL2ZhcSNfcmVzb2x2aW5nLXNoZWxsLWVudmlyb25tZW50LWlzLXNsb3ctZXJyb3Itd2FybmluZw==">Resolving Shell Environment is Slow<i class="fa fa-external-link-alt"></i></span>，如果 .bashrc 需要三秒以上，则显示第一条消息，如果需要十秒以上，则显示第二条消息。</p>
-<p>我在 VSCode 中打开了一个终端并获取了我的 .bashrc 文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Mark$ time <span class="built_in">source</span> ~/.bashrc</span><br><span class="line">real    0m1.448s</span><br><span class="line">user    0m0.524s</span><br><span class="line">sys     0m0.671s</span><br></pre></td></tr></table></figure>
-
-<p>如您所见，只需不到 1.5 秒。</p>
-<p><strong>环境：</strong></p>
-<ul>
-<li>MacOS Monterey 12.5</li>
-<li>VSCode 1.69.2</li>
-</ul>
-<p>希望有人知道是什么导致了这种情况。<br>除此之外，也许有人可以将我指向实际生成这些错误的代码。</p>
-<p>遇到同样情况，发现问题：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUvaXNzdWVzLzExMzg2OSNpc3N1ZWNvbW1lbnQtNzgwMDcyOTA0">https://github.com/microsoft/vscode/issues/113869#issuecomment-780072904<i class="fa fa-external-link-alt"></i></span></p>
-<p>我提取<code>nvm load code</code>到问题中的<code>condition function</code>参考，解决了这个问题：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function load-nvm &#123;</span><br><span class="line">  export NVM_DIR=&quot;$HOME/.nvm&quot;</span><br><span class="line">  [ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; \. &quot;$NVM_DIR/nvm.sh&quot;  # This loads nvm</span><br><span class="line">  [ -s &quot;$NVM_DIR/bash_completion&quot; ] &amp;&amp; \. &quot;$NVM_DIR/bash_completion&quot;  # This loads nvm bash_completion</span><br><span class="line">  [[ -s `brew --prefix`/etc/autojump.sh ]] &amp;&amp; . `brew --prefix`/etc/autojump.sh</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># nvm</span><br><span class="line">if [[ &quot;x$&#123;TERM_PROGRAM&#125;&quot; = &quot;xvscode&quot; ]]; then</span><br><span class="line">  echo &#x27;in vscode, nvm not work; use `load-nvm`&#x27;;</span><br><span class="line">else</span><br><span class="line">  load-nvm</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>工具使用</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>Vscode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>聊聊网络中的传输协议</title>
     <url>//2019/03/25/%E8%81%8A%E8%81%8A%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<p>一直说写这么一篇文章，可是都没什么时间静下心来整理，最近项目不是很忙，打算抽时间整理整理一些常用的方法，反正慢慢来嘛~~</p>
@@ -1880,6 +1866,42 @@ public Class HelloWorld&#123;
         <tag>网络传输协议</tag>
         <tag>TCP/IP协议族</tag>
         <tag>HTTP/HTTPS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Vscode 终端抱怨解析环境需要过多时间问题</title>
+    <url>//2022/07/31/%E8%A7%A3%E5%86%B3-Vscode-%E7%BB%88%E7%AB%AF%E6%8A%B1%E6%80%A8%E8%A7%A3%E6%9E%90%E7%8E%AF%E5%A2%83%E9%9C%80%E8%A6%81%E8%BF%87%E5%A4%9A%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>当我从 Dock 启动 VSCode 时，它​​总是抱怨</p>
+<blockquote>
+<p>解析您的 shell 环境需要很长时间。请<br>检查您的外壳配置。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>然后稍后</p>
+<blockquote>
+<p>无法在合理的时间内解析您的 shell 环境。<br>请检查您的外壳配置。</p>
+</blockquote>
+<p>根据这个页面，<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9zdXBwb3J0aW5nL2ZhcSNfcmVzb2x2aW5nLXNoZWxsLWVudmlyb25tZW50LWlzLXNsb3ctZXJyb3Itd2FybmluZw==">Resolving Shell Environment is Slow<i class="fa fa-external-link-alt"></i></span>，如果 .bashrc 需要三秒以上，则显示第一条消息，如果需要十秒以上，则显示第二条消息。</p>
+<p>我在 VSCode 中打开了一个终端并获取了我的 .bashrc 文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Mark$ time <span class="built_in">source</span> ~/.bashrc</span><br><span class="line">real    0m1.448s</span><br><span class="line">user    0m0.524s</span><br><span class="line">sys     0m0.671s</span><br></pre></td></tr></table></figure>
+
+<p>如您所见，只需不到 1.5 秒。</p>
+<p><strong>环境：</strong></p>
+<ul>
+<li>MacOS Monterey 12.5</li>
+<li>VSCode 1.69.2</li>
+</ul>
+<p>希望有人知道是什么导致了这种情况。<br>除此之外，也许有人可以将我指向实际生成这些错误的代码。</p>
+<p>遇到同样情况，发现问题：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUvaXNzdWVzLzExMzg2OSNpc3N1ZWNvbW1lbnQtNzgwMDcyOTA0">https://github.com/microsoft/vscode/issues/113869#issuecomment-780072904<i class="fa fa-external-link-alt"></i></span></p>
+<p>我提取<code>nvm load code</code>到问题中的<code>condition function</code>参考，解决了这个问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function load-nvm &#123;</span><br><span class="line">  export NVM_DIR=&quot;$HOME/.nvm&quot;</span><br><span class="line">  [ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; \. &quot;$NVM_DIR/nvm.sh&quot;  # This loads nvm</span><br><span class="line">  [ -s &quot;$NVM_DIR/bash_completion&quot; ] &amp;&amp; \. &quot;$NVM_DIR/bash_completion&quot;  # This loads nvm bash_completion</span><br><span class="line">  [[ -s `brew --prefix`/etc/autojump.sh ]] &amp;&amp; . `brew --prefix`/etc/autojump.sh</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># nvm</span><br><span class="line">if [[ &quot;x$&#123;TERM_PROGRAM&#125;&quot; = &quot;xvscode&quot; ]]; then</span><br><span class="line">  echo &#x27;in vscode, nvm not work; use `load-nvm`&#x27;;</span><br><span class="line">else</span><br><span class="line">  load-nvm</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>Vscode</tag>
       </tags>
   </entry>
 </search>
