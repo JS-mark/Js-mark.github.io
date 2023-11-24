@@ -47,7 +47,7 @@ jobs:
           command: |
             git config --global user.name "The Mark"
             git config --global user.email "sunduo3195@qq.com"
-            hexo deploy
+            sh build.sh
   verify:
     docker:
       - image: cimg/node:18.18
