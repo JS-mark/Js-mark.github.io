@@ -2,12 +2,13 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.1
+      - image: cimg/node:18.18
     steps:
       - checkout
+      - run: node --version
       - run:
           name: Update NPM
-          command: sudo npm install -g npm@latest
+          command: npm install -g npm@latest
       - run:
           name: Install Hexo CLI
           command: |
@@ -30,13 +31,13 @@ jobs:
             - '*'
   deploy:
     docker:
-      - image: cimg/node:18.1
+      - image: cimg/node:18.18
     steps:
       - checkout
       - run:
           name: Install Hexo CLI
           command: |
-            sudo npm install hexo-cli -g
+            npm install hexo-cli -g
       - restore_cache:
           key: node-cache-{{ checksum "package-lock.json" }}
       - attach_workspace:
@@ -52,11 +53,11 @@ jobs:
             hexo deploy
   verify:
     docker:
-      - image: cimg/node:18.1
+      - image: cimg/node:18.18
     steps:
       - run:
           name: Install BLC
-          command: sudo npm install -g broken-link-checker
+          command: npm install -g broken-link-checker
       - run:
           name: Check broken internal links
           command: blc https://e.printstacktrace.blog -roe
