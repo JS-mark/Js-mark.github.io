@@ -57,8 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 public/
-package-lock.json
 .deploy_git/
-.vscode/
-
+yarn.lock
 db.json
