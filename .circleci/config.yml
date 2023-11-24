@@ -1,42 +1,82 @@
 version: 2.1
-
 jobs:
   build:
     docker:
-      - image: circleci/node:16
-    working_directory: ~/mark-blog
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
+          name: Update NPM
+          command: sudo npm install -g npm@latest
+      - run:
+          name: Install Hexo CLI
           command: |
-            git clone -b blog https://github.com/JS-mark/Js-mark.github.io.git
+            sudo npm install hexo-cli -g
       - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
+          key: node-cache-{{ checksum "package-lock.json" }}
       - run:
-          name: Install
-          command: yarn
+          name: Install NPM packages
+          command: npm ci
       - save_cache:
+          key: node-cache-{{ checksum "package-lock.json" }}
           paths:
-            - node_modules
-          key: dependencies-{{ checksum "package.json" }}
+            - ./node_modules
       - run:
-          name: Set Var
+          name: Generate blog
+          command: hexo generate
+      - persist_to_workspace:
+          root: public
+          paths:
+            - '*'
+  deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Install Hexo CLI
           command: |
+            sudo npm install hexo-cli -g
+      - restore_cache:
+          key: node-cache-{{ checksum "package-lock.json" }}
+      - attach_workspace:
+          at: public
+      - add_ssh_keys:
+          fingerprints:
+            - '72:c2:bc:6c:87:e5:a9:64:9a:cd:93:c4:3a:1b:fe:9c'
+      - deploy:
+          name: Deploy website
+          command: |
+            git config --global user.name "The Mark"
             git config --global user.email "sunduo3195@qq.com"
-            git config --global user.name "Mark"
+            hexo deploy
+  verify:
+    docker:
+      - image: circleci/node:10
+    steps:
       - run:
-          name: Clean
-          command: yarn clean
+          name: Install BLC
+          command: sudo npm install -g broken-link-checker
       - run:
-          name: Deploy
-          command: yarn deploy
+          name: Check broken internal links
+          command: blc https://e.printstacktrace.blog -roe
+
 workflows:
   version: 2
-  build_and_deploy:
+  build:
     jobs:
       - build:
           filters:
             branches:
+              ignore:
+                - main
+                - gh-pages
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
               only: blog
-              ignore: master
+      - verify:
+          requires:
+            - deploy
