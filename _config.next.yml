@@ -266,7 +266,7 @@ tag_icon: true
 reward_settings:
   # If true, reward will be displayed in every article by default.
   enable: true
-  animation: true
+  animation: false
   comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
 
 reward:
@@ -920,6 +920,27 @@ pdf:
   # Default height
   height: 500px
 
+# flowchart tag
+flowchart:
+  # raphael:   # optional, the source url of raphael.js
+  # flowchart: # optional, the source url of flowchart.js
+  options: drawSVG # options used for `drawSVG`
+
+# sequence tag
+sequence:
+  webfont: //cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js
+  snap: //cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js
+  underscore: //cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js
+  sequence: //cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js
+  # webfont:     # optional, the source url of webfontloader.js
+  # snap:        # optional, the source url of snap.svg.js
+  # underscore:  # optional, the source url of underscore.js
+  # sequence:    # optional, the source url of sequence-diagram.js
+  # css: # optional, the url for css, such as hand drawn theme
+  options:
+    theme: simple
+    css_class:
+
 # Mermaid tag
 mermaid:
   enable: true
@@ -934,7 +955,7 @@ mermaid:
 # For more information: http://velocityjs.org
 motion:
   enable: true
-  async: false
+  async: true
   transition:
     # Transition variants:
     # fadeIn | flipXIn | flipYIn | flipBounceXIn | flipBounceYIn
