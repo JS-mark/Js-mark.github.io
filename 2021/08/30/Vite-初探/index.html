@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
   <link rel="icon" type="image/png" sizes="32x32" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"js-mark.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"js-mark.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="注：转载于前端工程化 – vite 初探 春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？ vite官方介绍地址: vitejs.dev&#x2F;guide&#x2F;why.h…">
 <meta property="og:type" content="article">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7da53ccd112e4676a2c7db89afb40211~tplv-k3u1fbpfcp-watermark.awebp">
 <meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3bfc28338f14f2ab6a25ba0f33c856c~tplv-k3u1fbpfcp-watermark.awebp">
 <meta property="article:published_time" content="2021-08-30T15:20:27.000Z">
-<meta property="article:modified_time" content="2024-07-22T07:40:40.608Z">
+<meta property="article:modified_time" content="2024-07-22T09:11:27.734Z">
 <meta property="article:author" content="Mark">
 <meta property="article:tag" content="Javascript">
 <meta property="article:tag" content="前端工程化">
@@ -98,7 +98,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">48</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">31</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">48</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -256,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-07-22 07:40:40" itemprop="dateModified" datetime="2024-07-22T07:40:40+00:00">2024-07-22</time>
+      <time title="修改时间：2024-07-22 09:11:27" itemprop="dateModified" datetime="2024-07-22T09:11:27+00:00">2024-07-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -277,9 +277,9 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>注：转载于<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTM2ODAwNTUxMjM3NTgyODg0">前端工程化 – vite 初探<i class="fa fa-external-link-alt"></i></span></p>
+    <div class="post-body" itemprop="articleBody"><html><head></head><body><p>注：转载于<span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82OTM2ODAwNTUxMjM3NTgyODg0">前端工程化 – vite 初探<i class="fa fa-external-link-alt"></i></span></p>
 <p>春节期间，尤雨溪一连串的动作宣布了vite 2.0正式发布，那么赶紧来看看这个被尤雨溪号称为下一代的前端构建工具和现在的构建工具到底有哪里不一样？</p>
-<p>vite官方介绍地址: <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vdml0ZWpzLmRldi9ndWlkZS93aHkuaHRtbCUyM3Nsb3ctc2VydmVyLXN0YXJ0" title="https://vitejs.dev/guide/why.html#slow-server-start">vitejs.dev&#x2F;guide&#x2F;why.h…<i class="fa fa-external-link-alt"></i></span></p>
+<p>vite官方介绍地址: <span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5jbi8/dGFyZ2V0PWh0dHBzOi8vdml0ZWpzLmRldi9ndWlkZS93aHkuaHRtbCUyM3Nsb3ctc2VydmVyLXN0YXJ0" title="https://vitejs.dev/guide/why.html#slow-server-start">vitejs.dev/guide/why.h…<i class="fa fa-external-link-alt"></i></span></p>
 <span id="more"></span>
 <p>首先我们要知道，vite为何而诞生？</p>
 <h2 id="为什么需要打包工具？"><a href="#为什么需要打包工具？" class="headerlink" title="为什么需要打包工具？"></a>为什么需要打包工具？</h2><p>在前端工程化的今天，前端的技术栈越来越丰富，配套的工具也越来越多，为了提升前端的开发效率各种各样框架是层出不穷，</p>
@@ -300,16 +300,16 @@
 <p>vite针对这种情况,在收到请求时做了一个叫pre-bundle的优化，也就是</p>
 <ul>
 <li>把非esm的js代码转换成esm代码</li>
-<li>把一个依赖打成一个一个js文件返回给前端(而不是每个文件独立返回，比如lodash-es这个依赖有600多个内部模块，最终只会返回lodash-es这一个文件，里面包含了全部的内部模块)，避免网络波动，过度占用网络端口(这里会把打包的代码放在node_modules&#x2F;.vite&#x2F;下)</li>
+<li>把一个依赖打成一个一个js文件返回给前端(而不是每个文件独立返回，比如lodash-es这个依赖有600多个内部模块，最终只会返回lodash-es这一个文件，里面包含了全部的内部模块)，避免网络波动，过度占用网络端口(这里会把打包的代码放在node_modules/.vite/下)</li>
 <li>在请求js代码时加入了缓存信息在http请求的头部，实现浏览器缓存</li>
 <li>对于monorepo，vite会把依赖的项目也一起通过esm的方式引入进来</li>
 </ul>
 <h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>热更新时，webpack由于是树状的依赖，因此其中的每一个节点改变，其祖先节点都需要重新编译加载(其实在应用中感觉开销比想象中更大)。并且由于热更新导致页面重新加载，页面上原本的状态也会丢失。（具体的原理还需要深入学习一下）</p>
 <p>而vite由于基于esm，一个节点改变，大部分情况下那就只要重新请求这个节点就好了，我们知道算法中O(1)和O(n)区别还是很大的。并且vite热更新的时候，会在请求头中加入缓存的信息，服务器对于没有修改的文件返回304，极大程度的避免了不必要的重新加载</p>
 <h2 id="vite的其他能力"><a href="#vite的其他能力" class="headerlink" title="vite的其他能力"></a>vite的其他能力</h2><h3 id="typescript"><a href="#typescript" class="headerlink" title="typescript"></a>typescript</h3><p>Vite仅执行.t 文件的转译工作，并不执行任何类型检查(请确保ts错误都已经处理完)。Vite 使用 esbuild 将 TypeScript 转译到 JavaScript，约是 tsc 速度的 20~30 倍</p>
-<h3 id="ssr-ssg"><a href="#ssr-ssg" class="headerlink" title="ssr&#x2F;ssg"></a>ssr&#x2F;ssg</h3><p>vite的官网很明确的说vite对ssr(服务端渲染)和ssg(静态页面生成)的特性还不稳定，而且由于笔者对这两块都不怎么了解，因此暂不介绍</p>
-<h3 id="sass-less"><a href="#sass-less" class="headerlink" title="sass&#x2F;less"></a>sass&#x2F;less</h3><p>vite支持css预处理器如less和sass，如果在css文件的后缀名中加入<code>.module</code>，vite会把css文件识别成模块，于是可以像使用对象由于使用css。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./index.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">&#x27;./style.module.scss&#x27;</span>;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;style[</span>&#x27;<span class="attr">home__title</span>&#x27;]&#125; /&gt;</span></span></span><br><span class="line"></span><br><span class="line">./style.<span class="property">module</span>.<span class="property">scss</span></span><br><span class="line">.<span class="property">home__title</span> &#123;</span><br><span class="line">    <span class="attr">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ssr-ssg"><a href="#ssr-ssg" class="headerlink" title="ssr/ssg"></a>ssr/ssg</h3><p>vite的官网很明确的说vite对ssr(服务端渲染)和ssg(静态页面生成)的特性还不稳定，而且由于笔者对这两块都不怎么了解，因此暂不介绍</p>
+<h3 id="sass-less"><a href="#sass-less" class="headerlink" title="sass/less"></a>sass/less</h3><p>vite支持css预处理器如less和sass，如果在css文件的后缀名中加入<code>.module</code>，vite会把css文件识别成模块，于是可以像使用对象由于使用css。</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./index.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">'./style.module.scss'</span>;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">{style[</span>'<span class="attr">home__title</span>']} /&gt;</span></span></span><br><span class="line"></span><br><span class="line">./style.<span class="property">module</span>.<span class="property">scss</span></span><br><span class="line">.<span class="property">home__title</span> {</span><br><span class="line">    <span class="attr">color</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h3 id="预构建"><a href="#预构建" class="headerlink" title="预构建"></a>预构建</h3><p>这里主要是两个目的</p>
 <ol>
@@ -333,7 +333,7 @@
 </ul>
 <p>其中，vite的生产构建是基于rollup封装好了的，而snowpack则可以用户自己决定webpack、rollup还是其他构建工具，感觉尤玉溪是真的钟爱rollup，因为vue3也是用的这个，有机会需要学习一下。</p>
 <p>最后说一下自己的看法：vite和snowpack在我看来，区别真不算大。但是使用vite意味着现在webpack打包的那一套配置都得改，甚至可能要修改打包的流水线，某种程度上提高了使用vite的门槛，有可能会阻塞vite的推广。毕竟一项技术能否普及，首先要看市场的需要，其次是上车的门槛和社区生态。但是vite有一个天然的优势就是尤雨溪这个名字，可以让vite获得更高的曝光度，吸引更多人来关注，但是实际应用还是需要尤雨溪团队再推动一下才行。</p>
-
+</body></html>
     </div>
 
     
@@ -470,6 +470,12 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
@@ -483,15 +489,15 @@
   
   <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
   <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
-  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.0/pdfobject.min.js","integrity":"sha256-JJZNsid68vnh3/zyj0lY9BN5ynxVX/12XgOa1TlaYN0="},"url":"/lib/pdf/web/viewer.html"}</script>
   <script src="/js/third-party/tags/pdf.js"></script>
 
   <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"}}</script>
