@@ -1411,7 +1411,7 @@ public Class HelloWorld&#123;
     <title>修改了SSH默认端口之后，如何配置git？</title>
     <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
     <content><![CDATA[<h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjMTA1OyYjeDc0OyYjNjQ7JiMxMjA7JiMxMjA7JiN4Nzg7JiN4MmU7JiM5OTsmI3g2ZjsmI3g2ZDs=">&#x67;&#105;&#x74;&#64;&#120;&#120;&#x78;&#x2e;&#99;&#x6f;&#x6d;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjMTA1OyYjeDc0OyYjeDQwOyYjeDc4OyYjMTIwOyYjMTIwOyYjeDJlOyYjOTk7JiMxMTE7JiMxMDk7">&#x67;&#105;&#x74;&#x40;&#x78;&#120;&#120;&#x2e;&#99;&#111;&#109;<i class="fa fa-external-link-alt"></i></span>:Projects&#x2F;xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
 <span id="more"></span>
 <h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></table></figure>
 
