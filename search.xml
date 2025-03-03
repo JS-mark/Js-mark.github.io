@@ -3,7 +3,7 @@
   <entry>
     <title>35岁双非前端程序员：在压力与机遇间摇摆</title>
     <url>//2025/03/02/35%E5%B2%81%E5%8F%8C%E9%9D%9E%E5%89%8D%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%EF%BC%9A%E5%9C%A8%E5%8E%8B%E5%8A%9B%E4%B8%8E%E6%9C%BA%E9%81%87%E9%97%B4%E6%91%87%E6%91%86/</url>
-    <content><![CDATA[<html><head></head><body><p><img data-src="/img.png" alt="泰国旅行照"></p>
+    <content><![CDATA[<html><head></head><body><p><img data-src="/2025/03/02/35%E5%B2%81%E5%8F%8C%E9%9D%9E%E5%89%8D%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%EF%BC%9A%E5%9C%A8%E5%8E%8B%E5%8A%9B%E4%B8%8E%E6%9C%BA%E9%81%87%E9%97%B4%E6%91%87%E6%91%86/img.png" alt="泰国旅行照"></p>
 <p>身为一名 35 岁的双非前端程序员，近来我常感觉自己仿若一叶孤舟，漂泊在波涛汹涌的海面，四周皆是惊涛骇浪，而我拼尽全力维持平衡，一心探寻正确航向。</p>
 <span id="more"></span>
 <h2 id="家庭生活的-“甜蜜负担”"><a href="#家庭生活的-“甜蜜负担”" class="headerlink" title="家庭生活的 “甜蜜负担”"></a>家庭生活的 “甜蜜负担”</h2><p>我和爱人新婚不久，本以为会开启浪漫的二人世界，可现实却如同一部满是琐碎日常的家庭剧。每天下班到家，话题从代码中的 bug，变成了今晚吃啥，是点外卖还是下厨。要是决定自己做饭，那去菜市场就像一场 “战斗”，和大爷大妈们争抢最新鲜的蔬菜，仿佛这也是一场 “技术比拼”。</p>
@@ -1464,7 +1464,7 @@ public Class HelloWorld{
     <title>修改了SSH默认端口之后，如何配置git？</title>
     <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
     <content><![CDATA[<html><head></head><body><h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjeDY5OyYjeDc0OyYjeDQwOyYjeDc4OyYjeDc4OyYjMTIwOyYjNDY7JiN4NjM7JiN4NmY7JiMxMDk7">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjMTA1OyYjeDc0OyYjNjQ7JiMxMjA7JiMxMjA7JiN4Nzg7JiM0NjsmIzk5OyYjMTExOyYjeDZkOw==">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
 <span id="more"></span>
 <h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1571,6 +1571,49 @@ public Class HelloWorld{
         <tag>前端开发</tag>
         <tag>Javascript</tag>
         <tag>问题排查</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令行配置代理服务</title>
+    <url>//2019/01/29/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1/</url>
+    <content><![CDATA[<html><head></head><body><ul>
+<li>因为需要通过命令下载国外资源，但在 IE 配置代理后，对 cmd 却没有效果，于是查了下，有配置 cmd 代理的方法。</li>
+</ul>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><span id="more"></span>
+<ul>
+<li>通过设置环境变量来配置代理，一种方式是直接在系统设置中配置（这个就不解释了），另一种方式是在需要时通过 <code>set</code> 命令临时设置。</li>
+<li>控制代理的环境变量分别是 http_proxy、http_proxy_user、http_proxy_pass，不区分大小写，分别代表代理地址（应是 <span class="exturl" data-url="aHR0cDovL2lwOnBvcnQ=">http://ip:port<i class="fa fa-external-link-alt"></i></span> 的形式）、代理用户名、代理密码，一般情况下只需要配置 http_proxy 即可（其余两个参数暂无条件测试，是否有作用未知），参数格式大致如下所示。</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">http_proxy=http://localhost:1080</span><br><span class="line">http_proxy_user=zhangsan</span><br><span class="line">http_proxy_pass=lisi</span><br><span class="line">通过 <span class="built_in">set</span> 命令的形式大致如下所示。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h4><figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> http_proxy=http://localhost:1080</span><br><span class="line"><span class="built_in">set</span> http_proxy_user=zhangsan</span><br><span class="line"><span class="built_in">set</span> http_proxy_pass=lisi</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="删除参数"><a href="#删除参数" class="headerlink" title="删除参数"></a>删除参数</h4><figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> http_proxy=</span><br><span class="line"><span class="built_in">set</span> http_proxy_user=</span><br><span class="line"><span class="built_in">set</span> http_proxy_pass=</span><br></pre></td></tr></tbody></table></figure>
+
+<p>另外经测试还有 https_proxy 环境变量可配置，用于配置 https 的代理，如果未配置则将使用 http_proxy 的配置。据此可推测有 https_proxy_user 等参数。</p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<li>因目前没有环境测试，故以下结论仅根据网上资料整理并推测所得，仅做记录和供参考，详见参考资料。</li>
+<li>据资料得，Linux 配置方式与 Windows 相似，仅命令及配置方式有所不同。</li>
+<li>可配置的环境变量名分别为 http_proxy、https_proxy、ftp_proxy、no_proxy，分别是配置 http 代理、https 代理、ftp 代理、不使用代理的地址，参数格式大致如下所示（正确性有待考察，可能需要加 http:// 前缀），no_proxy 较特殊。</li>
+</ul>
+<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">http*proxy=192.168.10.91:3128</span><br><span class="line">https_proxy=192.168.10.91:3128</span><br><span class="line">ftp_proxy=192.168.10.91:3128</span><br><span class="line">no_proxy=<span class="string">"127.0.0.1, localhost, 172.26.*, 172.25.6.66, 192.168.\_"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>在 linux 下也有两种配置方式，一是需要在相关系统文件中配置，二是通过 export 命令临时设置，这里不做详细介绍。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Windows 和 Linux 的配置方式大致相同，推测 Windows 也有类似 no_proxy 等的配置，鉴于很少用到，故不做深入研究，需要之时可做尝试。</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXpsb28uY29tLzIwMDgvMTIvc2V0X2h0dHBfcHJveHkuaHRtbA==">命令行配置代理服务器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy5meDExNC5uZXQvcWEtMTUtMTUzODY3LmFzcHg=">为 windows cmd 设置代理<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2x5bXJnLmJsb2cuNTFjdG8uY29tLzE1NTEzMjcvNDI1NzQ0">linux 命令行模式下实现代理上网<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy5saW51eGRpeWYuY29tL2xpbnV4LzE0MTkxLmh0bWw=">Ubuntu 设置代理和例外<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1724,49 +1767,6 @@ public Class HelloWorld{
         <tag>前端开发</tag>
         <tag>Javascript</tag>
         <tag>面试题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令行配置代理服务</title>
-    <url>//2019/01/29/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1/</url>
-    <content><![CDATA[<html><head></head><body><ul>
-<li>因为需要通过命令下载国外资源，但在 IE 配置代理后，对 cmd 却没有效果，于是查了下，有配置 cmd 代理的方法。</li>
-</ul>
-<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><span id="more"></span>
-<ul>
-<li>通过设置环境变量来配置代理，一种方式是直接在系统设置中配置（这个就不解释了），另一种方式是在需要时通过 <code>set</code> 命令临时设置。</li>
-<li>控制代理的环境变量分别是 http_proxy、http_proxy_user、http_proxy_pass，不区分大小写，分别代表代理地址（应是 <span class="exturl" data-url="aHR0cDovL2lwOnBvcnQ=">http://ip:port<i class="fa fa-external-link-alt"></i></span> 的形式）、代理用户名、代理密码，一般情况下只需要配置 http_proxy 即可（其余两个参数暂无条件测试，是否有作用未知），参数格式大致如下所示。</li>
-</ul>
-<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">http_proxy=http://localhost:1080</span><br><span class="line">http_proxy_user=zhangsan</span><br><span class="line">http_proxy_pass=lisi</span><br><span class="line">通过 <span class="built_in">set</span> 命令的形式大致如下所示。</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h4><figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> http_proxy=http://localhost:1080</span><br><span class="line"><span class="built_in">set</span> http_proxy_user=zhangsan</span><br><span class="line"><span class="built_in">set</span> http_proxy_pass=lisi</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="删除参数"><a href="#删除参数" class="headerlink" title="删除参数"></a>删除参数</h4><figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> http_proxy=</span><br><span class="line"><span class="built_in">set</span> http_proxy_user=</span><br><span class="line"><span class="built_in">set</span> http_proxy_pass=</span><br></pre></td></tr></tbody></table></figure>
-
-<p>另外经测试还有 https_proxy 环境变量可配置，用于配置 https 的代理，如果未配置则将使用 http_proxy 的配置。据此可推测有 https_proxy_user 等参数。</p>
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul>
-<li>因目前没有环境测试，故以下结论仅根据网上资料整理并推测所得，仅做记录和供参考，详见参考资料。</li>
-<li>据资料得，Linux 配置方式与 Windows 相似，仅命令及配置方式有所不同。</li>
-<li>可配置的环境变量名分别为 http_proxy、https_proxy、ftp_proxy、no_proxy，分别是配置 http 代理、https 代理、ftp 代理、不使用代理的地址，参数格式大致如下所示（正确性有待考察，可能需要加 http:// 前缀），no_proxy 较特殊。</li>
-</ul>
-<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">http*proxy=192.168.10.91:3128</span><br><span class="line">https_proxy=192.168.10.91:3128</span><br><span class="line">ftp_proxy=192.168.10.91:3128</span><br><span class="line">no_proxy=<span class="string">"127.0.0.1, localhost, 172.26.*, 172.25.6.66, 192.168.\_"</span></span><br></pre></td></tr></tbody></table></figure>
-
-<ul>
-<li>在 linux 下也有两种配置方式，一是需要在相关系统文件中配置，二是通过 export 命令临时设置，这里不做详细介绍。</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>Windows 和 Linux 的配置方式大致相同，推测 Windows 也有类似 no_proxy 等的配置，鉴于很少用到，故不做深入研究，需要之时可做尝试。</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZXpsb28uY29tLzIwMDgvMTIvc2V0X2h0dHBfcHJveHkuaHRtbA==">命令行配置代理服务器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy5meDExNC5uZXQvcWEtMTUtMTUzODY3LmFzcHg=">为 windows cmd 设置代理<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2x5bXJnLmJsb2cuNTFjdG8uY29tLzE1NTEzMjcvNDI1NzQ0">linux 命令行模式下实现代理上网<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy5saW51eGRpeWYuY29tL2xpbnV4LzE0MTkxLmh0bWw=">Ubuntu 设置代理和例外<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-</body></html>]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>windows</tag>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
