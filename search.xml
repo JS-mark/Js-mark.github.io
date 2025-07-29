@@ -24,6 +24,10 @@
 <p>在这个充满挑战与机遇的时代，作为一名 35 岁的双非前端程序员，即便面临家庭、生活和工作的重重压力，可我也看到了 AI 带来的无限可能。我坚信，只要保持积极的学习态度，持续提升自己，就一定能在这片波涛汹涌的大海中找准航向，驶向成功彼岸。正如那句名言所说：“机遇总是留给有准备的人。” 我要做好充分准备，迎接未来挑战，抓住属于自己的机遇。</p>
 <p>P.S. 巴拉巴拉半天，希望大家别烦我哈，发发牢骚！</p>
 </body></html>]]></content>
+      <categories>
+        <category>人生</category>
+        <category>前端</category>
+      </categories>
       <tags>
         <tag>代码人生、琐碎生活</tag>
       </tags>
@@ -32,30 +36,30 @@
     <title>DayJs使用</title>
     <url>//2018/11/30/DayJs/</url>
     <content><![CDATA[<html><head></head><body><p align="center">
-    <a href="#" target="_blank" rel="noopener noreferrer">
-        <img width="550" data-src="https://user-images.githubusercontent.com/17680888/39081119-3057bbe2-456e-11e8-862c-646133ad4b43.png" alt="Day.js">
-    </a>
+	<a href="#" target="_blank" rel="noopener noreferrer">
+		<img width="550" data-src="https://user-images.githubusercontent.com/17680888/39081119-3057bbe2-456e-11e8-862c-646133ad4b43.png" alt="Day.js">
+	</a>
 </p>
 <p align="center">Moment.js 的 <b>2kB</b> 轻量化方案，拥有同样强大的 API</p>
 <span id="more"></span>
 <br>
 <p align="center">
-    <a href="https://unpkg.com/dayjs/dayjs.min.js">
-        <img data-src="http://img.badgesize.io/https://unpkg.com/dayjs/dayjs.min.js?compression=gzip&amp;style=flat-square" alt="Gzip Size">
-    </a>
-    <a href="https://www.npmjs.com/package/dayjs"><img data-src="https://img.shields.io/npm/v/dayjs.svg?style=flat-square" alt="NPM Version"></a>
-    <a href="https://travis-ci.org/iamkun/dayjs">
-        <img data-src="https://img.shields.io/travis/iamkun/dayjs/master.svg?style=flat-square" alt="Build Status">
-    </a>
-    <a href="https://codecov.io/gh/iamkun/dayjs">
-        <img data-src="https://img.shields.io/codecov/c/github/iamkun/dayjs/master.svg?style=flat-square" alt="Codecov">
-    </a>
-    <a href="https://github.com/iamkun/dayjs/blob/master/LICENSE">
-        <img data-src="https://img.shields.io/npm/l/dayjs.svg?style=flat-square" alt="License"></a>
-    <br>
-    <a href="https://saucelabs.com/u/dayjs">
-        <img width="750" data-src="https://user-images.githubusercontent.com/17680888/40040137-8e3323a6-584b-11e8-9dba-bbe577ee8a7b.png" alt="Sauce Test Status">
-    </a>
+	<a href="https://unpkg.com/dayjs/dayjs.min.js">
+		<img data-src="http://img.badgesize.io/https://unpkg.com/dayjs/dayjs.min.js?compression=gzip&amp;style=flat-square" alt="Gzip Size">
+	</a>
+	<a href="https://www.npmjs.com/package/dayjs"><img data-src="https://img.shields.io/npm/v/dayjs.svg?style=flat-square" alt="NPM Version"></a>
+	<a href="https://travis-ci.org/iamkun/dayjs">
+		<img data-src="https://img.shields.io/travis/iamkun/dayjs/master.svg?style=flat-square" alt="Build Status">
+	</a>
+	<a href="https://codecov.io/gh/iamkun/dayjs">
+		<img data-src="https://img.shields.io/codecov/c/github/iamkun/dayjs/master.svg?style=flat-square" alt="Codecov">
+	</a>
+	<a href="https://github.com/iamkun/dayjs/blob/master/LICENSE">
+		<img data-src="https://img.shields.io/npm/l/dayjs.svg?style=flat-square" alt="License"></a>
+	<br>
+	<a href="https://saucelabs.com/u/dayjs">
+		<img width="750" data-src="https://user-images.githubusercontent.com/17680888/40040137-8e3323a6-584b-11e8-9dba-bbe577ee8a7b.png" alt="Sauce Test Status">
+	</a>
 </p>
 
 <blockquote>
@@ -339,7 +343,7 @@
 <ul>
 <li>通过创建iframe请求URL Scheme</li>
 </ul>
-<figure class="highlight ts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="title function_">createIframeRequest</span>(<span class="params"><span class="attr">url</span>: <span class="built_in">string</span></span>) {</span><br><span class="line">  <span class="keyword">try</span> {</span><br><span class="line">    <span class="keyword">if</span> (!iframeNode) {</span><br><span class="line">      iframeNode = <span class="title function_">documentcreateElement</span>(<span class="string">"iframe"</span>);</span><br><span class="line">      iframeNode.<span class="property">style</span>.<span class="property">display</span> = <span class="string">"none"</span>;</span><br><span class="line">      <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">appendChild</span>(iframeNode);</span><br><span class="line">      <span class="comment">// ??是否需要删除</span></span><br><span class="line">      <span class="keyword">let</span> <span class="attr">timerRemoveIframe</span>: <span class="title class_">NodeJS</span>.<span class="property">Timeout</span> | <span class="literal">null</span> = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">        <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">removeChild</span>(</span><br><span class="line">          iframeNode <span class="keyword">as</span> <span class="title class_">HTMLIFrameElement</span></span><br><span class="line">        );</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timerRemoveIframe <span class="keyword">as</span> <span class="title class_">NodeJS</span>.<span class="property">Timeout</span>);</span><br><span class="line">        timerRemoveIframe = <span class="literal">null</span>;</span><br><span class="line">      }, <span class="number">0</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 修改url</span></span><br><span class="line">    iframeNode.<span class="property">src</span> = url;</span><br><span class="line">  } <span class="keyword">catch</span> (error) {</span><br><span class="line">   <span class="comment">// 触发异常监控</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 调用方法</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> <span class="variable">event</span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> <span class="variable">data</span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span></span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">invoke</span>(<span class="params"><span class="attr">event</span>: <span class="built_in">string</span>, data?: <span class="built_in">any</span></span>) {</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">isBridgeReady</span>) {</span><br><span class="line">        <span class="title function_">reject</span>();</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">"Bridge not ready!"</span>);</span><br><span class="line">      }</span><br><span class="line">      <span class="comment">// 生成随机id</span></span><br><span class="line">      <span class="keyword">const</span> <span class="attr">callback</span>: <span class="built_in">string</span> = <span class="title function_">nanoid</span>();</span><br><span class="line">      <span class="keyword">const</span> dataObj = {</span><br><span class="line">        event,</span><br><span class="line">        callback,</span><br><span class="line">      };</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`<span class="subst">${<span class="variable language_">this</span>.baseSchema}</span>?<span class="subst">${qs.stringify(dataObj)}</span>`</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 向window上注册变量方法</span></span><br><span class="line">      <span class="variable language_">window</span>.<span class="property">callbackObj</span>[callback] = {</span><br><span class="line">        url,</span><br><span class="line">        <span class="attr">call_time</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">        <span class="title function_">success</span>(<span class="params">data</span>) {</span><br><span class="line">          <span class="title function_">resolve</span>(data);</span><br><span class="line">        },</span><br><span class="line">        <span class="title function_">error</span>(<span class="params">error</span>) {</span><br><span class="line">          <span class="title function_">reject</span>(error);</span><br><span class="line">        },</span><br><span class="line">      };</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 请求</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">createIframeRequest</span>(url);</span><br><span class="line"></span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">        <span class="comment">// 支持使用addJs</span></span><br><span class="line">        <span class="keyword">if</span> (</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span> &amp;&amp;</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span>.<span class="property">call</span></span><br><span class="line">        ) {</span><br><span class="line">          <span class="keyword">let</span> {</span><br><span class="line">            callback,</span><br><span class="line">            isSuccess,</span><br><span class="line">            <span class="attr">data</span>: res,</span><br><span class="line">          } = <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span>.<span class="title function_">call</span>(</span><br><span class="line">            <span class="title class_">JSON</span>.<span class="title function_">stringify</span>({</span><br><span class="line">              event,</span><br><span class="line">              data,</span><br><span class="line">              <span class="attr">call_time</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">            })</span><br><span class="line">          );</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(res) === <span class="string">"[object Object]"</span>) {</span><br><span class="line">            res = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(res);</span><br><span class="line">          }</span><br><span class="line">          <span class="comment">// 调用</span></span><br><span class="line">          <span class="title class_">CallJSBridge</span>(callback, isSuccess, res);</span><br><span class="line">        }</span><br><span class="line">      }, <span class="number">0</span>);</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="title function_">createIframeRequest</span>(<span class="params"><span class="attr">url</span>: <span class="built_in">string</span></span>) {</span><br><span class="line">  <span class="keyword">try</span> {</span><br><span class="line">    <span class="keyword">if</span> (!iframeNode) {</span><br><span class="line">      iframeNode = <span class="title function_">documentcreateElement</span>(<span class="string">"iframe"</span>);</span><br><span class="line">      iframeNode.<span class="property">style</span>.<span class="property">display</span> = <span class="string">"none"</span>;</span><br><span class="line">      <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">appendChild</span>(iframeNode);</span><br><span class="line">      <span class="comment">// ??是否需要删除</span></span><br><span class="line">      <span class="keyword">let</span> <span class="attr">timerRemoveIframe</span>: <span class="title class_">NodeJS</span>.<span class="property">Timeout</span> | <span class="literal">null</span> = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">        <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">removeChild</span>(</span><br><span class="line">          iframeNode <span class="keyword">as</span> <span class="title class_">HTMLIFrameElement</span></span><br><span class="line">        );</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timerRemoveIframe <span class="keyword">as</span> <span class="title class_">NodeJS</span>.<span class="property">Timeout</span>);</span><br><span class="line">        timerRemoveIframe = <span class="literal">null</span>;</span><br><span class="line">      }, <span class="number">0</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 修改url</span></span><br><span class="line">    iframeNode.<span class="property">src</span> = url;</span><br><span class="line">  } <span class="keyword">catch</span> (error) {</span><br><span class="line">   <span class="comment">// 触发异常监控</span></span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 调用方法</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> <span class="variable">event</span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> <span class="variable">data</span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span></span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">invoke</span>(<span class="params"><span class="attr">event</span>: <span class="built_in">string</span>, <span class="attr">data</span>?: <span class="built_in">any</span></span>) {</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">isBridgeReady</span>) {</span><br><span class="line">        <span class="title function_">reject</span>();</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">"Bridge not ready!"</span>);</span><br><span class="line">      }</span><br><span class="line">      <span class="comment">// 生成随机id</span></span><br><span class="line">      <span class="keyword">const</span> <span class="attr">callback</span>: <span class="built_in">string</span> = <span class="title function_">nanoid</span>();</span><br><span class="line">      <span class="keyword">const</span> dataObj = {</span><br><span class="line">        event,</span><br><span class="line">        callback,</span><br><span class="line">      };</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`<span class="subst">${<span class="variable language_">this</span>.baseSchema}</span>?<span class="subst">${qs.stringify(dataObj)}</span>`</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 向window上注册变量方法</span></span><br><span class="line">      <span class="variable language_">window</span>.<span class="property">callbackObj</span>[callback] = {</span><br><span class="line">        url,</span><br><span class="line">        <span class="attr">call_time</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">        <span class="title function_">success</span>(<span class="params">data</span>) {</span><br><span class="line">          <span class="title function_">resolve</span>(data);</span><br><span class="line">        },</span><br><span class="line">        <span class="title function_">error</span>(<span class="params">error</span>) {</span><br><span class="line">          <span class="title function_">reject</span>(error);</span><br><span class="line">        },</span><br><span class="line">      };</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 请求</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">createIframeRequest</span>(url);</span><br><span class="line"></span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">        <span class="comment">// 支持使用addJs</span></span><br><span class="line">        <span class="keyword">if</span> (</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span> &amp;&amp;</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span>.<span class="property">call</span></span><br><span class="line">        ) {</span><br><span class="line">          <span class="keyword">let</span> {</span><br><span class="line">            callback,</span><br><span class="line">            isSuccess,</span><br><span class="line">            <span class="attr">data</span>: res,</span><br><span class="line">          } = <span class="variable language_">window</span>.<span class="property">__BridgeHandler</span>.<span class="title function_">call</span>(</span><br><span class="line">            <span class="title class_">JSON</span>.<span class="title function_">stringify</span>({</span><br><span class="line">              event,</span><br><span class="line">              data,</span><br><span class="line">              <span class="attr">call_time</span>: +<span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">            })</span><br><span class="line">          );</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(res) === <span class="string">"[object Object]"</span>) {</span><br><span class="line">            res = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(res);</span><br><span class="line">          }</span><br><span class="line">          <span class="comment">// 调用</span></span><br><span class="line">          <span class="title class_">CallJSBridge</span>(callback, isSuccess, res);</span><br><span class="line">        }</span><br><span class="line">      }, <span class="number">0</span>);</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li>web同学在一进入页面前注入向window中注入代码</li>
@@ -405,8 +409,8 @@
 <blockquote>
 <p>术语（译者注）：</p>
 <ul>
-<li>_标准（Standard）_： 用于定义与其他事物区别的一套规则</li>
-<li>_实现（Implementation）_： 某个标准的具体实施/真实实践</li>
+<li><em>标准（Standard）</em>： 用于定义与其他事物区别的一套规则</li>
+<li><em>实现（Implementation）</em>： 某个标准的具体实施/真实实践</li>
 </ul>
 </blockquote>
 <p>不过，JavaScript 开发者们并不怎么在乎这些，因为在诞生之后的 15 年里，ECMAScript 并没有多少变化，而且现实中的很多实现都已经和标准大相径庭。其实在第一版的 ECMAScript 发布后，很快又跟进发布了两个版本，但是自从 1999 年 ECMAScript 3 发布后，十年内都没有任何改动被成功添加到官方规范里。取而代之的，是各大浏览器厂商们争先进行自己的语言拓展，web 开发者们别无选择只能去尝试并且支持这些 API。即使是在 2009 年 ECMAScript 5 发布之后，仍然用了数年这些新规范才得到了浏览器的广泛支持，可是大部分开发者还是写着 ECMAScript 3 风格的代码，并不觉得有必要去了解这些规范。</p>
@@ -419,8 +423,8 @@
 <ul>
 <li><strong>ECMAScript</strong>：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。</li>
 <li><strong>JavaScript</strong>：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。</li>
-<li>**ECMAScript 5 (ES5)**：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
-<li>**ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)**：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅<span class="exturl" data-url="aHR0cDovL2thbmdheC5naXRodWIuaW8vY29tcGF0LXRhYmxlL2VzNi8=">这张兼容性表<i class="fa fa-external-link-alt"></i></span>来查看不同浏览器和工具的实现情况。</li>
+<li><strong>ECMAScript 5 (ES5)</strong>：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
+<li><strong>ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)</strong>：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅<span class="exturl" data-url="aHR0cDovL2thbmdheC5naXRodWIuaW8vY29tcGF0LXRhYmxlL2VzNi8=">这张兼容性表<i class="fa fa-external-link-alt"></i></span>来查看不同浏览器和工具的实现情况。</li>
 <li><strong>ECMAScript 2016</strong>：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定</li>
 <li><strong>ECMAScript Proposals</strong>：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。</li>
 </ul>
@@ -802,8 +806,10 @@
 <li>微信开发者工具（开发微信小程序和微信公众号） <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLndlaXhpbi5xcS5jb20vbWluaXByb2dyYW0vZGV2L2RldnRvb2xzL2Rvd25sb2FkLmh0bWw=">官方网站<i class="fa fa-external-link-alt"></i></span></li>
 <li>支付宝小程序（开发支付宝小程序） <span class="exturl" data-url="aHR0cHM6Ly9vcGVuZG9jcy5hbGlwYXkuY29tL21pbmkvaWRlL2Rvd25sb2Fk">官方网站<i class="fa fa-external-link-alt"></i></span></li>
 <li>HBuilder DCloud 出品 IDE <span class="exturl" data-url="aHR0cHM6Ly9kY2xvdWQuaW8v">官方网站<i class="fa fa-external-link-alt"></i></span></li>
-<li>Webstorm 是 JetBrains 公司旗下一款 JavaScript 开发工具。学生免费。 <span class="exturl" data-url="aHR0cHM6Ly93d3cuamV0YnJhaW5zLmNvbS93ZWJzdG9ybS8=">官方网站<i class="fa fa-external-link-alt"></i></span><span id="more"></span></li>
+<li>Webstorm 是 JetBrains 公司旗下一款 JavaScript 开发工具。学生免费。 <span class="exturl" data-url="aHR0cHM6Ly93d3cuamV0YnJhaW5zLmNvbS93ZWJzdG9ybS8=">官方网站<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
+<span id="more"></span>
+
 <h2 id="Git-GUI"><a href="#Git-GUI" class="headerlink" title="Git GUI"></a>Git GUI</h2><ul>
 <li><p>SourceTre 一个免费开源的 windows 和 mac 上的 git 客户端 <span class="exturl" data-url="aHR0cHM6Ly93d3cuc291cmNldHJlZWFwcC5jb20v">官方网站<i class="fa fa-external-link-alt"></i></span></p>
 </li>
@@ -856,8 +862,10 @@
     <title>node-sass 安装失败</title>
     <url>//2024/11/15/node-sass-%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5/</url>
     <content><![CDATA[<html><head></head><body><ul>
-<li>直接npm install时遇到sass软件报错<span id="more"></span></li>
+<li>直接npm install时遇到sass软件报错</li>
 </ul>
+<span id="more"></span>
+
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">npm ERR! gyp ERR! stack Error: Can<span class="string">'t find Python executable "python", you can set the PYTHON env variable.</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! stack     at PythonFinder.failNoPython (D:\code\cesium-demo\node_modules\node-gyp\lib\configure.js:484:19)</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! stack     at PythonFinder.&lt;anonymous&gt; (D:\code\cesium-demo\node_modules\node-gyp\lib\configure.js:509:16)</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! stack     at callback (D:\code\cesium-demo\node_modules\graceful-fs\polyfills.js:306:20)</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! stack     at FSReqCallback.oncomplete (node:fs:202:21)</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! System Windows_NT 10.0.19045</span></span><br><span class="line"><span class="string">npm ERR! gyp ERR! command "C:\\nvm\\nodejs\\node.exe" "D:\\code\\cesium-demo\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild" "--verbose" "--libsass_ext=" "--libsass_cflags=" "--libsass_ldflags=" "--libsass_library="</span></span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
@@ -887,13 +895,13 @@
     <title>rust-analyzer在vscode中的问题</title>
     <url>//2023/11/24/rust-analyzer%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<html><head></head><body><h2 id="rust-analyzer在vscode中的问题-md"><a href="#rust-analyzer在vscode中的问题-md" class="headerlink" title="rust-analyzer在vscode中的问题.md"></a>rust-analyzer在vscode中的问题.md</h2><ul>
-<li><p>无法使用<code>rust-analyzer</code>，或者<code>rust-analyzer</code>一直在加载中</p>
+<li>无法使用<code>rust-analyzer</code>，或者<code>rust-analyzer</code>一直在加载中</li>
+</ul>
 <span id="more"></span>
-</li>
-<li><p>如果确定没有多个程序占用，可以删除rm -rf ~/.cargo/.package-cache，然后再执行cargo build 或者 cargo run</p>
-</li>
-<li><p>重启 vscode, 问题即可解决</p>
-</li>
+
+<ul>
+<li>如果确定没有多个程序占用，可以删除rm -rf ~/.cargo/.package-cache，然后再执行cargo build 或者 cargo run</li>
+<li>重启 vscode, 问题即可解决</li>
 </ul>
 </body></html>]]></content>
       <categories>
@@ -911,8 +919,9 @@
     <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
 <li>为什么学习脚本编写???</li>
 <li>你有没有遇到过这样场景，繁杂并且重复的操作 N 多件~~~</li>
-<li>那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）<br><img data-src="/assets/img/2018/12/20150424040700733.jpg" alt="image"><br>好了！那么我们步入今天的正题！<span id="more"></span></li>
+<li>那么这个时候我们是不是可以想一些其他更快捷、更方便的方法呢！（答案是肯定的，肯定有撒因为我们人类可是很懒的高级哺乳动物）<br><img data-src="/assets/img/2018/12/20150424040700733.jpg" alt="image"><br>好了！那么我们步入今天的正题！</li>
 </ul>
+<span id="more"></span>
 <h3 id="一、shell-中特殊变量"><a href="#一、shell-中特殊变量" class="headerlink" title="一、shell 中特殊变量"></a>一、shell 中特殊变量</h3><figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$0</span>    <span class="comment"># 当前脚本的文件名（间接运行时还包括绝对路径）。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$n</span>    <span class="comment"># 传递给脚本或函数的参数。n 是一个数字，表示第几个参数。例如，第一个参数是 $1 。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$#</span>    <span class="comment"># 传递给脚本或函数的参数个数。</span></span><br><span class="line"><span class="built_in">echo</span> $*    <span class="comment"># 传递给脚本或函数的所有参数。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$@</span>    <span class="comment"># 传递给脚本或函数的所有参数。被双引号 (" ") 包含时，与 $* 不同，下面将会讲到。</span></span><br><span class="line"><span class="built_in">echo</span> $?    <span class="comment"># 上个命令的退出状态，或函数的返回值。</span></span><br><span class="line"><span class="built_in">echo</span> $$    <span class="comment"># 当前 Shell 进程 ID。对于 Shell 脚本，就是这些脚本所在的进程 ID。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$_</span>    <span class="comment"># 上一个命令的最后一个参数</span></span><br><span class="line"><span class="built_in">echo</span> $!    <span class="comment"># 后台运行的最后一个进程的 ID 号</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <p>示例：</p>
@@ -1079,6 +1088,49 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue二维码组件</title>
+    <url>//2018/03/12/vueqr-new/</url>
+    <content><![CDATA[<html><head></head><body><h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license"><img data-src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
+<blockquote>
+<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3></blockquote>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>快速添加 <code>vueqr-new</code> 组件到 app 中</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></tbody></table></figure>
+<span id="more"></span>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><figure class="highlight html"><table><tbody><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> vueQr <span class="keyword">from</span> <span class="string">'vueqr-new'</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> config = {</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 容错等级</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">errorCorrectionLevel</span>: <span class="string">'H'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 图片类型</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">type</span>: <span class="string">'image/png'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">rendererOpts</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">quality</span>: <span class="number">0.3</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 边框与二维码之间的间距</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">margin</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 缩放倍数</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">scale</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="number">500</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">maskPattern</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">color</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">dark</span>: <span class="string">'#000000'</span>,</span></span><br><span class="line"><span class="language-javascript">  light : <span class="string">"#ffffff"</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">style</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="string">'128px'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">border</span>: <span class="string">'1px solid #ccc'</span></span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> {</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) {</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> {</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">text</span>: <span class="string">'https://example.com'</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">config</span>: config</span></span><br><span class="line"><span class="language-javascript">    }</span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">components</span>: {</span></span><br><span class="line"><span class="language-javascript">    vueQr</span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>属性描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>config</td>
+<td>Object</td>
+<td>qrcode option</td>
+</tr>
+<tr>
+<td>text</td>
+<td>String</td>
+<td>qrcode value</td>
+</tr>
+</tbody></table>
+<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3pwYW8vcXJjb2RlLnJlYWN0">“node-qrcode”<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3></blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phY2stSW4vdnVlUXItbmV3L2Jsb2IvbWFzdGVyL0xJQ0VOU0U=">MIT<i class="fa fa-external-link-alt"></i></span></p>
+</body></html>]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Typora For Markdown 语法</title>
     <url>//2018/03/12/typora/</url>
     <content><![CDATA[<html><head></head><body><p>#Typora For Markdown 语法</p>
@@ -1230,49 +1282,6 @@ public Class HelloWorld{
       <tags>
         <tag>前端开发</tag>
         <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue二维码组件</title>
-    <url>//2018/03/12/vueqr-new/</url>
-    <content><![CDATA[<html><head></head><body><h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license"><img data-src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
-<blockquote>
-<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3></blockquote>
-<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>快速添加 <code>vueqr-new</code> 组件到 app 中</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></tbody></table></figure>
-<span id="more"></span>
-<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><figure class="highlight html"><table><tbody><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> vueQr <span class="keyword">from</span> <span class="string">'vueqr-new'</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> config = {</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 容错等级</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">errorCorrectionLevel</span>: <span class="string">'H'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 图片类型</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">type</span>: <span class="string">'image/png'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">rendererOpts</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">quality</span>: <span class="number">0.3</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 边框与二维码之间的间距</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">margin</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 缩放倍数</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">scale</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="number">500</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">maskPattern</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">color</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">dark</span>: <span class="string">'#000000'</span>,</span></span><br><span class="line"><span class="language-javascript">  light : <span class="string">"#ffffff"</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">style</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="string">'128px'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">border</span>: <span class="string">'1px solid #ccc'</span></span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> {</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) {</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> {</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">text</span>: <span class="string">'https://example.com'</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">config</span>: config</span></span><br><span class="line"><span class="language-javascript">    }</span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">components</span>: {</span></span><br><span class="line"><span class="language-javascript">    vueQr</span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
-<thead>
-<tr>
-<th>属性</th>
-<th>类型</th>
-<th>属性描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>config</td>
-<td>Object</td>
-<td>qrcode option</td>
-</tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>qrcode value</td>
-</tr>
-</tbody></table>
-<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3pwYW8vcXJjb2RlLnJlYWN0">“node-qrcode”<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3></blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phY2stSW4vdnVlUXItbmV3L2Jsb2IvbWFzdGVyL0xJQ0VOU0U=">MIT<i class="fa fa-external-link-alt"></i></span></p>
-</body></html>]]></content>
-      <categories>
-        <category>Vue</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1464,7 +1473,7 @@ public Class HelloWorld{
     <title>修改了SSH默认端口之后，如何配置git？</title>
     <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
     <content><![CDATA[<html><head></head><body><h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjeDY3OyYjMTA1OyYjeDc0OyYjNjQ7JiMxMjA7JiMxMjA7JiN4Nzg7JiM0NjsmIzk5OyYjMTExOyYjeDZkOw==">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjMTAzOyYjMTA1OyYjeDc0OyYjeDQwOyYjeDc4OyYjeDc4OyYjeDc4OyYjeDJlOyYjeDYzOyYjeDZmOyYjMTA5Ow==">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
 <span id="more"></span>
 <h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1574,6 +1583,41 @@ public Class HelloWorld{
       </tags>
   </entry>
   <entry>
+    <title>前端技术：在变革浪潮中预见未来</title>
+    <url>//2025/07/29/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%EF%BC%9A%E5%9C%A8%E5%8F%98%E9%9D%A9%E6%B5%AA%E6%BD%AE%E4%B8%AD%E9%A2%84%E8%A7%81%E6%9C%AA%E6%9D%A5/</url>
+    <content><![CDATA[<html><head></head><body><h2 id="前端技术的现状"><a href="#前端技术的现状" class="headerlink" title="前端技术的现状"></a>前端技术的现状</h2><p>在当下，前端开发领域呈现出一派繁荣的景象，各种技术百花齐放，共同构建起我们日常所接触到的丰富多彩的 Web 世界。主流框架方面，React、Vue 和 Angular 可谓是 “三巨头”。React 由 Facebook 开发并维护，其组件化开发模式极大地提高了代码的可重用性和可维护性 ，像 Facebook、Instagram 等大型平台都依赖 React 构建用户界面。Vue.js 则以其简洁易用的语法和双向数据绑定特性深受开发者喜爱，在国内众多中小项目中广泛应用，例如饿了么的前端界面就大量使用了 Vue。Angular 作为 Google 推出的全功能框架，凭借内置的路由、状态管理等功能，在企业级应用开发中占据一席之地，像一些大型金融机构的内部管理系统就会选用 Angular 。</p>
+<span id="more"></span>
+<p>在工具层面，Webpack 曾经是前端构建工具的王者，它能够将各种静态资源（如 JavaScript、CSS、图片等）进行打包、优化，提高项目的加载性能和可维护性。但如今，Vite 以其闪电般的冷启动速度和即时热模块替换（HMR）功能迅速崛起，成为众多新项目的首选构建工具。例如在一些个人开发者搭建的博客项目中，使用 Vite 能极大缩短开发过程中的等待时间，提升开发效率。代码编辑器方面，Visual Studio Code 凭借其丰富的插件生态、强大的代码智能提示和调试功能，成为了前端开发者的心头好，无论是初学者还是经验丰富的开发者都能从中受益。</p>
+<p>从应用场景来看，前端技术早已不再局限于传统的网页开发。在移动端，React Native、Flutter 等技术允许开发者使用前端语言构建高性能的原生移动应用，许多知名的 APP，如 Facebook、闲鱼等都采用了这类技术，实现了一套代码多端运行，大大降低了开发成本。在桌面端，Electron 框架使得前端开发者可以利用 HTML、CSS 和 JavaScript 开发桌面应用程序，像 Atom、VS Code 这些优秀的编辑器就是基于 Electron 开发的。在物联网领域，前端技术也开始崭露头角，通过 Web 技术构建的交互界面，可以方便地对智能设备进行控制和管理 。</p>
+<h2 id="正在崛起的前沿趋势"><a href="#正在崛起的前沿趋势" class="headerlink" title="正在崛起的前沿趋势"></a>正在崛起的前沿趋势</h2><h3 id="AI-深度融入前端开发"><a href="#AI-深度融入前端开发" class="headerlink" title="AI 深度融入前端开发"></a>AI 深度融入前端开发</h3><p>AI 正以前所未有的速度融入前端开发的各个环节，从代码编写到用户交互，都能看到 AI 的身影。在代码生成方面，GitHub Copilot X 这类智能工具崭露头角。它基于强大的 AI 算法，能够根据自然语言描述自动生成前端代码片段。比如，当你输入 “创建一个响应式的导航栏，包含首页、产品和关于我们三个链接”，Copilot X 就能迅速生成对应的 HTML、CSS 和 JavaScript 代码，大大提高了开发效率 。在性能优化领域，AI 也发挥着关键作用。通过分析前端应用的运行数据，AI 工具可以精准定位性能瓶颈，如哪些函数执行时间过长、哪些资源加载缓慢等，并给出针对性的优化建议。像一些智能的图片压缩工具，利用 AI 算法可以在保证图片质量的前提下，将图片文件大小压缩到最优，减少页面加载时间。</p>
+<p>在用户交互层面，AI 的应用让前端体验更加智能和个性化。以智能语音助手为例，它借助自然语言处理技术，能够理解用户的语音指令并执行相应操作，如在电商 APP 中，用户通过语音就能查询商品信息、下单购买等，无需手动输入，提升了操作的便捷性。在个性化推荐方面，AI 根据用户的浏览历史、行为习惯等数据，为用户推送符合其兴趣的内容和产品，增强用户粘性。比如，音乐播放平台根据用户的音乐偏好，推荐个性化的歌单，让用户更容易发现喜欢的音乐。</p>
+<h3 id="边缘计算重塑前端架构"><a href="#边缘计算重塑前端架构" class="headerlink" title="边缘计算重塑前端架构"></a>边缘计算重塑前端架构</h3><p>随着 5G 技术的普及，边缘计算与前端的结合成为了新的技术热点，为前端架构带来了深刻变革。边缘计算的核心优势在于将计算和数据处理能力下沉到离用户更近的边缘节点，如基站、CDN 节点等，从而大大降低了数据传输延迟，提高了应用的响应速度和可用性 。在实时应用中，边缘计算的优势尤为明显。以在线视频会议为例，传统的云端处理模式下，音视频数据需要上传到云端进行处理，再返回给用户，这在网络不稳定时容易出现卡顿、延迟等问题。而借助边缘计算，音视频数据可以在靠近用户的边缘节点进行实时处理和转码，减少了数据传输的距离和时间，即使在弱网环境下，也能保证视频会议的流畅进行，实现低延迟的实时互动 。</p>
+<p>在智能安防领域，前端摄像头采集的视频数据通过边缘计算设备进行实时分析，如人脸识别、行为检测等，一旦发现异常情况，能立即发出警报，无需将大量数据传输到中心服务器处理，提高了安防系统的及时性和可靠性 。边缘计算还可以实现前端应用的离线运行或部分离线运行。通过在本地设备或边缘节点缓存关键数据和应用逻辑，当网络连接中断时，用户仍能继续使用应用的基本功能，待网络恢复后再进行数据同步，这在一些对实时性要求不高但需要持续可用的应用场景中，如离线地图、笔记应用等，具有重要意义 。</p>
+<h3 id="WebAssembly-的全面革新"><a href="#WebAssembly-的全面革新" class="headerlink" title="WebAssembly 的全面革新"></a>WebAssembly 的全面革新</h3><p>WebAssembly（Wasm）自诞生以来，不断演进，正从最初的 “性能补充” 角色逐渐转变为前端开发的核心组件，对前端开发生态产生了深远影响 。早期，WebAssembly 主要用于解决 JavaScript 在计算密集型任务上的性能短板，如在图形渲染、科学计算等场景中，将 C、C++、Rust 等语言编写的代码编译成 WebAssembly 格式，在浏览器中以接近原生的速度运行，大大提升了执行效率。例如，在 3D 游戏开发中，WebAssembly 结合 WebGL 技术，能够实现更流畅的画面渲染和更复杂的物理模拟，让 Web 端游戏的性能和体验接近原生游戏 。如今，WebAssembly 的能力边界不断拓展，其多语言支持特性吸引了更多开发者加入 Web 开发生态。除了传统的 C 系语言，像 Go、Python 等语言也能通过工具链编译为 WebAssembly，这意味着开发者可以根据项目需求，选择最适合的语言来实现特定功能。比如，在数据处理和分析场景中，Python 丰富的数据分析库和简洁的语法，配合 WebAssembly 在浏览器中的高效执行，能够快速搭建出强大的数据处理应用，而无需依赖后端服务器 。</p>
+<p>WebAssembly 还推动了前端与后端的融合。一些后端服务可以直接以 WebAssembly 模块的形式在前端运行，实现了前后端代码的复用，减少了前后端通信的开销，提高了应用的整体性能和开发效率。例如，在一些小型的全栈应用中，部分业务逻辑可以用 Rust 编写成 WebAssembly 模块，在前端和后端同时运行，实现了真正意义上的全栈开发 。</p>
+<h2 id="新兴技术的应用场景与潜力"><a href="#新兴技术的应用场景与潜力" class="headerlink" title="新兴技术的应用场景与潜力"></a>新兴技术的应用场景与潜力</h2><h3 id="Web3-与去中心化应用"><a href="#Web3-与去中心化应用" class="headerlink" title="Web3 与去中心化应用"></a>Web3 与去中心化应用</h3><p>Web3 技术正以前所未有的速度改变着互联网的格局，在前端开发领域也展现出了巨大的应用潜力。区块链交互是 Web3 前端开发的核心之一，通过 Web3.js、Ethers.js 等 JavaScript 库，前端开发者能够与以太坊、Binance Smart Chain 等区块链网络进行通信 。在去中心化金融（DeFi）领域，这些交互能力使得前端应用可以实现诸如去中心化借贷、交易等复杂功能。以 Uniswap 为例，它是基于以太坊区块链的去中心化交易平台，前端通过与智能合约交互，用户可以在上面自由地进行加密货币的兑换，无需中心化机构的监管，所有交易记录都公开透明地存储在区块链上，确保了交易的公平性和可追溯性 。</p>
+<p>去中心化身份验证（DID）也是 Web3 在前端的重要应用方向。传统的身份验证方式依赖于中心化的服务器，用户的身份信息容易受到攻击和泄露。而 DID 利用区块链的加密技术，让用户能够完全掌控自己的身份数据。在前端实现 DID 时，用户可以通过加密钱包（如 MetaMask）进行身份验证，前端应用通过与区块链上的身份验证智能合约交互，确认用户身份的真实性 。这一技术在社交领域尤为重要，用户可以在不同的去中心化社交平台上使用同一身份，保护了用户隐私的同时，也增强了用户数据的安全性 。在未来，随着 Web3 技术的不断成熟，预计会有更多的金融、社交、游戏等领域的应用基于 Web3 开发，为用户带来更加公平、开放、安全的互联网体验 。</p>
+<h3 id="AR-VR-与沉浸式体验"><a href="#AR-VR-与沉浸式体验" class="headerlink" title="AR/VR 与沉浸式体验"></a>AR/VR 与沉浸式体验</h3><p>随着 WebXR 标准的不断完善，前端开发者迎来了构建沉浸式 AR/VR 体验的黄金时代。WebXR 为前端提供了一套统一的 API，使得开发者能够在浏览器中轻松创建跨平台的 AR/VR 应用，无需依赖特定的软件或硬件环境 。在教育行业，AR/VR 技术有着广阔的应用前景。通过前端开发构建的 AR/VR 教育应用，学生可以身临其境地学习历史、地理、科学等知识。比如在历史课上，学生借助 VR 设备，仿佛穿越时空，亲眼目睹历史事件的发生；在地理课中，利用 AR 技术，学生可以将抽象的地理地貌直观地呈现在眼前，增强对知识的理解和记忆 。</p>
+<p>在游戏领域，AR/VR 技术更是为玩家带来了前所未有的沉浸式体验。前端开发者可以利用 WebXR 结合 WebGL 技术，创建出具有高度交互性和真实感的 3D 游戏场景。玩家通过手柄、手势等自然交互方式与游戏环境进行互动，仿佛置身于游戏世界之中。在房地产行业，AR/VR 技术也开始崭露头角。购房者可以通过前端应用，利用 VR 设备远程参观房屋，提前感受房屋的布局、装修风格等，节省了时间和精力 。可以预见，未来 AR/VR 技术将与前端开发深度融合，在更多行业中发挥重要作用，为用户带来更加丰富、沉浸式的数字体验 。</p>
+<h2 id="开发者如何拥抱变革"><a href="#开发者如何拥抱变革" class="headerlink" title="开发者如何拥抱变革"></a>开发者如何拥抱变革</h2><p>面对前端技术的快速发展，开发者需要积极主动地调整学习和工作方式，才能在这个充满挑战与机遇的领域中保持竞争力。</p>
+<h3 id="多元化技术学习路径"><a href="#多元化技术学习路径" class="headerlink" title="多元化技术学习路径"></a>多元化技术学习路径</h3><p>开发者不应局限于传统的前端技术栈，而应积极探索新兴技术领域。例如，WebGPU 作为一项全新的图形处理技术，为前端带来了更强大的图形渲染能力和计算性能。通过学习 WebGPU，开发者可以构建更加复杂和高性能的 3D 应用、游戏以及数据可视化项目 。学习资源方面，MDN Web Docs 上有关于 WebGPU 的详细文档和教程，开发者可以从基础概念入手，逐步掌握其使用方法。同时，像 GitHub 上也有许多开源的 WebGPU 项目，通过阅读和分析这些项目的源代码，可以加深对 WebGPU 实际应用的理解 。</p>
+<p>服务端技术对于前端开发者也变得越来越重要。Edge Functions 允许前端开发者将部分业务逻辑部署到离用户更近的边缘节点，从而实现低延迟的数据处理和响应。学习 Edge Functions，开发者可以参考 Vercel、Cloudflare Workers 等平台的官方文档和示例，了解如何在实际项目中使用 Edge Functions 进行 API 请求处理、数据缓存等操作 。此外，掌握 Node.js、Express 等服务端技术，能够帮助前端开发者更好地理解前后端交互的原理，实现全栈开发，提升项目的整体把控能力 。</p>
+<h3 id="积极参与开源社区"><a href="#积极参与开源社区" class="headerlink" title="积极参与开源社区"></a>积极参与开源社区</h3><p>开源社区是前端技术发展的重要驱动力，参与开源社区能够让开发者接触到最新的技术动态和最佳实践 。关注热门的开源项目，如 React、Vue 等框架的官方仓库，不仅可以了解它们的最新特性和发展方向，还能学习到优秀的代码结构和设计模式。以 React 为例，通过关注其 GitHub 仓库，开发者可以参与到代码审查、提出功能建议等活动中，深入了解 React 的核心机制 。参与开源项目的贡献，无论是修复一个小的 bug，还是添加新的功能模块，都能让开发者在实践中提升自己的技术能力，同时还能结识到来自世界各地的优秀开发者，拓展人脉资源 。像在一些前端组件库的开源项目中，开发者可以根据自己的需求，提交改进组件功能或优化性能的代码，与其他开发者共同完善项目 。此外，积极参与开源社区的讨论和交流，如在 Stack Overflow、GitHub Issues 等平台上提问、回答问题，能够帮助开发者解决实际开发中遇到的问题，积累经验，紧跟前端技术的发展潮流 。</p>
+<h2 id="总结与展望"><a href="#总结与展望" class="headerlink" title="总结与展望"></a>总结与展望</h2><p>前端技术正站在一个新的十字路口，AI、边缘计算、WebAssembly 等前沿技术的崛起，为前端开发带来了前所未有的机遇和挑战。这些新兴技术不仅拓展了前端的应用边界，也对开发者的技术能力和思维方式提出了更高的要求 。对于前端开发者而言，在这个快速变化的时代，保持学习的热情和好奇心是至关重要的。积极探索新兴技术，不断拓宽自己的技术视野，才能在技术浪潮中找准方向，不被淘汰 。同时，要善于将理论知识转化为实际项目经验，通过参与开源项目、构建个人项目等方式，提升自己的实践能力 。未来，前端技术将继续与其他领域深度融合，创造出更加丰富、智能、沉浸式的用户体验 。让我们一起期待前端技术的下一次变革，共同见证前端开发的辉煌未来 。</p>
+<blockquote>
+<p>（注：文档部分内容可能由 AI 生成）</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>前端</category>
+        <category>人生</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>命令行配置代理服务</title>
     <url>//2019/01/29/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<html><head></head><body><ul>
@@ -1614,6 +1658,36 @@ public Class HelloWorld{
       <tags>
         <tag>windows</tag>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于CKEditor5的格式化插件</title>
+    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
+<span id="more"></span>
+<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
+<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>获取选中元素的 attribute 将其存起来</li>
+<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
+<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
+</ul>
+</li>
+<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
+<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> { model } = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> { schema } = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">"textProxy"</span>) || item.<span class="title function_">is</span>(<span class="string">"text"</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) {</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) {</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) {</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) {</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) {</span><br><span class="line">    <span class="keyword">if</span> (block) {</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) {</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+</body></html>]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>JavaScript</tag>
+        <tag>NPM</tag>
+        <tag>CKEditor5</tag>
       </tags>
   </entry>
   <entry>
@@ -1770,36 +1844,6 @@ public Class HelloWorld{
       </tags>
   </entry>
   <entry>
-    <title>基于CKEditor5的格式化插件</title>
-    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
-<span id="more"></span>
-<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
-<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
-<li>获取选中元素的 attribute 将其存起来</li>
-<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
-<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
-</ul>
-</li>
-<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
-<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> { model } = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> { schema } = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">"textProxy"</span>) || item.<span class="title function_">is</span>(<span class="string">"text"</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) {</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) {</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) {</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) {</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) {</span><br><span class="line">    <span class="keyword">if</span> (block) {</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) {</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-</body></html>]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>JavaScript</tag>
-        <tag>NPM</tag>
-        <tag>CKEditor5</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多Node环境设置</title>
     <url>//2020/09/12/%E5%A4%9ANode%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE/</url>
     <content><![CDATA[<html><head></head><body><p>建议使用 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NyZWF0aW9uaXgvbnZt">NVM<i class="fa fa-external-link-alt"></i></span> 对<code>Node</code>进行管理，在安装Node之前可以先安装好<code>NVM</code>，下面几种安装方式任选其一即可。</p>
@@ -1868,6 +1912,10 @@ public Class HelloWorld{
 <span id="more"></span>
 <p>  紧接着，我们踏上了浪漫的泰国蜜月之旅。在芭提雅，我们体验了精彩的成人秀和迷人的人妖秀，在岛上尽情享受浮潜和大海的乐趣，还在风月街悠然地散步，感受着独特的异国风情。在曼谷，我们来一场惬意的 citywalk，用脚步丈量这座城市的魅力。此外，我们还参加了大象活动日，与这些可爱的生灵亲密接触。<br>  这些美好的经历让我深感人生的丰富与多彩，但与此同时，我也开始思考生活的真正意义。<br>  每日的忙碌与奔波，让我像一个不停旋转的陀螺，却很少有时间停下来问问自己，这是否是我真正想要的生活。朝九晚五的工作，按部就班的日常，虽然安稳，但却让我感到内心的空虚和迷茫。<br>  如今，<strong>“换个活法”</strong> 的想法在我心中开始萌芽。我渴望打破这种惯性，去追寻一种更能让灵魂得到滋养的生活方式。但具体怎么做，我还没有清晰的规划，只是有了这样一个模糊而强烈的念头。<br>  或许不再被闹钟生硬地叫醒，而是迎着清晨的第一缕阳光自然苏醒；或许不再匆匆忙忙地在路边买个早餐就去挤公交，而是能悠然地为自己准备一份营养丰富的美食。<br>  我渴望不再让时间被无意义的会议和琐事填满，而是把更多的时光投入到自己热爱的事物中。比如读一本搁置已久的好书，学习一门一直感兴趣的外语，或者去探索未知的远方，感受不同的风土人情。<br>  我期待能拥有更多与家人和朋友相处的温馨时光，不再因为忙碌而忽略了他们的存在和感受。<br>  虽然现在还只是想法的开端，但我知道，这颗种子已经种下。我要勇敢地面对内心的恐惧和外界的质疑，因为只有勇敢迈出这一步，才有可能真正拥抱生活的无限可能。<br>  这不仅仅是一次生活方式的改变，更是一次自我的重新发现和成长之旅。我期待着在这个探索的过程中，让这颗萌芽的想法逐渐清晰，最终遇见一个更加真实、快乐和充满活力的自己。<br>  朋友们，你们是否也有过这样的冲动？是否也在心中种下了这样一颗想要改变的种子？</p>
 </body></html>]]></content>
+      <categories>
+        <category>人生</category>
+        <category>前端</category>
+      </categories>
   </entry>
   <entry>
     <title>用掘金－Markdown 编辑器写文章</title>
@@ -1887,22 +1935,22 @@ public Class HelloWorld{
 <li>撤销： <code>Ctrl/Cmd + Z</code></li>
 </ul>
 <h3 id="常用语法"><a href="#常用语法" class="headerlink" title="常用语法"></a>常用语法</h3><h4 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h4><blockquote>
-<p>语法格式：**’#’+’空格’+’文本’**</p>
+<p>语法格式：<strong>‘#’+’空格’+’文本’</strong></p>
 </blockquote>
 <figure class="highlight text"><table><tbody><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line"></span><br><span class="line">## 二级标题</span><br><span class="line"></span><br><span class="line">### 三级标题</span><br><span class="line"></span><br><span class="line">#### 四级标题</span><br><span class="line"></span><br><span class="line">##### 五级标题</span><br><span class="line"></span><br><span class="line">###### 六级标题</span><br></pre></td></tr></tbody></table></figure>
 
 <h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><blockquote>
-<p>无序列表语法格式：**’-‘ + ‘空格’ ＋ ‘文本’**</p>
+<p>无序列表语法格式：<strong>‘-‘ + ‘空格’ ＋ ‘文本’</strong></p>
 </blockquote>
 <figure class="highlight text"><table><tbody><tr><td class="code"><pre><span class="line">- 文本一</span><br><span class="line">- 文本二</span><br><span class="line">- 文本三</span><br></pre></td></tr></tbody></table></figure>
 
 <blockquote>
-<p>有序列表语法格式：**’数字’ + ‘.’ + ‘空格’ + ‘文本’**</p>
+<p>有序列表语法格式：<strong>‘数字’ + ‘.’ + ‘空格’ + ‘文本’</strong></p>
 </blockquote>
 <figure class="highlight text"><table><tbody><tr><td class="code"><pre><span class="line">1. 文本一</span><br><span class="line">2. 文本二</span><br><span class="line">3. 文本三</span><br></pre></td></tr></tbody></table></figure>
 
 <blockquote>
-<p>任务列表语法格式：**’-‘ + ‘空格’ + ‘[ ]’ + ‘文本’**</p>
+<p>任务列表语法格式：<strong>‘-‘ + ‘空格’ + ‘[ ]’ + ‘文本’</strong></p>
 </blockquote>
 <figure class="highlight text"><table><tbody><tr><td class="code"><pre><span class="line">- [x] 文本一</span><br><span class="line">- [ ] 文本二</span><br><span class="line">- [ ] 文本三</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1911,7 +1959,7 @@ public Class HelloWorld{
 <li>插入图片的语法与插入链接的语法很像，只是前面多了一个 <code>!</code>.语法如下：<br><code>![图片的标注](图片链接地址)</code></li>
 </ul>
 <h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><blockquote>
-<p>语法：**’&gt;’+’空格’+’文本’**</p>
+<p>语法：<strong>‘&gt;’+’空格’+’文本’</strong></p>
 </blockquote>
 <p>例如：</p>
 <figure class="highlight text"><table><tbody><tr><td class="code"><pre><span class="line">&gt; Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，然后转换成格式丰富的 HTML 页面。</span><br></pre></td></tr></tbody></table></figure>
@@ -1988,7 +2036,7 @@ public Class HelloWorld{
 </blockquote>
 <p>根据这个页面，<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9zdXBwb3J0aW5nL2ZhcSNfcmVzb2x2aW5nLXNoZWxsLWVudmlyb25tZW50LWlzLXNsb3ctZXJyb3Itd2FybmluZw==">Resolving Shell Environment is Slow<i class="fa fa-external-link-alt"></i></span>，如果 .bashrc 需要三秒以上，则显示第一条消息，如果需要十秒以上，则显示第二条消息。</p>
 <p>我在 VSCode 中打开了一个终端并获取了我的 .bashrc 文件</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">Mark$ time <span class="built_in">source</span> ~/.bashrc</span><br><span class="line">real    0m1.448s</span><br><span class="line">user    0m0.524s</span><br><span class="line">sys     0m0.671s</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">Mark$ <span class="keyword">time</span> <span class="built_in">source</span> ~/.bashrc</span><br><span class="line">real    0m1.448s</span><br><span class="line">user    0m0.524s</span><br><span class="line">sys     0m0.671s</span><br></pre></td></tr></tbody></table></figure>
 
 <p>如您所见，只需不到 1.5 秒。</p>
 <p><strong>环境：</strong></p>
