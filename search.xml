@@ -33,6 +33,115 @@
       </tags>
   </entry>
   <entry>
+    <title>别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI</title>
+    <url>//2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/</url>
+    <content><![CDATA[<html><head></head><body><h1 id="别再为-AI-Agent-重写一遍你的系统：我为什么做-Bridgent-AI"><a href="#别再为-AI-Agent-重写一遍你的系统：我为什么做-Bridgent-AI" class="headerlink" title="别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI"></a>别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI</h1><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-blog-hero.png" alt="Bridgent AI：复用现有 Schema 生成 MCP Tools"></p>
+<p>AI coding agent 正从“帮我补几行代码”，逐渐变成能够完成真实工程任务的协作者。</p>
+<p>但只要把它放进实际项目，很快就会遇到一道墙：它可以理解代码，却看不见团队内部的 API、数据库和业务函数。要让 Claude Code、Cursor、Codex 或 Gemini CLI 调用这些能力，通常还得手写一套 MCP Server。</p>
+<span id="more"></span>
+<p>问题是，我们的系统明明已经被描述过一次了。</p>
+<p>OpenAPI 描述了 HTTP API，Prisma 和 Drizzle 描述了数据模型，tRPC router 描述了应用过程，Zod 描述了函数输入。为了 MCP 再维护一份 tool schema，不仅重复劳动，也很容易出现两边定义逐渐漂移的问题。</p>
+<p>这就是我开始做 <strong>Bridgent AI</strong> 的原因：</p>
+<blockquote>
+<p>不重新发明一套描述，让项目里已经存在的 schema 直接成为 MCP Tools。</p>
+</blockquote>
+<p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcmsvQnJpZGdlbnQ=">github.com/JS-mark/Bridgent<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用文档：<a href="https://js-mark.com/Bridgent/">js-mark.com/Bridgent</a></p>
+<h2 id="MCP-接入真正麻烦的，不只是写一个工具"><a href="#MCP-接入真正麻烦的，不只是写一个工具" class="headerlink" title="MCP 接入真正麻烦的，不只是写一个工具"></a>MCP 接入真正麻烦的，不只是写一个工具</h2><p>一个最简单的 MCP demo 并不复杂。但当它进入真实项目，事情很快会变多：</p>
+<ul>
+<li>为每个能力重新定义名称、说明和输入 schema；</li>
+<li>把 OpenAPI、ORM model 或业务函数转换成工具；</li>
+<li>选择 stdio、HTTP 或 Web runtime；</li>
+<li>处理鉴权上下文、异常、超时和结果序列化；</li>
+<li>限制数据库查询范围，避免大结果塞满模型上下文；</li>
+<li>防止 raw SQL 或未审计的写操作被意外暴露。</li>
+</ul>
+<p>单独看，每一项都不算难。问题在于，每个项目都需要再做一遍。</p>
+<p>Bridgent AI 想减少的正是这层重复工程。它不是另一个 Agent framework，不管理 prompt、memory、planning，也不绑定某一种模型。它只专注于一件事：<strong>把现有系统能力转换为边界清晰、可以被 MCP host 调用的工具。</strong></p>
+<h2 id="Bridgent-AI-的工作方式"><a href="#Bridgent-AI-的工作方式" class="headerlink" title="Bridgent AI 的工作方式"></a>Bridgent AI 的工作方式</h2><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-architecture.png" alt="Bridgent AI 技术架构图"></p>
+<p><em>图：已有 Source 经过 Bridgent 的 adapter 与统一 Tool Runtime，运行在不同 transport 上，最终供多个 MCP host 调用。</em></p>
+<p>这套架构分为四层：</p>
+<h3 id="1-复用现有-Source"><a href="#1-复用现有-Source" class="headerlink" title="1. 复用现有 Source"></a>1. 复用现有 Source</h3><p>当前 Alpha 已支持：</p>
+<ul>
+<li><strong>OpenAPI 3.x</strong>：将 operation 转换为 MCP tool；</li>
+<li><strong>Prisma 6.x</strong>：从 model 生成查询工具，并支持显式开启的审计写工具；</li>
+<li><strong>Drizzle</strong>：从 tables 生成只读查询工具；</li>
+<li><strong>tRPC v10/v11</strong>：query procedure 默认成为读工具，mutation 默认隐藏；</li>
+<li><strong>Zod + TypeScript function</strong>：用于定义项目自己的 typed tool。</li>
+</ul>
+<p>这些 adapter 的目标不是把所有差异抹掉，而是保留原有定义的类型信息，并在不支持的输入形态上明确失败，而不是悄悄退化成宽松的 <code>any</code>。</p>
+<h3 id="2-统一为-Bridgent-Tools"><a href="#2-统一为-Bridgent-Tools" class="headerlink" title="2. 统一为 Bridgent Tools"></a>2. 统一为 Bridgent Tools</h3><p>不同 source 最终统一为包含 <code>description</code>、<code>inputSchema</code> 与 <code>run</code> 的工具结构，并可携带 source、读写能力、审计和限制等 metadata。</p>
+<p>CLI 可以利用这些 metadata，在启动 MCP Inspector 前给出 source 与 capability hints。开发者因此能更早发现“生成工具过多”或“开启了写能力”之类的风险信号。</p>
+<h3 id="3-选择合适的-Transport"><a href="#3-选择合适的-Transport" class="headerlink" title="3. 选择合适的 Transport"></a>3. 选择合适的 Transport</h3><p>同一套 tools 可以运行在：</p>
+<ul>
+<li><strong>stdio</strong>：适合本地 Claude Code、Cursor、Codex、Gemini CLI；</li>
+<li><strong>Streamable HTTP</strong>：适合自托管的共享 MCP Server；</li>
+<li><strong>Web Standard fetch handler</strong>：适合 Cloudflare Workers、Deno、Bun 等 fetch-compatible runtime。</li>
+</ul>
+<p>Bridgent AI 使用显式 server-file 模型。依赖注入、业务鉴权上下文和最终暴露范围仍掌握在开发者手中，而不是被隐藏在一个远端控制台里。</p>
+<h3 id="4-交给任何兼容-MCP-的-Host"><a href="#4-交给任何兼容-MCP-的-Host" class="headerlink" title="4. 交给任何兼容 MCP 的 Host"></a>4. 交给任何兼容 MCP 的 Host</h3><p>项目为 Claude Code、Cursor、OpenAI Codex CLI 和 Gemini CLI 提供了可直接复制的配置文档。仓库还使用官方 MCP SDK Client 对 stdio、HTTP 与 Web handler 做协议级测试。</p>
+<h2 id="五分钟跑起第一个-Server"><a href="#五分钟跑起第一个-Server" class="headerlink" title="五分钟跑起第一个 Server"></a>五分钟跑起第一个 Server</h2><p>环境需要 Node.js <code>&gt;= 22.18</code>。先安装 CLI、core 与 Zod：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">pnpm add -D @bridgent/cli @bridgent/core zod</span><br><span class="line">bridgent init ./server.ts</span><br></pre></td></tr></tbody></table></figure>
+
+<p>也可以直接编写一个最小的 <code>server.ts</code>：</p>
+<figure class="highlight ts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> { createStdioServer, defineTool } <span class="keyword">from</span> <span class="string">'@bridgent/core'</span></span><br><span class="line"><span class="keyword">import</span> { z } <span class="keyword">from</span> <span class="string">'zod'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> <span class="title function_">createStdioServer</span>({</span><br><span class="line">  <span class="attr">name</span>: <span class="string">'hello'</span>,</span><br><span class="line">  <span class="attr">version</span>: <span class="string">'0.0.1'</span>,</span><br><span class="line">  <span class="attr">tools</span>: [</span><br><span class="line">    <span class="title function_">defineTool</span>({</span><br><span class="line">      <span class="attr">name</span>: <span class="string">'add'</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">'Add two numbers'</span>,</span><br><span class="line">      <span class="attr">inputSchema</span>: z.<span class="title function_">object</span>({</span><br><span class="line">        <span class="attr">a</span>: z.<span class="title function_">number</span>(),</span><br><span class="line">        <span class="attr">b</span>: z.<span class="title function_">number</span>(),</span><br><span class="line">      }),</span><br><span class="line">      <span class="attr">run</span>: <span class="function">(<span class="params">{ a, b }</span>) =&gt;</span> a + b,</span><br><span class="line">    }),</span><br><span class="line">  ],</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后启动开发模式：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">bridgent dev ./server.ts</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果项目已经有 tRPC router，也可以直接复用：</p>
+<figure class="highlight ts"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> { createStdioServer } <span class="keyword">from</span> <span class="string">'@bridgent/core'</span></span><br><span class="line"><span class="keyword">import</span> { fromTrpc } <span class="keyword">from</span> <span class="string">'@bridgent/source-trpc'</span></span><br><span class="line"><span class="keyword">import</span> { appRouter } <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> <span class="title function_">createStdioServer</span>({</span><br><span class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</span><br><span class="line">  <span class="attr">version</span>: <span class="string">'0.0.1'</span>,</span><br><span class="line">  <span class="attr">tools</span>: <span class="title function_">fromTrpc</span>({</span><br><span class="line">    <span class="attr">router</span>: appRouter,</span><br><span class="line">    <span class="attr">createContext</span>: <span class="function">() =&gt;</span> ({ <span class="attr">userId</span>: <span class="string">'demo'</span> }),</span><br><span class="line">  }),</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>tRPC query 会生成读工具；mutation 和 subscription 不会默认暴露。要开放 mutation，必须同时显式开启写能力，并将最终工具名加入 allowlist。</p>
+<h2 id="数据库接入，安全默认比功能数量更重要"><a href="#数据库接入，安全默认比功能数量更重要" class="headerlink" title="数据库接入，安全默认比功能数量更重要"></a>数据库接入，安全默认比功能数量更重要</h2><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-safety.png" alt="Bridgent AI 数据库安全机制示意图"></p>
+<p><em>图：Agent 的数据库请求依次经过只读边界、结果限制、提交确认和审计记录。</em></p>
+<p>“能让 Agent 查数据库”很适合做演示，但真正决定它能否进入项目的，是默认边界。</p>
+<p>Bridgent AI 当前采用以下策略：</p>
+<ol>
+<li><strong>默认只读</strong>：Prisma 与 Drizzle 不会因为接入 adapter 就自动获得写权限；</li>
+<li><strong>查询受限</strong>：结果行数有上限，并提供 query timeout；</li>
+<li><strong>不暴露 raw SQL</strong>：避免工具绕过模型和字段边界；</li>
+<li><strong>写操作显式开放</strong>：Prisma writes 需要开启 mutating、配置工具 allowlist 与 audit；</li>
+<li><strong>两步提交</strong>：先 dry-run 获取一次性 preview token，再使用相同参数 commit；</li>
+<li><strong>降低重复写入风险</strong>：支持 audit sink 与同进程幂等键，应对 MCP host 的重试行为。</li>
+</ol>
+<p>这些机制不会替代业务系统自己的认证和授权。<code>createContext</code>、用户身份、租户隔离等仍应由宿主应用负责。Bridgent AI 提供的是工具层的安全默认值，而不是绕过业务边界的万能入口。</p>
+<h2 id="为什么我没有把它做成一个“大而全”的-Agent-平台"><a href="#为什么我没有把它做成一个“大而全”的-Agent-平台" class="headerlink" title="为什么我没有把它做成一个“大而全”的 Agent 平台"></a>为什么我没有把它做成一个“大而全”的 Agent 平台</h2><p>在 AI 工具领域，很容易不断加入 prompt 管理、memory、workflow、模型路由和托管控制台。但这些能力并不是 Bridgent AI 当前最该解决的问题。</p>
+<p>它现阶段坚持三件事：</p>
+<ul>
+<li><strong>本地运行</strong>：工具与业务代码放在一起；</li>
+<li><strong>显式组合</strong>：开发者能够看到并控制 server file；</li>
+<li><strong>专注连接层</strong>：只解决 Source → MCP Tools，而不是接管完整 Agent runtime。</li>
+</ul>
+<p>这种边界让 Bridgent AI 更容易进入现有工程，也让项目可以把精力放在 adapter 正确性、transport 兼容性和安全控制上。</p>
+<h2 id="当前状态与下一步"><a href="#当前状态与下一步" class="headerlink" title="当前状态与下一步"></a>当前状态与下一步</h2><p>Bridgent AI 仍处于 <strong>Alpha</strong>，现在已经具备：</p>
+<ul>
+<li>OpenAPI、Prisma、Drizzle、tRPC、Zod 五类 source；</li>
+<li>stdio、Streamable HTTP、Web Standard handler 三类 transport；</li>
+<li><code>bridgent init</code>、<code>dev</code>、<code>serve</code>、<code>inspect</code> CLI；</li>
+<li>主流 MCP host 的配置文档；</li>
+<li>示例项目和协议级测试。</li>
+</ul>
+<p>下一阶段计划聚焦 generated tool surface 的本地 policy enforcement，让 metadata 不只是用于提示，还能在工具执行前真正限制 allowlist、只读模式、最大工具数量，以及写工具必须具备的安全条件。</p>
+<p>GraphQL、托管控制台与 registry/distribution workflow 仍属于更后续的方向，不会为了功能列表好看而提前承诺。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>我做 Bridgent AI，不是因为 MCP Server 完全写不出来，而是因为团队不应该为同一套系统定义反复付出维护成本。</p>
+<p>如果你的项目已经有 OpenAPI、Prisma、Drizzle、tRPC 或 Zod，那么它们本来就应该成为 AI Agent 理解和调用系统的入口。</p>
+<p>项目现在还早，真实使用反馈会直接影响它接下来支持什么。如果 Bridgent AI 刚好解决了你的问题，欢迎试用、提交 Issue，或者点一个 Star，让我知道这条路值得继续走下去。</p>
+<ul>
+<li>GitHub：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcmsvQnJpZGdlbnQ=">https://github.com/JS-mark/Bridgent<i class="fa fa-external-link-alt"></i></span></li>
+<li>文档：<a href="https://js-mark.com/Bridgent/">https://js-mark.com/Bridgent/</a></li>
+<li>License：MIT</li>
+</ul>
+</body></html>]]></content>
+      <tags>
+        <tag>MCP</tag>
+        <tag>AI Agent</tag>
+        <tag>TypeScript</tag>
+        <tag>Node.js</tag>
+        <tag>Open Source</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DayJs使用</title>
     <url>//2018/11/30/DayJs/</url>
     <content><![CDATA[<html><head></head><body><p align="center">
@@ -1088,49 +1197,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue二维码组件</title>
-    <url>//2018/03/12/vueqr-new/</url>
-    <content><![CDATA[<html><head></head><body><h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license"><img data-src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
-<blockquote>
-<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3></blockquote>
-<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>快速添加 <code>vueqr-new</code> 组件到 app 中</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></tbody></table></figure>
-<span id="more"></span>
-<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><figure class="highlight html"><table><tbody><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> vueQr <span class="keyword">from</span> <span class="string">'vueqr-new'</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> config = {</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 容错等级</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">errorCorrectionLevel</span>: <span class="string">'H'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 图片类型</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">type</span>: <span class="string">'image/png'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">rendererOpts</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">quality</span>: <span class="number">0.3</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 边框与二维码之间的间距</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">margin</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 缩放倍数</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">scale</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="number">500</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">maskPattern</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">color</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">dark</span>: <span class="string">'#000000'</span>,</span></span><br><span class="line"><span class="language-javascript">  light : <span class="string">"#ffffff"</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">style</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="string">'128px'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">border</span>: <span class="string">'1px solid #ccc'</span></span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> {</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) {</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> {</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">text</span>: <span class="string">'https://example.com'</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">config</span>: config</span></span><br><span class="line"><span class="language-javascript">    }</span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">components</span>: {</span></span><br><span class="line"><span class="language-javascript">    vueQr</span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
-<thead>
-<tr>
-<th>属性</th>
-<th>类型</th>
-<th>属性描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>config</td>
-<td>Object</td>
-<td>qrcode option</td>
-</tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>qrcode value</td>
-</tr>
-</tbody></table>
-<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3pwYW8vcXJjb2RlLnJlYWN0">“node-qrcode”<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3></blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phY2stSW4vdnVlUXItbmV3L2Jsb2IvbWFzdGVyL0xJQ0VOU0U=">MIT<i class="fa fa-external-link-alt"></i></span></p>
-</body></html>]]></content>
-      <categories>
-        <category>Vue</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora For Markdown 语法</title>
     <url>//2018/03/12/typora/</url>
     <content><![CDATA[<html><head></head><body><p>#Typora For Markdown 语法</p>
@@ -1282,6 +1348,49 @@ public Class HelloWorld{
       <tags>
         <tag>前端开发</tag>
         <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue二维码组件</title>
+    <url>//2018/03/12/vueqr-new/</url>
+    <content><![CDATA[<html><head></head><body><h1 id="vue-components"><a href="#vue-components" class="headerlink" title="vue components"></a>vue components</h1><p><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/v/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://www.npmjs.com/package/vueqr-new"><img data-src="https://img.shields.io/npm/dt/vueqr-new.svg?style=flat-square" alt="npm"></a><a href="https://github.com/Jack-In/vueQr-new/master/license"><img data-src="https://img.shields.io/npm/l/vueqr-new.svg?style=flat-square" alt="npm"></a></p>
+<blockquote>
+<h3 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h3></blockquote>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p>快速添加 <code>vueqr-new</code> 组件到 app 中</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">npm install --save vueqr-new</span><br></pre></td></tr></tbody></table></figure>
+<span id="more"></span>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><figure class="highlight html"><table><tbody><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">vue-qr</span> <span class="attr">:config</span>=<span class="string">"config"</span> <span class="attr">:text</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">vue-qr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> vueQr <span class="keyword">from</span> <span class="string">'vueqr-new'</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> config = {</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 容错等级</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">errorCorrectionLevel</span>: <span class="string">'H'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 图片类型</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">type</span>: <span class="string">'image/png'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">rendererOpts</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">quality</span>: <span class="number">0.3</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 边框与二维码之间的间距</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">margin</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// 缩放倍数</span></span></span><br><span class="line"><span class="language-javascript">  <span class="attr">scale</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="number">500</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">maskPattern</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">color</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">dark</span>: <span class="string">'#000000'</span>,</span></span><br><span class="line"><span class="language-javascript">  light : <span class="string">"#ffffff"</span></span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">style</span>: {</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: <span class="string">'128px'</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">border</span>: <span class="string">'1px solid #ccc'</span></span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> {</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) {</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> {</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">text</span>: <span class="string">'https://example.com'</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">config</span>: config</span></span><br><span class="line"><span class="language-javascript">    }</span></span><br><span class="line"><span class="language-javascript">  },</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">components</span>: {</span></span><br><span class="line"><span class="language-javascript">    vueQr</span></span><br><span class="line"><span class="language-javascript">  }</span></span><br><span class="line"><span class="language-javascript">}</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Component-props"><a href="#Component-props" class="headerlink" title="Component props"></a>Component props</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>属性描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>config</td>
+<td>Object</td>
+<td>qrcode option</td>
+</tr>
+<tr>
+<td>text</td>
+<td>String</td>
+<td>qrcode value</td>
+</tr>
+</tbody></table>
+<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3pwYW8vcXJjb2RlLnJlYWN0">“node-qrcode”<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3></blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0phY2stSW4vdnVlUXItbmV3L2Jsb2IvbWFzdGVyL0xJQ0VOU0U=">MIT<i class="fa fa-external-link-alt"></i></span></p>
+</body></html>]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1473,7 +1582,7 @@ public Class HelloWorld{
     <title>修改了SSH默认端口之后，如何配置git？</title>
     <url>//2020/01/19/%E4%BF%AE%E6%94%B9%E4%BA%86SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEgit%EF%BC%9F/</url>
     <content><![CDATA[<html><head></head><body><h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>由于安全或者其它原因，我们可能会修改默认的SSH服务端口号，默认情况下，已有的git项目在pull或者push的时候会报错！</p>
-<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjMTAzOyYjMTA1OyYjeDc0OyYjeDQwOyYjeDc4OyYjeDc4OyYjeDc4OyYjeDJlOyYjeDYzOyYjeDZmOyYjMTA5Ow==">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
+<p>现在假设原来的项目的remote设置为<span class="exturl" data-url="bWFpbHRvOiYjMTAzOyYjMTA1OyYjeDc0OyYjeDQwOyYjMTIwOyYjMTIwOyYjeDc4OyYjeDJlOyYjeDYzOyYjeDZmOyYjMTA5Ow==">git@xxx.com<i class="fa fa-external-link-alt"></i></span>:Projects/xxx.git，将服务器SSH默认端口修改为223后，导致push或 pull出错</p>
 <span id="more"></span>
 <h3 id="有两个解决办法"><a href="#有两个解决办法" class="headerlink" title="有两个解决办法"></a>有两个解决办法</h3><h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">git remote set-url origin ssh://git@xxx.com:223/~/Projects/p1.git</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1618,6 +1727,36 @@ public Class HelloWorld{
       </tags>
   </entry>
   <entry>
+    <title>基于CKEditor5的格式化插件</title>
+    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
+<span id="more"></span>
+<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
+<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>获取选中元素的 attribute 将其存起来</li>
+<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
+<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
+</ul>
+</li>
+<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
+<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> { model } = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> { schema } = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">"textProxy"</span>) || item.<span class="title function_">is</span>(<span class="string">"text"</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) {</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) {</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) {</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) {</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) {</span><br><span class="line">    <span class="keyword">if</span> (block) {</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) {</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+</body></html>]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>前端开发</tag>
+        <tag>JavaScript</tag>
+        <tag>NPM</tag>
+        <tag>CKEditor5</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>命令行配置代理服务</title>
     <url>//2019/01/29/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<html><head></head><body><ul>
@@ -1658,36 +1797,6 @@ public Class HelloWorld{
       <tags>
         <tag>windows</tag>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于CKEditor5的格式化插件</title>
-    <url>//2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写该文的起因是为了向大家介绍下基于CKEditor5 开发格式刷插件的思路</p>
-<span id="more"></span>
-<h3 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h3><ul>
-<li>实现了文字与段落的属性Copy<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/1.gif" alt="image"></li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
-<li>获取选中元素的 attribute 将其存起来</li>
-<li>再次选中时将选中元素的 attribute 通过存起来的属性值将其重置（当然重置可以采用<code>removeFormat</code>插件将元素格式移除）<ul>
-<li>当然选中的元素需要判别下文字用文字的方法，段落用段落的方法<br><img data-src="/2022/08/22/%E5%9F%BA%E4%BA%8ECKEditor5%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8F%92%E4%BB%B6/2.png" alt="image"></li>
-</ul>
-</li>
-<li>关于按钮的开启状态可以通过<code>isEnable</code>去设置，通过插件的<code>refresh</code>去刷新开启状态！（P.s 当然这是我们这边的业务工需求，大家可以按实际的业务需求来做）</li>
-<li>UI 层的话就直接使用默认的 <code>Button</code> 按钮就好，监听下<code>buttonView</code> 然后执行<code>execute</code></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ja2VkaXRvci5jb20vZG9jcy9ja2VkaXRvcjUvbGF0ZXN0L2FwaS9tb2R1bGVfZW5naW5lX21vZGVsX3NjaGVtYS1BdHRyaWJ1dGVQcm9wZXJ0aWVzLmh0bWw=">文档<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h3 id="一些实际代码"><a href="#一些实际代码" class="headerlink" title="一些实际代码"></a>一些实际代码</h3><figure class="highlight js"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否可以开启</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">_checkEnabled</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> { model } = <span class="variable language_">this</span>.<span class="property">editor</span>;</span><br><span class="line">  <span class="keyword">const</span> { schema } = model;</span><br><span class="line">  <span class="keyword">const</span> selectedElements = <span class="title class_">Array</span>.<span class="title function_">from</span>(</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_getNotFormattingItems</span>(model.<span class="property">document</span>.<span class="property">selection</span>, schema)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">const</span> flag = selectedElements.<span class="title function_">some</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">is</span>(<span class="string">"textProxy"</span>) || item.<span class="title function_">is</span>(<span class="string">"text"</span>));</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取不可以参与格式化的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">* <span class="title function_">_getNotFormattingItems</span>(<span class="params">selection, schema</span>) {</span><br><span class="line">  <span class="comment">// Check formatting on selected items that are not blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> curRange <span class="keyword">of</span> selection.<span class="title function_">getRanges</span>()) {</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> item <span class="keyword">of</span> curRange.<span class="title function_">getItems</span>()) {</span><br><span class="line">      <span class="keyword">if</span> (!schema.<span class="title function_">isBlock</span>(item)) {</span><br><span class="line">        <span class="keyword">yield</span> item;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Check formatting from selected blocks.</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> selection.<span class="title function_">getSelectedBlocks</span>()) {</span><br><span class="line">    <span class="keyword">if</span> (block) {</span><br><span class="line">      <span class="keyword">yield</span> block;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Finally the selection might be formatted as well, so make sure to check it.</span></span><br><span class="line">  <span class="keyword">if</span> (selection) {</span><br><span class="line">    <span class="keyword">yield</span> selection;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-</body></html>]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>前端开发</tag>
-        <tag>JavaScript</tag>
-        <tag>NPM</tag>
-        <tag>CKEditor5</tag>
       </tags>
   </entry>
   <entry>

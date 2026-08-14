@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://avatars.githubusercontent.com/u/31335385?s=60&v=4">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"js-mark.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.23.2","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"language":false,"highlight_theme":"solarized dark"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Bridgent AI 可以复用 OpenAPI、Prisma、Drizzle、tRPC 与 Zod 定义，生成 Claude Code、Cursor、Codex 等客户端可调用的 MCP Tools。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI">
+<meta property="og:url" content="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/index.html">
+<meta property="og:site_name" content="Mark&#39;s Blog">
+<meta property="og:description" content="Bridgent AI 可以复用 OpenAPI、Prisma、Drizzle、tRPC 与 Zod 定义，生成 Claude Code、Cursor、Codex 等客户端可调用的 MCP Tools。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-blog-hero.png">
+<meta property="og:image" content="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-architecture.png">
+<meta property="og:image" content="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-safety.png">
+<meta property="article:published_time" content="2026-08-14T19:38:51.000Z">
+<meta property="article:modified_time" content="2026-08-14T12:10:01.596Z">
+<meta property="article:author" content="Mark">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="AI Agent">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Open Source">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-blog-hero.png">
+
+
+<link rel="canonical" href="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/","path":"/2026/08/14/Bridgent-AI：为什么我选择复用-Schema，而不是继续手写-MCP-Server/","title":"别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI | Mark's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js" defer></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.0.5/fancybox/fancybox.umd.js" integrity="sha256-UiSieVaV/DXce2LW7QH+o77w+AIoAvSCPBkezriZ2DQ=" crossorigin="anonymous" defer></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js" defer></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+<style type="text/css">
+:root {
+  --body-bg-color: #eee;
+  --content-bg-color: #fff;
+  --card-bg-color: #f5f5f5;
+  --text-color: #555;
+  --blockquote-color: #666;
+  --link-color: #555;
+  --link-hover-color: #222;
+  --brand-color: #fff;
+  --brand-hover-color: #fff;
+  --table-row-odd-bg-color: #f9f9f9;
+  --table-row-hover-bg-color: #f5f5f5;
+  --menu-item-bg-color: #f5f5f5;
+  --theme-color: #222;
+  --btn-default-bg: #fff;
+  --btn-default-color: #555;
+  --btn-default-border-color: #555;
+  --btn-default-hover-bg: #222;
+  --btn-default-hover-color: #fff;
+  --btn-default-hover-border-color: #222;
+  --highlight-background: #fff5f5;
+  --highlight-foreground: #ff502c;
+  --highlight-gutter-background: #e1e1e1;
+  --highlight-gutter-foreground: #555;
+  color-scheme: light;
+}
+</style>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Mark's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mark's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">58</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">20</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li><li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%AB%E5%86%8D%E4%B8%BA-AI-Agent-%E9%87%8D%E5%86%99%E4%B8%80%E9%81%8D%E4%BD%A0%E7%9A%84%E7%B3%BB%E7%BB%9F%EF%BC%9A%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%81%9A-Bridgent-AI"><span class="nav-number">1.</span> <span class="nav-text">别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP-%E6%8E%A5%E5%85%A5%E7%9C%9F%E6%AD%A3%E9%BA%BB%E7%83%A6%E7%9A%84%EF%BC%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E5%86%99%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.</span> <span class="nav-text">MCP 接入真正麻烦的，不只是写一个工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridgent-AI-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">Bridgent AI 的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%A4%8D%E7%94%A8%E7%8E%B0%E6%9C%89-Source"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 复用现有 Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%9F%E4%B8%80%E4%B8%BA-Bridgent-Tools"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 统一为 Bridgent Tools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84-Transport"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 选择合适的 Transport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BA%A4%E7%BB%99%E4%BB%BB%E4%BD%95%E5%85%BC%E5%AE%B9-MCP-%E7%9A%84-Host"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. 交给任何兼容 MCP 的 Host</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E5%88%86%E9%92%9F%E8%B7%91%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA-Server"><span class="nav-number">1.3.</span> <span class="nav-text">五分钟跑起第一个 Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8E%A5%E5%85%A5%EF%BC%8C%E5%AE%89%E5%85%A8%E9%BB%98%E8%AE%A4%E6%AF%94%E5%8A%9F%E8%83%BD%E6%95%B0%E9%87%8F%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="nav-number">1.4.</span> <span class="nav-text">数据库接入，安全默认比功能数量更重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E6%B2%A1%E6%9C%89%E6%8A%8A%E5%AE%83%E5%81%9A%E6%88%90%E4%B8%80%E4%B8%AA%E2%80%9C%E5%A4%A7%E8%80%8C%E5%85%A8%E2%80%9D%E7%9A%84-Agent-%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.5.</span> <span class="nav-text">为什么我没有把它做成一个“大而全”的 Agent 平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="nav-number">1.6.</span> <span class="nav-text">当前状态与下一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="nav-number">1.7.</span> <span class="nav-text">写在最后</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mark"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Mark</p>
+  <div class="site-description" itemprop="description">Personal Technology Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcms=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JS-mark"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnN1bmR1bzMxOTVAcXEuY29t" title="E-Mail → mailto:sunduo3195@qq.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdS8yMzUzMzgyOTYx" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2353382961"><i class="fab fa-weibo fa-fw"></i></span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Mark">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mark's Blog">
+      <meta itemprop="description" content="Personal Technology Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI | Mark's Blog">
+      <meta itemprop="description" content="Bridgent AI 可以复用 OpenAPI、Prisma、Drizzle、tRPC 与 Zod 定义，生成 Claude Code、Cursor、Codex 等客户端可调用的 MCP Tools。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-08-14 19:38:51 / 修改时间：12:10:01" itemprop="dateCreated datePublished" datetime="2026-08-14T19:38:51+00:00">2026-08-14</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Bridgent AI 可以复用 OpenAPI、Prisma、Drizzle、tRPC 与 Zod 定义，生成 Claude Code、Cursor、Codex 等客户端可调用的 MCP Tools。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><html><head></head><body><h1 id="别再为-AI-Agent-重写一遍你的系统：我为什么做-Bridgent-AI"><a href="#别再为-AI-Agent-重写一遍你的系统：我为什么做-Bridgent-AI" class="headerlink" title="别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI"></a>别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI</h1><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-blog-hero.png" alt="Bridgent AI：复用现有 Schema 生成 MCP Tools"></p>
+<p>AI coding agent 正从“帮我补几行代码”，逐渐变成能够完成真实工程任务的协作者。</p>
+<p>但只要把它放进实际项目，很快就会遇到一道墙：它可以理解代码，却看不见团队内部的 API、数据库和业务函数。要让 Claude Code、Cursor、Codex 或 Gemini CLI 调用这些能力，通常还得手写一套 MCP Server。</p>
+<span id="more"></span>
+<p>问题是，我们的系统明明已经被描述过一次了。</p>
+<p>OpenAPI 描述了 HTTP API，Prisma 和 Drizzle 描述了数据模型，tRPC router 描述了应用过程，Zod 描述了函数输入。为了 MCP 再维护一份 tool schema，不仅重复劳动，也很容易出现两边定义逐渐漂移的问题。</p>
+<p>这就是我开始做 <strong>Bridgent AI</strong> 的原因：</p>
+<blockquote>
+<p>不重新发明一套描述，让项目里已经存在的 schema 直接成为 MCP Tools。</p>
+</blockquote>
+<p>项目地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcmsvQnJpZGdlbnQ=">github.com/JS-mark/Bridgent<i class="fa fa-external-link-alt"></i></span></p>
+<p>使用文档：<a href="https://js-mark.com/Bridgent/">js-mark.com/Bridgent</a></p>
+<h2 id="MCP-接入真正麻烦的，不只是写一个工具"><a href="#MCP-接入真正麻烦的，不只是写一个工具" class="headerlink" title="MCP 接入真正麻烦的，不只是写一个工具"></a>MCP 接入真正麻烦的，不只是写一个工具</h2><p>一个最简单的 MCP demo 并不复杂。但当它进入真实项目，事情很快会变多：</p>
+<ul>
+<li>为每个能力重新定义名称、说明和输入 schema；</li>
+<li>把 OpenAPI、ORM model 或业务函数转换成工具；</li>
+<li>选择 stdio、HTTP 或 Web runtime；</li>
+<li>处理鉴权上下文、异常、超时和结果序列化；</li>
+<li>限制数据库查询范围，避免大结果塞满模型上下文；</li>
+<li>防止 raw SQL 或未审计的写操作被意外暴露。</li>
+</ul>
+<p>单独看，每一项都不算难。问题在于，每个项目都需要再做一遍。</p>
+<p>Bridgent AI 想减少的正是这层重复工程。它不是另一个 Agent framework，不管理 prompt、memory、planning，也不绑定某一种模型。它只专注于一件事：<strong>把现有系统能力转换为边界清晰、可以被 MCP host 调用的工具。</strong></p>
+<h2 id="Bridgent-AI-的工作方式"><a href="#Bridgent-AI-的工作方式" class="headerlink" title="Bridgent AI 的工作方式"></a>Bridgent AI 的工作方式</h2><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-architecture.png" alt="Bridgent AI 技术架构图"></p>
+<p><em>图：已有 Source 经过 Bridgent 的 adapter 与统一 Tool Runtime，运行在不同 transport 上，最终供多个 MCP host 调用。</em></p>
+<p>这套架构分为四层：</p>
+<h3 id="1-复用现有-Source"><a href="#1-复用现有-Source" class="headerlink" title="1. 复用现有 Source"></a>1. 复用现有 Source</h3><p>当前 Alpha 已支持：</p>
+<ul>
+<li><strong>OpenAPI 3.x</strong>：将 operation 转换为 MCP tool；</li>
+<li><strong>Prisma 6.x</strong>：从 model 生成查询工具，并支持显式开启的审计写工具；</li>
+<li><strong>Drizzle</strong>：从 tables 生成只读查询工具；</li>
+<li><strong>tRPC v10/v11</strong>：query procedure 默认成为读工具，mutation 默认隐藏；</li>
+<li><strong>Zod + TypeScript function</strong>：用于定义项目自己的 typed tool。</li>
+</ul>
+<p>这些 adapter 的目标不是把所有差异抹掉，而是保留原有定义的类型信息，并在不支持的输入形态上明确失败，而不是悄悄退化成宽松的 <code>any</code>。</p>
+<h3 id="2-统一为-Bridgent-Tools"><a href="#2-统一为-Bridgent-Tools" class="headerlink" title="2. 统一为 Bridgent Tools"></a>2. 统一为 Bridgent Tools</h3><p>不同 source 最终统一为包含 <code>description</code>、<code>inputSchema</code> 与 <code>run</code> 的工具结构，并可携带 source、读写能力、审计和限制等 metadata。</p>
+<p>CLI 可以利用这些 metadata，在启动 MCP Inspector 前给出 source 与 capability hints。开发者因此能更早发现“生成工具过多”或“开启了写能力”之类的风险信号。</p>
+<h3 id="3-选择合适的-Transport"><a href="#3-选择合适的-Transport" class="headerlink" title="3. 选择合适的 Transport"></a>3. 选择合适的 Transport</h3><p>同一套 tools 可以运行在：</p>
+<ul>
+<li><strong>stdio</strong>：适合本地 Claude Code、Cursor、Codex、Gemini CLI；</li>
+<li><strong>Streamable HTTP</strong>：适合自托管的共享 MCP Server；</li>
+<li><strong>Web Standard fetch handler</strong>：适合 Cloudflare Workers、Deno、Bun 等 fetch-compatible runtime。</li>
+</ul>
+<p>Bridgent AI 使用显式 server-file 模型。依赖注入、业务鉴权上下文和最终暴露范围仍掌握在开发者手中，而不是被隐藏在一个远端控制台里。</p>
+<h3 id="4-交给任何兼容-MCP-的-Host"><a href="#4-交给任何兼容-MCP-的-Host" class="headerlink" title="4. 交给任何兼容 MCP 的 Host"></a>4. 交给任何兼容 MCP 的 Host</h3><p>项目为 Claude Code、Cursor、OpenAI Codex CLI 和 Gemini CLI 提供了可直接复制的配置文档。仓库还使用官方 MCP SDK Client 对 stdio、HTTP 与 Web handler 做协议级测试。</p>
+<h2 id="五分钟跑起第一个-Server"><a href="#五分钟跑起第一个-Server" class="headerlink" title="五分钟跑起第一个 Server"></a>五分钟跑起第一个 Server</h2><p>环境需要 Node.js <code>&gt;= 22.18</code>。先安装 CLI、core 与 Zod：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pnpm add -D @bridgent/cli @bridgent/core zod</span><br><span class="line">bridgent init ./server.ts</span><br></pre></td></tr></tbody></table></figure>
+
+<p>也可以直接编写一个最小的 <code>server.ts</code>：</p>
+<figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { createStdioServer, defineTool } <span class="keyword">from</span> <span class="string">'@bridgent/core'</span></span><br><span class="line"><span class="keyword">import</span> { z } <span class="keyword">from</span> <span class="string">'zod'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> <span class="title function_">createStdioServer</span>({</span><br><span class="line">  <span class="attr">name</span>: <span class="string">'hello'</span>,</span><br><span class="line">  <span class="attr">version</span>: <span class="string">'0.0.1'</span>,</span><br><span class="line">  <span class="attr">tools</span>: [</span><br><span class="line">    <span class="title function_">defineTool</span>({</span><br><span class="line">      <span class="attr">name</span>: <span class="string">'add'</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">'Add two numbers'</span>,</span><br><span class="line">      <span class="attr">inputSchema</span>: z.<span class="title function_">object</span>({</span><br><span class="line">        <span class="attr">a</span>: z.<span class="title function_">number</span>(),</span><br><span class="line">        <span class="attr">b</span>: z.<span class="title function_">number</span>(),</span><br><span class="line">      }),</span><br><span class="line">      <span class="attr">run</span>: <span class="function">(<span class="params">{ a, b }</span>) =&gt;</span> a + b,</span><br><span class="line">    }),</span><br><span class="line">  ],</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后启动开发模式：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bridgent dev ./server.ts</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果项目已经有 tRPC router，也可以直接复用：</p>
+<figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { createStdioServer } <span class="keyword">from</span> <span class="string">'@bridgent/core'</span></span><br><span class="line"><span class="keyword">import</span> { fromTrpc } <span class="keyword">from</span> <span class="string">'@bridgent/source-trpc'</span></span><br><span class="line"><span class="keyword">import</span> { appRouter } <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> <span class="title function_">createStdioServer</span>({</span><br><span class="line">  <span class="attr">name</span>: <span class="string">'app'</span>,</span><br><span class="line">  <span class="attr">version</span>: <span class="string">'0.0.1'</span>,</span><br><span class="line">  <span class="attr">tools</span>: <span class="title function_">fromTrpc</span>({</span><br><span class="line">    <span class="attr">router</span>: appRouter,</span><br><span class="line">    <span class="attr">createContext</span>: <span class="function">() =&gt;</span> ({ <span class="attr">userId</span>: <span class="string">'demo'</span> }),</span><br><span class="line">  }),</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>tRPC query 会生成读工具；mutation 和 subscription 不会默认暴露。要开放 mutation，必须同时显式开启写能力，并将最终工具名加入 allowlist。</p>
+<h2 id="数据库接入，安全默认比功能数量更重要"><a href="#数据库接入，安全默认比功能数量更重要" class="headerlink" title="数据库接入，安全默认比功能数量更重要"></a>数据库接入，安全默认比功能数量更重要</h2><p><img data-src="/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/bridgent-safety.png" alt="Bridgent AI 数据库安全机制示意图"></p>
+<p><em>图：Agent 的数据库请求依次经过只读边界、结果限制、提交确认和审计记录。</em></p>
+<p>“能让 Agent 查数据库”很适合做演示，但真正决定它能否进入项目的，是默认边界。</p>
+<p>Bridgent AI 当前采用以下策略：</p>
+<ol>
+<li><strong>默认只读</strong>：Prisma 与 Drizzle 不会因为接入 adapter 就自动获得写权限；</li>
+<li><strong>查询受限</strong>：结果行数有上限，并提供 query timeout；</li>
+<li><strong>不暴露 raw SQL</strong>：避免工具绕过模型和字段边界；</li>
+<li><strong>写操作显式开放</strong>：Prisma writes 需要开启 mutating、配置工具 allowlist 与 audit；</li>
+<li><strong>两步提交</strong>：先 dry-run 获取一次性 preview token，再使用相同参数 commit；</li>
+<li><strong>降低重复写入风险</strong>：支持 audit sink 与同进程幂等键，应对 MCP host 的重试行为。</li>
+</ol>
+<p>这些机制不会替代业务系统自己的认证和授权。<code>createContext</code>、用户身份、租户隔离等仍应由宿主应用负责。Bridgent AI 提供的是工具层的安全默认值，而不是绕过业务边界的万能入口。</p>
+<h2 id="为什么我没有把它做成一个“大而全”的-Agent-平台"><a href="#为什么我没有把它做成一个“大而全”的-Agent-平台" class="headerlink" title="为什么我没有把它做成一个“大而全”的 Agent 平台"></a>为什么我没有把它做成一个“大而全”的 Agent 平台</h2><p>在 AI 工具领域，很容易不断加入 prompt 管理、memory、workflow、模型路由和托管控制台。但这些能力并不是 Bridgent AI 当前最该解决的问题。</p>
+<p>它现阶段坚持三件事：</p>
+<ul>
+<li><strong>本地运行</strong>：工具与业务代码放在一起；</li>
+<li><strong>显式组合</strong>：开发者能够看到并控制 server file；</li>
+<li><strong>专注连接层</strong>：只解决 Source → MCP Tools，而不是接管完整 Agent runtime。</li>
+</ul>
+<p>这种边界让 Bridgent AI 更容易进入现有工程，也让项目可以把精力放在 adapter 正确性、transport 兼容性和安全控制上。</p>
+<h2 id="当前状态与下一步"><a href="#当前状态与下一步" class="headerlink" title="当前状态与下一步"></a>当前状态与下一步</h2><p>Bridgent AI 仍处于 <strong>Alpha</strong>，现在已经具备：</p>
+<ul>
+<li>OpenAPI、Prisma、Drizzle、tRPC、Zod 五类 source；</li>
+<li>stdio、Streamable HTTP、Web Standard handler 三类 transport；</li>
+<li><code>bridgent init</code>、<code>dev</code>、<code>serve</code>、<code>inspect</code> CLI；</li>
+<li>主流 MCP host 的配置文档；</li>
+<li>示例项目和协议级测试。</li>
+</ul>
+<p>下一阶段计划聚焦 generated tool surface 的本地 policy enforcement，让 metadata 不只是用于提示，还能在工具执行前真正限制 allowlist、只读模式、最大工具数量，以及写工具必须具备的安全条件。</p>
+<p>GraphQL、托管控制台与 registry/distribution workflow 仍属于更后续的方向，不会为了功能列表好看而提前承诺。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>我做 Bridgent AI，不是因为 MCP Server 完全写不出来，而是因为团队不应该为同一套系统定义反复付出维护成本。</p>
+<p>如果你的项目已经有 OpenAPI、Prisma、Drizzle、tRPC 或 Zod，那么它们本来就应该成为 AI Agent 理解和调用系统的入口。</p>
+<p>项目现在还早，真实使用反馈会直接影响它接下来支持什么。如果 Bridgent AI 刚好解决了你的问题，欢迎试用、提交 Issue，或者点一个 Star，让我知道这条路值得继续走下去。</p>
+<ul>
+<li>GitHub：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pTLW1hcmsvQnJpZGdlbnQ=">https://github.com/JS-mark/Bridgent<i class="fa fa-external-link-alt"></i></span></li>
+<li>文档：<a href="https://js-mark.com/Bridgent/">https://js-mark.com/Bridgent/</a></li>
+<li>License：MIT</li>
+</ul>
+</body></html>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechat.png" alt="Mark 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Mark 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>Mark
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://js-mark.com/2026/08/14/Bridgent-AI%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%8D%E7%94%A8-Schema%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%A7%E7%BB%AD%E6%89%8B%E5%86%99-MCP-Server/" title="别再为 AI Agent 重写一遍你的系统：我为什么做 Bridgent AI">https://js-mark.com/2026/08/14/Bridgent-AI：为什么我选择复用-Schema，而不是继续手写-MCP-Server/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/mark_blog">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/Wechat.jpeg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MCP/" rel="tag"><i class="fa fa-tag"></i> MCP</a>
+              <a href="/tags/AI-Agent/" rel="tag"><i class="fa fa-tag"></i> AI Agent</a>
+              <a href="/tags/TypeScript/" rel="tag"><i class="fa fa-tag"></i> TypeScript</a>
+              <a href="/tags/Node-js/" rel="tag"><i class="fa fa-tag"></i> Node.js</a>
+              <a href="/tags/Open-Source/" rel="tag"><i class="fa fa-tag"></i> Open Source</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/07/29/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%EF%BC%9A%E5%9C%A8%E5%8F%98%E9%9D%A9%E6%B5%AA%E6%BD%AE%E4%B8%AD%E9%A2%84%E8%A7%81%E6%9C%AA%E6%9D%A5/" rel="next" title="前端技术：在变革浪潮中预见未来">
+                  前端技术：在变革浪潮中预见未来 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2015 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mark</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL0pzLW1hcms=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"JS-mark","repo":"Js-mark.github.io","client_id":"771111cf1a5ef33c99d5","client_secret":"00254dd1456d8593ede120f4158193706ac7b3fb","admin_user":"JS-mark","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","perPage":10,"pagerDirection":"last","js":{"url":"//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"},"path_md5":"6cd58bb4ffa94eed1f180a53dcf64141"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>
